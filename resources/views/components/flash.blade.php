@@ -1,6 +1,6 @@
 @foreach (['success' => 'positive', 'error' => 'critical'] as $key => $tone)
     @if (session()->has($key))
-        <div class="flash flash-{{ $tone }}" role="status">
+        <div class="flash flash-{{ $tone }}" role="{{ $key === 'error' ? 'alert' : 'status' }}">
             <strong>{{ $key === 'success' ? 'Berhasil:' : 'Terjadi masalah:' }}</strong>
             {{ session($key) }}
         </div>

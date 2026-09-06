@@ -17,7 +17,6 @@
             </a>
             <div class="nav-links">
                 <a href="#tentang">Tentang</a>
-                <a class="button button-primary" href="#mulai">Lihat peta</a>
             </div>
         </nav>
     </header>

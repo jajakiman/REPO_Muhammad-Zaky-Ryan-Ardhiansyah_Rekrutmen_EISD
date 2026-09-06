@@ -15,4 +15,29 @@ class FoundationTest extends TestCase
             ->assertSee('Langsung ke konten utama')
             ->assertSee('href="#main-content"', false);
     }
+
+    public function test_home_page_does_not_advertise_an_unavailable_map(): void
+    {
+        $this->get('/')
+            ->assertOk()
+            ->assertDontSee('Lihat peta');
+    }
+
+    public function test_flash_messages_use_appropriate_live_region_roles(): void
+    {
+        $this->withSession([
+            'success' => 'Data tersimpan.',
+            'error' => 'Data gagal disimpan.',
+        ])->get('/')
+            ->assertSee('flash-positive" role="status', false)
+            ->assertSee('flash-critical" role="alert', false);
+    }
+
+    public function test_example_environment_uses_database_free_web_defaults(): void
+    {
+        $environment = file_get_contents(base_path('.env.example'));
+
+        $this->assertStringContainsString('SESSION_DRIVER=file', $environment);
+        $this->assertStringContainsString('CACHE_STORE=file', $environment);
+    }
 }
