@@ -16,7 +16,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('/keluar', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-    Route::view('/pelapor', 'dashboards.reporter')->name('reporter.dashboard');
-    Route::view('/petugas', 'dashboards.officer')->name('officer.dashboard');
-    Route::view('/admin', 'dashboards.admin')->name('admin.dashboard');
+    Route::view('/pelapor', 'dashboards.reporter')->middleware('role:reporter')->name('reporter.dashboard');
+    Route::view('/petugas', 'dashboards.officer')->middleware('role:officer')->name('officer.dashboard');
+    Route::view('/admin', 'dashboards.admin')->middleware('role:admin')->name('admin.dashboard');
 });
