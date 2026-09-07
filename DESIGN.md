@@ -6,6 +6,12 @@ AksesLoka is a public campus accessibility service. It should feel dependable,
 clear, and practical for visitors, reporters, officers, and central admins.
 The interface prioritizes wayfinding and task completion over decoration.
 
+Brand assets are generated as multi-resolution PNG and WebP formats:
+- Favicons: `favicon-32x32.png`, `favicon-16x16.png`, and `apple-touch-icon.png` (180x180).
+- Logo mark: `public/images/logo-mark.webp` and `logo-mark.png` (512x512, transparent RGBA).
+- Horizontal lockup: `public/images/logo-horizontal.webp` and `logo-horizontal.png` (720x180).
+- Embossed badge: `public/images/logo-badge.webp` and `logo-badge.png` (512x512).
+
 ## Design Read
 
 Public-service campus product for accessibility-sensitive users, using an

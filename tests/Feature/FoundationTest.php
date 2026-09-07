@@ -75,4 +75,18 @@ class FoundationTest extends TestCase
 
         $this->assertStringStartsWith('https://', asset('css/app.css'));
     }
+
+    public function test_brand_raster_logo_and_favicons_are_served(): void
+    {
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('favicon-32x32.png')
+            ->assertSee('logo-mark.webp')
+            ->assertSee('logo-mark.png');
+
+        $this->assertFileExists(public_path('images/logo-mark.png'));
+        $this->assertFileExists(public_path('images/logo-mark.webp'));
+        $this->assertFileExists(public_path('images/logo-horizontal.webp'));
+        $this->assertFileExists(public_path('images/favicon-32x32.png'));
+    }
 }

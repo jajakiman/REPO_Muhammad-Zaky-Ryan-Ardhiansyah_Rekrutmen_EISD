@@ -6,23 +6,34 @@
 
 @php
     $dimensions = match($size) {
-        'sm' => ['mark' => 'w-7 h-7', 'title' => 'text-base', 'sub' => 'text-[10px]'],
-        'lg' => ['mark' => 'w-12 h-12', 'title' => 'text-2xl', 'sub' => 'text-xs'],
-        default => ['mark' => 'w-9 h-9', 'title' => 'text-lg', 'sub' => 'text-[11px]'],
+        'sm' => ['mark' => 'w-7 h-7', 'horiz' => 'h-7 w-auto', 'badge' => 'w-16 h-16', 'title' => 'text-base', 'sub' => 'text-[10px]'],
+        'lg' => ['mark' => 'w-12 h-12', 'horiz' => 'h-12 w-auto', 'badge' => 'w-24 h-24', 'title' => 'text-2xl', 'sub' => 'text-xs'],
+        default => ['mark' => 'w-9 h-9', 'horiz' => 'h-9 w-auto', 'badge' => 'w-20 h-20', 'title' => 'text-lg', 'sub' => 'text-[11px]'],
     };
 @endphp
 
-<div {{ $attributes->merge(['class' => 'inline-flex items-center gap-2.5']) }}>
-    <svg class="{{ $dimensions['mark'] }} shrink-0 shadow-sm rounded-xl" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" aria-hidden="true">
-        <rect width="48" height="48" rx="12" fill="#1E3A8A" />
-        <path d="M24 7C17.37 7 12 12.37 12 19c0 8.8 10.2 19.4 12 20.9 1.8-1.5 12-12.1 12-20.9 0-6.63-5.37-12-12-12z" fill="#172554" opacity="0.65" />
-        <circle cx="24" cy="14.5" r="3.2" fill="#EA580C" />
-        <path d="M24 19.5v6.5l4.5 4" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-        <path d="M19 24a6 6 0 1 0 6 6" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" />
-        <circle cx="32" cy="18" r="1.75" fill="#EA580C" />
-    </svg>
+@if($variant === 'badge')
+    <picture class="inline-block shrink-0">
+        <source srcset="{{ asset('images/logo-badge.webp') }}" type="image/webp">
+        <img src="{{ asset('images/logo-badge.png') }}" alt="AksesLoka Badge" class="{{ $dimensions['badge'] }} object-contain drop-shadow-md" width="512" height="512" loading="eager">
+    </picture>
+@elseif($variant === 'horizontal')
+    <picture class="inline-block shrink-0">
+        <source srcset="{{ asset('images/logo-horizontal.webp') }}" type="image/webp">
+        <img src="{{ asset('images/logo-horizontal.png') }}" alt="AksesLoka - Aksesibilitas Kampus" class="{{ $dimensions['horiz'] }} object-contain" width="720" height="180" loading="eager">
+    </picture>
+@elseif($variant === 'mark')
+    <picture class="inline-block shrink-0">
+        <source srcset="{{ asset('images/logo-mark.webp') }}" type="image/webp">
+        <img src="{{ asset('images/logo-mark.png') }}" alt="AksesLoka Logo" class="{{ $dimensions['mark'] }} object-contain rounded-xl shadow-sm" width="512" height="512" loading="eager">
+    </picture>
+@else
+    <div {{ $attributes->merge(['class' => 'inline-flex items-center gap-2.5']) }}>
+        <picture class="inline-block shrink-0">
+            <source srcset="{{ asset('images/logo-mark.webp') }}" type="image/webp">
+            <img src="{{ asset('images/logo-mark.png') }}" alt="AksesLoka Logo" class="{{ $dimensions['mark'] }} object-contain rounded-xl shadow-sm" width="512" height="512" loading="eager">
+        </picture>
 
-    @if($variant === 'full')
         <div class="flex flex-col leading-tight">
             <span class="font-extrabold tracking-tight {{ $dimensions['title'] }} {{ $textColor === 'white' ? 'text-white' : 'text-slate-900' }}">
                 Akses<span class="text-orange-500">Loka</span>
@@ -31,5 +42,5 @@
                 Aksesibilitas Kampus
             </span>
         </div>
-    @endif
-</div>
+    </div>
+@endif
