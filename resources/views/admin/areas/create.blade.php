@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 @section('title', 'Tambah Area Kampus | AksesLoka')
 @section('content')
 <section class="form-section"><div class="container form-layout">

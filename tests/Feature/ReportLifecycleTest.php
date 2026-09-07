@@ -70,7 +70,7 @@ class ReportLifecycleTest extends TestCase
             ->assertSee('Laporkan Masalah')
             ->assertSee(route('login'));
 
-        // 3. Visitor registers as Reporter
+        // 3. Visitor registers as Reporter (auto-logged in directly into the system)
         $registerResponse = $this->post(route('register'), [
             'name' => 'Ahmad Pelapor',
             'email' => 'ahmad@student.telkomuniversity.ac.id',
@@ -79,17 +79,11 @@ class ReportLifecycleTest extends TestCase
             'affiliation_type' => 'student',
             'campus_id' => $campus->id,
         ]);
-        $registerResponse->assertRedirect(route('login'));
-
-        // Reporter logs in
-        $loginResponse = $this->post(route('login'), [
-            'email' => 'ahmad@student.telkomuniversity.ac.id',
-            'password' => 'Rahasia123!',
-        ]);
-        $loginResponse->assertRedirect(route('reporter.dashboard'));
+        $registerResponse->assertRedirect(route('reporter.dashboard'));
 
         $reporter = User::where('email', 'ahmad@student.telkomuniversity.ac.id')->firstOrFail();
         $this->assertSame('reporter', $reporter->role);
+        $this->assertAuthenticatedAs($reporter);
 
         // 4. Reporter submits a problem report with a photo
         $photo = UploadedFile::fake()->create('foto_kendala.jpg', 500, 'image/jpeg');

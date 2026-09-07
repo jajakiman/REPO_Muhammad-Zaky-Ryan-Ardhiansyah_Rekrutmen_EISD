@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 @section('title', 'Area '.$campus->name.' | AksesLoka')
 @section('content')
 <section class="admin-section"><div class="container">

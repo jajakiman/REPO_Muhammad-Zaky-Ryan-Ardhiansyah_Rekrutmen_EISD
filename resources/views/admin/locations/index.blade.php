@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 @section('title', 'Lokasi '.$area->name.' | AksesLoka')
 @section('content')
 <section class="admin-section"><div class="container"><div class="page-heading"><div><p class="eyebrow">{{ $campus->name }} / {{ $area->name }}</p><h1>Lokasi kampus</h1></div><div class="actions"><a class="button button-secondary" href="{{ route('admin.campuses.areas.index', $campus) }}">Kembali ke area</a>@if($campus->is_active && $area->is_active)<a class="button button-primary" href="{{ route('admin.campuses.areas.locations.create', [$campus, $area]) }}">Tambah lokasi</a>@endif</div></div>

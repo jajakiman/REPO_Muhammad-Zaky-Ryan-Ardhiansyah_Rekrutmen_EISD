@@ -147,12 +147,12 @@ class AuthenticationTest extends TestCase
             'role' => 'admin',
         ]);
 
-        $response->assertRedirect(route('login'))->assertSessionHas('success');
         $user = User::where('email', 'rina@example.test')->firstOrFail();
+        $response->assertRedirect(route('reporter.dashboard'))->assertSessionHas('success');
         $this->assertSame('reporter', $user->role);
         $this->assertTrue($user->is_active);
         $this->assertTrue(Hash::check('rahasia123', $user->password));
-        $this->assertGuest();
+        $this->assertAuthenticatedAs($user);
     }
 
     public function test_campus_is_required_for_campus_affiliations(): void
@@ -165,8 +165,8 @@ class AuthenticationTest extends TestCase
 
     public function test_visitor_may_register_without_a_campus(): void
     {
-        $this->post(route('register'), $this->registrationData('visitor'))
-            ->assertRedirect(route('login'));
+        $response = $this->post(route('register'), $this->registrationData('visitor'));
+        $response->assertRedirect(route('reporter.dashboard'));
 
         $this->assertDatabaseHas('users', ['email' => 'visitor@example.test', 'campus_id' => null]);
     }

@@ -36,4 +36,19 @@ class RoleAuthorizationTest extends TestCase
             }
         }
     }
+
+    public function test_actor_dashboards_use_dedicated_sidebar_layout_without_public_landing_footer(): void
+    {
+        foreach (['reporter', 'officer', 'admin'] as $role) {
+            $user = User::factory()->create(['role' => $role]);
+
+            $response = $this->actingAs($user)->get(route($role.'.dashboard'));
+
+            $response->assertOk()
+                ->assertSee('dashboard-sidebar', false)
+                ->assertSee('sidebar-navigation', false)
+                ->assertDontSee('site-footer', false)
+                ->assertDontSee('FAQ</a>', false);
+        }
+    }
 }

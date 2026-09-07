@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 @section('title', 'Fasilitas '.$location->name.' | AksesLoka')
 @section('content')<section class="admin-section"><div class="container"><div class="page-heading"><div><p class="eyebrow">{{ $location->campusArea->campus->name }} / {{ $location->campusArea->name }}</p><h1>Fasilitas {{ $location->name }}</h1></div><div class="actions"><a class="button button-secondary" href="{{ route('admin.campuses.areas.locations.index',[$location->campusArea->campus,$location->campusArea]) }}">Kembali ke lokasi</a>@if($canAssign)<a class="button button-primary" href="{{ route('admin.locations.features.create',$location) }}">Pasang fasilitas</a>@endif</div></div>
 @unless($canAssign)<p class="flash flash-neutral">{{ $assignmentUnavailableMessage }}</p>@endunless
