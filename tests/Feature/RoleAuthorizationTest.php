@@ -51,4 +51,18 @@ class RoleAuthorizationTest extends TestCase
                 ->assertDontSee('FAQ</a>', false);
         }
     }
+
+    public function test_mobile_dashboard_sidebar_has_accessible_controls_and_backdrop(): void
+    {
+        $user = User::factory()->create(['role' => 'reporter']);
+
+        $response = $this->actingAs($user)->get(route('reporter.dashboard'));
+
+        $response->assertOk()
+            ->assertSee('id="sidebar-toggle-btn"', false)
+            ->assertSee('aria-expanded="false"', false)
+            ->assertSee('aria-controls="dashboard-sidebar"', false)
+            ->assertSee('id="sidebar-backdrop"', false)
+            ->assertSee('id="sidebar-close-btn"', false);
+    }
 }

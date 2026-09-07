@@ -36,18 +36,24 @@
         <a href="{{ route('home') }}" class="inline-flex items-center">
             <x-logo variant="full" size="sm" textColor="white" />
         </a>
-        <button type="button" onclick="document.getElementById('dashboard-sidebar').classList.toggle('hidden')" class="p-2 rounded-lg bg-white/10 text-white hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-orange-500" aria-label="Buka menu navigasi">
+        <button type="button" id="sidebar-toggle-btn" aria-expanded="false" aria-controls="dashboard-sidebar" class="p-2 rounded-lg bg-white/10 text-white hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-orange-500" aria-label="Buka menu navigasi">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
         </button>
     </header>
 
+    <!-- Mobile Drawer Backdrop -->
+    <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-950/70 z-40 hidden md:hidden transition-opacity backdrop-blur-xs" aria-hidden="true"></div>
+
     <!-- Sidebar Navigation -->
-    <aside id="dashboard-sidebar" class="dashboard-sidebar hidden md:flex md:flex-col w-full md:w-64 lg:w-72 bg-navy-950 text-white shrink-0 min-h-screen border-r border-white/10 shadow-xl z-30 sticky top-0 self-start">
-        <!-- Sidebar Brand -->
-        <div class="p-6 border-b border-white/10">
+    <aside id="dashboard-sidebar" class="dashboard-sidebar fixed inset-y-0 left-0 z-50 w-72 bg-navy-950 text-white flex flex-col -translate-x-full md:translate-x-0 md:static md:w-64 lg:w-72 transition-transform duration-200 ease-in-out shadow-2xl md:shadow-xl md:sticky md:top-0 md:min-h-screen shrink-0 border-r border-white/10">
+        <!-- Sidebar Brand & Mobile Close Button -->
+        <div class="p-6 border-b border-white/10 flex items-center justify-between">
             <a href="{{ route('home') }}" class="inline-flex items-center no-underline">
                 <x-logo variant="full" size="sm" textColor="white" />
             </a>
+            <button type="button" id="sidebar-close-btn" class="md:hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-orange-500" aria-label="Tutup menu navigasi">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
         </div>
 
         <!-- User Capsule -->
@@ -186,5 +192,53 @@
             @yield('content')
         </main>
     </div>
+
+    <!-- Accessible Mobile Drawer Controller -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var toggleBtn = document.getElementById('sidebar-toggle-btn');
+            var closeBtn = document.getElementById('sidebar-close-btn');
+            var sidebar = document.getElementById('dashboard-sidebar');
+            var backdrop = document.getElementById('sidebar-backdrop');
+
+            if (!toggleBtn || !sidebar || !backdrop) return;
+
+            function setDrawer(open) {
+                toggleBtn.setAttribute('aria-expanded', String(open));
+                if (open) {
+                    sidebar.classList.remove('-translate-x-full');
+                    sidebar.classList.add('translate-x-0');
+                    backdrop.classList.remove('hidden');
+                    if (closeBtn) closeBtn.focus();
+                } else {
+                    sidebar.classList.add('-translate-x-full');
+                    sidebar.classList.remove('translate-x-0');
+                    backdrop.classList.add('hidden');
+                    toggleBtn.focus();
+                }
+            }
+
+            toggleBtn.addEventListener('click', function () {
+                var isOpen = toggleBtn.getAttribute('aria-expanded') === 'true';
+                setDrawer(!isOpen);
+            });
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function () {
+                    setDrawer(false);
+                });
+            }
+
+            backdrop.addEventListener('click', function () {
+                setDrawer(false);
+            });
+
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape' && toggleBtn.getAttribute('aria-expanded') === 'true') {
+                    setDrawer(false);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
