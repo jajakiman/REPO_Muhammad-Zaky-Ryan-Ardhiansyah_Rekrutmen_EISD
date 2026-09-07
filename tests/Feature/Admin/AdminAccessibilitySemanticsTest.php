@@ -3,6 +3,7 @@
 namespace Tests\Feature\Admin;
 
 use App\Models\AccessibilityFeature;
+use App\Models\AccessibilityReport;
 use App\Models\Campus;
 use App\Models\CampusArea;
 use App\Models\CampusLocation;
@@ -27,15 +28,20 @@ class AdminAccessibilitySemanticsTest extends TestCase
         $area = CampusArea::factory()->create(['campus_id' => $campus->id]);
         $location = CampusLocation::factory()->create(['campus_area_id' => $area->id]);
         $feature = AccessibilityFeature::factory()->create();
-        IssueCategory::factory()->create();
-        LocationAccessibilityFeature::factory()->create(['campus_location_id' => $location->id, 'accessibility_feature_id' => $feature->id]);
-        User::factory()->create(['role' => 'officer', 'campus_id' => $campus->id, 'campus_area_id' => $area->id]);
+        $category = IssueCategory::factory()->create();
+        $laf = LocationAccessibilityFeature::factory()->create(['campus_location_id' => $location->id, 'accessibility_feature_id' => $feature->id]);
+        $officer = User::factory()->create(['role' => 'officer', 'campus_id' => $campus->id, 'campus_area_id' => $area->id]);
+        AccessibilityReport::factory()->create([
+            'location_accessibility_feature_id' => $laf->id,
+            'issue_category_id' => $category->id,
+            'reporter_id' => $admin->id,
+        ]);
 
         $routes = [
             route('admin.campuses.index'), route('admin.campuses.areas.index', $campus),
             route('admin.campuses.areas.locations.index', [$campus, $area]), route('admin.features.index'),
             route('admin.issue-categories.index'), route('admin.locations.features.index', $location),
-            route('admin.officers.index'),
+            route('admin.officers.index'), route('admin.reports.index'),
         ];
 
         foreach ($routes as $route) {

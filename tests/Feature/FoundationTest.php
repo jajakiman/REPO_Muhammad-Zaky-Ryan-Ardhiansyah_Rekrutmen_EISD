@@ -2,10 +2,12 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class FoundationTest extends TestCase
 {
+    use RefreshDatabase;
     public function test_home_page_exposes_the_brand_and_skip_link(): void
     {
         $response = $this->get('/');
