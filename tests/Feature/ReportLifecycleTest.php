@@ -79,7 +79,7 @@ class ReportLifecycleTest extends TestCase
             'affiliation_type' => 'student',
             'campus_id' => $campus->id,
         ]);
-        $registerResponse->assertRedirect(route('reporter.dashboard'));
+        $registerResponse->assertOk()->assertSee('data-auth-success-dialog', false);
 
         $reporter = User::where('email', 'ahmad@student.telkomuniversity.ac.id')->firstOrFail();
         $this->assertSame('reporter', $reporter->role);

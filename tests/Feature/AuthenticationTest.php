@@ -148,10 +148,11 @@ class AuthenticationTest extends TestCase
         ]);
 
         $user = User::where('email', 'rina@example.test')->firstOrFail();
-        $response->assertRedirect(route('reporter.dashboard'))
-            ->assertSessionHas('success')
-            ->assertSessionHas('success_modal', true)
-            ->assertSessionHas('success_modal_auto_close', true);
+        $response->assertOk()
+            ->assertSee('data-auth-success-dialog', false)
+            ->assertSee('data-redirect-url="'.route('reporter.dashboard').'"', false)
+            ->assertSee('data-auto-close="3000"', false)
+            ->assertDontSee('>OK</button>', false);
         $this->assertSame('reporter', $user->role);
         $this->assertTrue($user->is_active);
         $this->assertTrue(Hash::check('rahasia123', $user->password));
@@ -169,7 +170,7 @@ class AuthenticationTest extends TestCase
     public function test_visitor_may_register_without_a_campus(): void
     {
         $response = $this->post(route('register'), $this->registrationData('visitor'));
-        $response->assertRedirect(route('reporter.dashboard'));
+        $response->assertOk()->assertSee('data-auth-success-dialog', false);
 
         $this->assertDatabaseHas('users', ['email' => 'visitor@example.test', 'campus_id' => null]);
     }
@@ -216,9 +217,10 @@ class AuthenticationTest extends TestCase
             $oldSessionId = session()->getId();
 
             $this->post(route('login'), ['email' => $user->email, 'password' => 'correct-password'])
-                ->assertRedirect(route($destination))
-                ->assertSessionHas('success_modal', true)
-                ->assertSessionHas('success_modal_auto_close', true);
+                ->assertOk()
+                ->assertSee('data-auth-success-dialog', false)
+                ->assertSee('data-redirect-url="'.route($destination).'"', false)
+                ->assertDontSee('>OK</button>', false);
 
             $this->assertAuthenticatedAs($user);
             $this->assertNotSame($oldSessionId, session()->getId());
@@ -236,7 +238,8 @@ class AuthenticationTest extends TestCase
 
         $this->withSession(['url.intended' => route('admin.dashboard')])
             ->post(route('login'), ['email' => $reporter->email, 'password' => 'correct-password'])
-            ->assertRedirect(route('reporter.dashboard'));
+            ->assertOk()
+            ->assertSee('data-redirect-url="'.route('reporter.dashboard').'"', false);
     }
 
     public function test_login_is_locked_after_five_failed_attempts_for_the_same_email_and_ip(): void
@@ -268,7 +271,7 @@ class AuthenticationTest extends TestCase
         }
 
         $this->post(route('login'), ['email' => $user->email, 'password' => 'correct-password'])
-            ->assertRedirect(route('reporter.dashboard'));
+            ->assertOk();
         auth()->logout();
 
         for ($attempt = 0; $attempt < 4; $attempt++) {
@@ -276,7 +279,7 @@ class AuthenticationTest extends TestCase
         }
 
         $this->post(route('login'), ['email' => $user->email, 'password' => 'correct-password'])
-            ->assertRedirect(route('reporter.dashboard'));
+            ->assertOk();
         $this->assertAuthenticatedAs($user);
     }
 
@@ -294,6 +297,24 @@ class AuthenticationTest extends TestCase
         $this->assertGuest();
         $this->assertFalse(session()->has('private_value'));
         $this->assertNotSame($oldToken, session()->token());
+    }
+
+    public function test_each_authenticated_role_sees_an_accessible_logout_confirmation(): void
+    {
+        foreach (['reporter', 'officer', 'admin'] as $role) {
+            $user = User::factory()->create(['role' => $role]);
+
+            $this->actingAs($user)->get(route($role.'.dashboard'))
+                ->assertOk()
+                ->assertSee('data-logout-form', false)
+                ->assertSee('data-logout-dialog', false)
+                ->assertSee('Konfirmasi Keluar')
+                ->assertSee('Apakah Anda yakin ingin keluar dari AksesLoka?')
+                ->assertSee('Batal')
+                ->assertSee('Ya, Keluar');
+
+            auth()->logout();
+        }
     }
 
     public function test_success_modal_is_accessible_and_only_auto_closes_when_requested(): void

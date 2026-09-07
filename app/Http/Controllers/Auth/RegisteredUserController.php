@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\Campus;
 use App\Models\User;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -17,7 +16,7 @@ class RegisteredUserController extends Controller
         return view('auth.register', ['campuses' => Campus::active()->orderBy('name')->get()]);
     }
 
-    public function store(RegisterRequest $request): RedirectResponse
+    public function store(RegisterRequest $request): View
     {
         $user = User::create($request->safe()->merge([
             'role' => 'reporter',
@@ -28,9 +27,9 @@ class RegisteredUserController extends Controller
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->route('reporter.dashboard')
-            ->with('success', 'Registrasi berhasil. Selamat datang di AksesLoka.')
-            ->with('success_modal', true)
-            ->with('success_modal_auto_close', true);
+        return view('auth.success', [
+            'message' => 'Registrasi berhasil. Selamat datang di AksesLoka.',
+            'redirectUrl' => route('reporter.dashboard'),
+        ]);
     }
 }

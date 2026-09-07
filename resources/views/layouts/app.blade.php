@@ -59,7 +59,7 @@
                         <a href="{{ route('officer.queue.index') }}" class="inline-flex items-center text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">Antrean area</a>
                         <a href="{{ route('officer.history.index') }}" class="inline-flex items-center text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">Riwayat area</a>
                     @endif
-                    <form method="post" action="{{ route('logout') }}" class="inline-flex">
+                    <form method="post" action="{{ route('logout') }}" class="inline-flex" data-logout-form>
                         @csrf
                         <button class="nav-button inline-flex items-center text-slate-300 hover:text-red-300 px-2.5 py-1.5 text-sm font-semibold transition-colors" type="submit">Keluar</button>
                     </form>
@@ -96,6 +96,9 @@
             </div>
         </div>
     </footer>
+    @auth
+        <x-logout-confirmation />
+    @endauth
     <script src="https://cdn.jsdelivr.net/npm/motion@11.11.17/dist/motion.js" defer></script>
     <script src="{{ asset('js/motion-interactive.js') }}" defer></script>
 </body>

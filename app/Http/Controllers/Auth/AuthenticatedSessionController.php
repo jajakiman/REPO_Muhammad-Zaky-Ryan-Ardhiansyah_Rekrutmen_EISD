@@ -19,7 +19,7 @@ class AuthenticatedSessionController extends Controller
         return view('auth.login');
     }
 
-    public function store(LoginRequest $request): RedirectResponse
+    public function store(LoginRequest $request): View
     {
         $throttleKey = Str::transliterate(Str::lower($request->validated('email'))).'|'.$request->ip();
 
@@ -40,10 +40,10 @@ class AuthenticatedSessionController extends Controller
         RateLimiter::clear($throttleKey);
         $request->session()->regenerate();
 
-        return redirect()->route(Auth::user()->role.'.dashboard')
-            ->with('success', 'Berhasil masuk. Selamat datang di AksesLoka.')
-            ->with('success_modal', true)
-            ->with('success_modal_auto_close', true);
+        return view('auth.success', [
+            'message' => 'Berhasil masuk. Selamat datang di AksesLoka.',
+            'redirectUrl' => route(Auth::user()->role.'.dashboard'),
+        ]);
     }
 
     public function destroy(Request $request): RedirectResponse
