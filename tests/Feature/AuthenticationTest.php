@@ -33,11 +33,24 @@ class AuthenticationTest extends TestCase
             $response->assertOk()
                 ->assertSee('auth-shell', false)
                 ->assertSee('auth-panel', false)
+                ->assertSee('bg-slate-950', false)
                 ->assertSee('logo-mark.webp', false)
                 ->assertDontSee('🚀')
                 ->assertDontSee('✨')
                 ->assertDontSee('✅');
         }
+    }
+
+    public function test_registration_uses_interactive_native_select_components(): void
+    {
+        Campus::factory()->create(['name' => 'Kampus Aktif']);
+
+        $this->get(route('register'))
+            ->assertOk()
+            ->assertSee('select-shell', false)
+            ->assertSee('select-chevron', false)
+            ->assertSee('name="affiliation_type"', false)
+            ->assertSee('name="campus_id"', false);
     }
 
     public function test_public_registration_creates_an_active_reporter_with_hashed_password(): void

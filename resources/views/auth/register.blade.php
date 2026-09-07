@@ -3,8 +3,12 @@
 @section('title', 'Daftar sebagai Pelapor | AksesLoka')
 
 @section('content')
-<section class="auth-shell bg-gradient-to-b from-slate-50 to-blue-50/60 py-12 sm:py-16">
+<section class="auth-shell relative isolate min-h-[calc(100dvh-4.75rem)] overflow-hidden bg-slate-950 py-12 sm:py-16">
+    <div class="absolute inset-0 -z-10 bg-gradient-to-br from-slate-950 via-navy-950 to-slate-900" aria-hidden="true"></div>
+    <div class="absolute -left-24 top-20 -z-10 h-72 w-72 rounded-full bg-blue-800/20 blur-3xl" aria-hidden="true"></div>
+    <div class="absolute -right-24 bottom-10 -z-10 h-72 w-72 rounded-full bg-orange-600/10 blur-3xl" aria-hidden="true"></div>
     <div class="container mx-auto px-4 max-w-2xl">
+        <a href="{{ route('map.index') }}" class="mb-5 inline-flex min-h-11 items-center text-sm font-semibold text-slate-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg">Kembali ke peta kampus</a>
         <div class="auth-panel bg-white border border-slate-200 rounded-2xl shadow-xl shadow-slate-200/60 overflow-hidden">
             <div class="px-6 pt-8 text-center sm:px-10">
                 <x-logo variant="mark" size="lg" />
@@ -42,23 +46,27 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-5">
             <div class="field">
                 <label for="affiliation_type">Afiliasi</label>
-                <select id="affiliation_type" name="affiliation_type" required aria-describedby="affiliation_type-error">
+                <x-select-shell>
+                <select id="affiliation_type" name="affiliation_type" required aria-describedby="affiliation_type-error" class="hover:border-navy-900 focus:border-navy-900 focus:ring-4 focus:ring-orange-500/20 focus:outline-none">
                     <option value="">Pilih afiliasi</option>
                     <option value="student" @selected(old('affiliation_type') === 'student')>Mahasiswa</option>
                     <option value="lecturer" @selected(old('affiliation_type') === 'lecturer')>Dosen</option>
                     <option value="staff" @selected(old('affiliation_type') === 'staff')>Staf</option>
                     <option value="visitor" @selected(old('affiliation_type') === 'visitor')>Pengunjung</option>
                 </select>
+                </x-select-shell>
                 @error('affiliation_type')<p class="field-error" id="affiliation_type-error">{{ $message }}</p>@enderror
             </div>
             <div class="field">
                 <label for="campus_id">Kampus</label>
-                <select id="campus_id" name="campus_id" aria-describedby="campus-help campus_id-error">
+                <x-select-shell>
+                <select id="campus_id" name="campus_id" aria-describedby="campus-help campus_id-error" class="hover:border-navy-900 focus:border-navy-900 focus:ring-4 focus:ring-orange-500/20 focus:outline-none">
                     <option value="">Tidak memilih kampus</option>
                     @foreach ($campuses as $campus)
                         <option value="{{ $campus->id }}" @selected((string) old('campus_id') === (string) $campus->id)>{{ $campus->name }}</option>
                     @endforeach
                 </select>
+                </x-select-shell>
                 <p class="field-help" id="campus-help">Wajib untuk mahasiswa, dosen, dan staf. Opsional untuk pengunjung.</p>
                 @error('campus_id')<p class="field-error" id="campus_id-error">{{ $message }}</p>@enderror
             </div>

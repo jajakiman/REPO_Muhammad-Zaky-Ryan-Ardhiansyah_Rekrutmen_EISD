@@ -77,4 +77,16 @@ class LandingPageTest extends TestCase
             ->assertSee(route('map.index'))
             ->assertDontSee('Play trailer');
     }
+
+    public function test_landing_page_answers_product_specific_questions_in_an_open_grid(): void
+    {
+        $this->get(route('home'))
+            ->assertOk()
+            ->assertSee('Pertanyaan yang Sering Diajukan')
+            ->assertSee('faq-grid', false)
+            ->assertSee('Apakah pengunjung tanpa akun bisa melihat peta dan fasilitas?')
+            ->assertSee('Apakah sistem ini melacak koordinat GPS pengguna?')
+            ->assertSee('Apakah AksesLoka merupakan audit aksesibilitas resmi?')
+            ->assertDontSee('<details', false);
+    }
 }

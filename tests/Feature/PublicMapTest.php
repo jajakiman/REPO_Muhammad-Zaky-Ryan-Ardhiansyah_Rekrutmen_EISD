@@ -44,6 +44,17 @@ class PublicMapTest extends TestCase
             ->assertSee('accessible');
     }
 
+    public function test_public_map_filters_use_interactive_native_select_components(): void
+    {
+        $this->get(route('map.index'))
+            ->assertOk()
+            ->assertSee('select-shell', false)
+            ->assertSee('select-chevron', false)
+            ->assertSee('name="campus_id"', false)
+            ->assertSee('name="location_type"', false)
+            ->assertSee('name="accessibility_status"', false);
+    }
+
     public function test_map_filters_by_name_campus_type_and_accessibility_status(): void
     {
         $campus1 = Campus::factory()->create(['name' => 'Telkom University']);

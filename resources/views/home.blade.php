@@ -130,6 +130,42 @@
         </div>
     </section>
 
+    <section class="faq-section bg-white border-t border-slate-200 py-20 lg:py-24" aria-labelledby="faq-title">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="mx-auto max-w-2xl text-center">
+                <h2 id="faq-title" class="font-display text-4xl sm:text-5xl font-bold tracking-tight text-slate-900">Pertanyaan yang Sering Diajukan</h2>
+                <p class="mt-3 text-base leading-7 text-slate-600">Jawaban ringkas tentang akses peta, pelaporan, GPS, dan tindak lanjut fasilitas kampus.</p>
+            </div>
+
+            <div class="faq-grid mt-14 grid grid-cols-1 gap-x-12 gap-y-10 md:grid-cols-2 lg:gap-x-16 lg:gap-y-12">
+                <article>
+                    <h3 class="font-sans text-lg font-bold leading-7 text-slate-900">Apakah pengunjung tanpa akun bisa melihat peta dan fasilitas?</h3>
+                    <p class="mt-3 text-sm sm:text-base leading-7 text-slate-600">Ya. Peta kampus, ketersediaan fasilitas, dan kondisi fasilitas dapat dilihat tanpa membuat akun atau masuk.</p>
+                </article>
+                <article>
+                    <h3 class="font-sans text-lg font-bold leading-7 text-slate-900">Mengapa petugas hanya menangani laporan di area tertentu?</h3>
+                    <p class="mt-3 text-sm sm:text-base leading-7 text-slate-600">Setiap petugas ditugaskan pada satu area kampus agar verifikasi dan penanganan lapangan memiliki tanggung jawab yang jelas.</p>
+                </article>
+                <article>
+                    <h3 class="font-sans text-lg font-bold leading-7 text-slate-900">Siapa yang dapat membuat laporan kendala fasilitas?</h3>
+                    <p class="mt-3 text-sm sm:text-base leading-7 text-slate-600">Mahasiswa, dosen, staf, dan pengunjung yang sudah terdaftar sebagai Pelapor dapat mengirim laporan dengan satu foto bukti opsional.</p>
+                </article>
+                <article>
+                    <h3 class="font-sans text-lg font-bold leading-7 text-slate-900">Apakah sistem ini melacak koordinat GPS pengguna?</h3>
+                    <p class="mt-3 text-sm sm:text-base leading-7 text-slate-600">Tidak. Koordinat hanya dipakai sementara di browser setelah tombol lokasi terdekat ditekan. Data GPS tidak dikirim atau disimpan ke database.</p>
+                </article>
+                <article>
+                    <h3 class="font-sans text-lg font-bold leading-7 text-slate-900">Bagaimana laporan ditangani setelah dikirim?</h3>
+                    <p class="mt-3 text-sm sm:text-base leading-7 text-slate-600">Laporan masuk ke antrean area, diverifikasi dan diprioritaskan oleh petugas, lalu diperbarui hingga selesai beserta kondisi fasilitas terbarunya.</p>
+                </article>
+                <article>
+                    <h3 class="font-sans text-lg font-bold leading-7 text-slate-900">Apakah AksesLoka merupakan audit aksesibilitas resmi?</h3>
+                    <p class="mt-3 text-sm sm:text-base leading-7 text-slate-600">Bukan. AksesLoka adalah kanal informasi dan pelaporan operasional. Penilaian kelayakan resmi tetap memerlukan audit aksesibilitas profesional.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <!-- Tentang Layanan -->
     <section class="info-section py-16 bg-slate-50" id="tentang" aria-labelledby="about-title">
         <div class="container mx-auto px-4 max-w-3xl">

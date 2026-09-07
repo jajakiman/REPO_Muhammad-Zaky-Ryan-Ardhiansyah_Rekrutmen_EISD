@@ -31,7 +31,8 @@
 
                 <div class="field">
                     <label for="filter-campus">Kampus</label>
-                    <select id="filter-campus" name="campus_id">
+                    <x-select-shell>
+                    <select id="filter-campus" name="campus_id" class="hover:border-navy-900 focus:border-navy-900 focus:ring-4 focus:ring-orange-500/20 focus:outline-none">
                         <option value="">Semua Kampus</option>
                         @foreach($campuses as $campus)
                             <option value="{{ $campus->id }}" @selected((string) request('campus_id', (auth()->check() && !request()->has('campus_id') ? auth()->user()->campus_id : '')) === (string) $campus->id)>
@@ -39,26 +40,31 @@
                             </option>
                         @endforeach
                     </select>
+                    </x-select-shell>
                 </div>
 
                 <div class="field">
                     <label for="filter-type">Tipe Lokasi</label>
-                    <select id="filter-type" name="location_type">
+                    <x-select-shell>
+                    <select id="filter-type" name="location_type" class="hover:border-navy-900 focus:border-navy-900 focus:ring-4 focus:ring-orange-500/20 focus:outline-none">
                         <option value="">Semua Tipe</option>
                         @foreach($locationTypes as $value => $label)
                             <option value="{{ $value }}" @selected(request('location_type') === $value)>{{ $label }}</option>
                         @endforeach
                     </select>
+                    </x-select-shell>
                 </div>
 
                 <div class="field">
                     <label for="filter-status">Status Aksesibilitas</label>
-                    <select id="filter-status" name="accessibility_status">
+                    <x-select-shell>
+                    <select id="filter-status" name="accessibility_status" class="hover:border-navy-900 focus:border-navy-900 focus:ring-4 focus:ring-orange-500/20 focus:outline-none">
                         <option value="">Semua Status</option>
                         @foreach($accessibilityStatuses as $value => $label)
                             <option value="{{ $value }}" @selected(request('accessibility_status') === $value)>{{ $label }}</option>
                         @endforeach
                     </select>
+                    </x-select-shell>
                 </div>
 
                 <div class="filter-actions">
