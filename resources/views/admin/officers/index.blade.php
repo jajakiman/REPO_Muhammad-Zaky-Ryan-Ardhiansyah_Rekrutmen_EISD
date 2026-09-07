@@ -42,20 +42,11 @@
                                 <td data-label="Kampus">{{ $officer->campus?->name ?? 'Kampus belum ditetapkan' }}</td>
                                 <td data-label="Area tugas">{{ $officer->campusArea?->name ?? 'Area belum ditetapkan' }}</td>
                                 <td data-label="Status">
-                                    <span class="badge {{ $officer->is_active ? 'badge-positive' : 'badge-neutral' }}">
-                                        {{ $officer->is_active ? 'Aktif' : 'Nonaktif' }}
-                                    </span>
+                                    <x-status-switch :action="route('admin.officers.status', $officer)" :checked="$officer->is_active" :label="$officer->name" />
                                 </td>
                                 <td data-label="Aksi">
                                     <div class="table-actions">
-                                        <a href="{{ route('admin.officers.edit', $officer) }}">Ubah</a>
-                                        @if($officer->is_active)
-                                            <form method="post" action="{{ route('admin.officers.deactivate', $officer) }}">
-                                                @csrf
-                                                @method('patch')
-                                                <button class="link-button" type="submit">Nonaktifkan</button>
-                                            </form>
-                                        @endif
+                                        <a class="button button-secondary button-sm" href="{{ route('admin.officers.edit', $officer) }}">Ubah</a>
                                     </div>
                                 </td>
                             </tr>

@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\UpdateOfficerRequest;
 use App\Models\CampusArea;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class OfficerAccountController extends Controller
@@ -90,5 +91,13 @@ class OfficerAccountController extends Controller
 
         return redirect()->route('admin.officers.index')
             ->with('success', 'Akun petugas berhasil dinonaktifkan.');
+    }
+
+    public function status(Request $request, User $officer): RedirectResponse
+    {
+        abort_unless($officer->role === 'officer', 404);
+        $officer->update($request->validate(['is_active' => ['required', 'boolean']]));
+
+        return redirect()->route('admin.officers.index')->with('success', 'Status akun petugas berhasil diperbarui.');
     }
 }

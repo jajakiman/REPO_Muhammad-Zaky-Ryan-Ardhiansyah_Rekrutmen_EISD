@@ -93,7 +93,7 @@ textarea:focus-visible {
 .button-secondary { border-color: var(--navy-900); background: var(--white); color: var(--navy-900); }
 .button-danger { background: var(--red-800); color: var(--white); border-color: transparent; }
 .button-danger:hover { background: #7f1d1d; }
-.button-sm { min-height: 38px; padding: 0.4rem 0.85rem; font-size: 0.8rem; }
+.button-sm { min-height: 44px; padding: 0.4rem 0.85rem; font-size: 0.8rem; }
 .hero {
     padding-block: clamp(3rem, 8vw, 7rem);
     background: linear-gradient(145deg, var(--navy-950) 0 52%, var(--navy-900) 52% 100%);

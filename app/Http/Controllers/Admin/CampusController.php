@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreCampusRequest;
 use App\Http\Requests\Admin\UpdateCampusRequest;
 use App\Models\Campus;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CampusController extends Controller
@@ -47,5 +48,12 @@ class CampusController extends Controller
         $campus->update(['is_active' => false]);
 
         return redirect()->route('admin.campuses.index')->with('success', 'Kampus berhasil dinonaktifkan.');
+    }
+
+    public function status(Request $request, Campus $campus): RedirectResponse
+    {
+        $campus->update($request->validate(['is_active' => ['required', 'boolean']]));
+
+        return redirect()->route('admin.campuses.index')->with('success', 'Status kampus berhasil diperbarui.');
     }
 }

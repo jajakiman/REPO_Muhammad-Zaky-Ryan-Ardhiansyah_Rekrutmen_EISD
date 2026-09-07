@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\UpdateCampusAreaRequest;
 use App\Models\Campus;
 use App\Models\CampusArea;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CampusAreaController extends Controller
@@ -52,6 +53,18 @@ class CampusAreaController extends Controller
         $area->update(['is_active' => false]);
 
         return redirect()->route('admin.campuses.areas.index', $campus)->with('success', 'Area kampus berhasil dinonaktifkan.');
+    }
+
+    public function status(Request $request, Campus $campus, CampusArea $area): RedirectResponse
+    {
+        $this->ensureContext($campus, $area);
+        $data = $request->validate(['is_active' => ['required', 'boolean']]);
+        if ($data['is_active'] && ! $campus->is_active) {
+            return back()->withErrors(['is_active' => 'Aktifkan kampus terlebih dahulu.']);
+        }
+        $area->update($data);
+
+        return redirect()->route('admin.campuses.areas.index', $campus)->with('success', 'Status area berhasil diperbarui.');
     }
 
     private function ensureContext(Campus $campus, CampusArea $area): void

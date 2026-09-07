@@ -9,6 +9,7 @@ use App\Models\Campus;
 use App\Models\CampusArea;
 use App\Models\CampusLocation;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class CampusLocationController extends Controller
@@ -57,6 +58,18 @@ class CampusLocationController extends Controller
         $location->update(['is_active' => false]);
 
         return $this->redirect($campus, $area, 'Lokasi kampus berhasil dinonaktifkan.');
+    }
+
+    public function status(Request $request, Campus $campus, CampusArea $area, CampusLocation $location): RedirectResponse
+    {
+        $this->ensureLocationContext($campus, $area, $location);
+        $data = $request->validate(['is_active' => ['required', 'boolean']]);
+        if ($data['is_active'] && (! $campus->is_active || ! $area->is_active)) {
+            return back()->withErrors(['is_active' => 'Aktifkan kampus dan area terlebih dahulu.']);
+        }
+        $location->update($data);
+
+        return $this->redirect($campus, $area, 'Status lokasi berhasil diperbarui.');
     }
 
     private function ensureAreaContext(Campus $campus, CampusArea $area): void

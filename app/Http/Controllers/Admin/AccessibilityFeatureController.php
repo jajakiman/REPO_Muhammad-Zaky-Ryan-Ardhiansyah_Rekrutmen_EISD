@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreAccessibilityFeatureRequest;
 use App\Http\Requests\Admin\UpdateAccessibilityFeatureRequest;
 use App\Models\AccessibilityFeature;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class AccessibilityFeatureController extends Controller
@@ -46,6 +47,13 @@ class AccessibilityFeatureController extends Controller
         $feature->update(['is_active' => false]);
 
         return $this->redirect('Fasilitas berhasil dinonaktifkan.');
+    }
+
+    public function status(Request $request, AccessibilityFeature $feature): RedirectResponse
+    {
+        $feature->update($request->validate(['is_active' => ['required', 'boolean']]));
+
+        return $this->redirect('Status fasilitas berhasil diperbarui.');
     }
 
     private function redirect(string $message): RedirectResponse

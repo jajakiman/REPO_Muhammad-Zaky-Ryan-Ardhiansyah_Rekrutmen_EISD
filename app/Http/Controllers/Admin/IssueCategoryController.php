@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreIssueCategoryRequest;
 use App\Http\Requests\Admin\UpdateIssueCategoryRequest;
 use App\Models\IssueCategory;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class IssueCategoryController extends Controller
@@ -46,6 +47,13 @@ class IssueCategoryController extends Controller
         $issueCategory->update(['is_active' => false]);
 
         return $this->redirect('Kategori masalah berhasil dinonaktifkan.');
+    }
+
+    public function status(Request $request, IssueCategory $issueCategory): RedirectResponse
+    {
+        $issueCategory->update($request->validate(['is_active' => ['required', 'boolean']]));
+
+        return $this->redirect('Status kategori masalah berhasil diperbarui.');
     }
 
     private function redirect(string $message): RedirectResponse
