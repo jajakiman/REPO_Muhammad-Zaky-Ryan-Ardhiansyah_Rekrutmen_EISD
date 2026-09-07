@@ -9,7 +9,6 @@ use App\Models\CampusArea;
 use App\Models\CampusLocation;
 use App\Models\IssueCategory;
 use App\Models\LocationAccessibilityFeature;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -48,6 +47,14 @@ class LandingPageTest extends TestCase
             ->assertSee('Lokasi Kampus')
             ->assertSee('Fasilitas Terdata')
             ->assertSee('Laporan Diselesaikan');
+    }
+
+    public function test_landing_page_sections_use_consistent_eyebrows_and_branding(): void
+    {
+        $this->get(route('home'))
+            ->assertOk()
+            ->assertSee('Kota &amp; Komunitas Berkelanjutan', false)
+            ->assertDontSee('bg-emerald-50 text-emerald-800 border border-emerald-200', false);
     }
 
     public function test_display_typography_uses_pp_editorial_with_a_resilient_fallback(): void

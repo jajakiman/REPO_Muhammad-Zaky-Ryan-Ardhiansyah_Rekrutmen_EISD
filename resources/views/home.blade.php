@@ -115,15 +115,15 @@
     <!-- Komitmen SDGs 11 -->
     <section class="info-section bg-white border-t border-b border-slate-200 py-16">
         <div class="container mx-auto px-4 max-w-3xl text-center">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold uppercase tracking-wider mb-4">
-                Kota & Komunitas Berkelanjutan
-            </div>
+            <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-2">
+                Kota &amp; Komunitas Berkelanjutan
+            </p>
             <h2 class="font-display text-3xl font-bold text-slate-900 tracking-tight">Mendukung SDGs 11</h2>
             <p class="text-slate-600 text-base sm:text-lg leading-relaxed mt-4">
                 AksesLoka berkontribusi pada pencapaian <strong>SDGs 11</strong>, yaitu mewujudkan lingkungan ruang publik kampus yang inklusif, aman, berketahanan, dan mudah diakses bagi seluruh sivitas akademika, lansia, dan penyandang disabilitas.
             </p>
             <div class="mt-8">
-                <a class="button button-primary inline-flex items-center gap-2 bg-navy-900 hover:bg-navy-950 text-white font-bold px-6 py-3.5 rounded-xl shadow-md transition-all text-base" href="{{ route('map.index') }}">
+                <a class="button button-primary" href="{{ route('map.index') }}">
                     Mulai Jelajahi Peta Kampus
                 </a>
             </div>
