@@ -35,10 +35,65 @@ class AuthenticationTest extends TestCase
                 ->assertSee('auth-panel', false)
                 ->assertSee('bg-slate-950', false)
                 ->assertSee('logo-mark.webp', false)
+                ->assertDontSee('site-header', false)
+                ->assertDontSee('site-footer', false)
                 ->assertDontSee('🚀')
                 ->assertDontSee('✨')
                 ->assertDontSee('✅');
         }
+    }
+
+    public function test_auth_forms_mark_required_fields_and_offer_password_visibility_controls(): void
+    {
+        Campus::factory()->create();
+
+        $this->get(route('login'))
+            ->assertOk()
+            ->assertSee('required-mark', false)
+            ->assertSee('data-password-toggle="password"', false)
+            ->assertSee('aria-label="Tampilkan password"', false);
+
+        $this->get(route('register'))
+            ->assertOk()
+            ->assertSeeInOrder([
+                'Nama lengkap',
+                'required-mark',
+                'Email',
+                'required-mark',
+                'Password',
+                'required-mark',
+            ], false)
+            ->assertSee('data-password-toggle="password"', false)
+            ->assertSee('data-password-toggle="password_confirmation"', false);
+    }
+
+    public function test_standalone_auth_layout_keeps_flash_feedback(): void
+    {
+        $this->withSession(['success' => 'Registrasi berhasil. Silakan masuk ke AksesLoka.'])
+            ->get(route('login'))
+            ->assertOk()
+            ->assertSee('Registrasi berhasil. Silakan masuk ke AksesLoka.')
+            ->assertSee('role="status"', false);
+    }
+
+    public function test_registration_exposes_affiliation_dependent_campus_field_and_error_summary(): void
+    {
+        Campus::factory()->create();
+
+        $this->get(route('register'))
+            ->assertOk()
+            ->assertSee('data-affiliation-campus', false)
+            ->assertSee('data-campus-field', false)
+            ->assertSee('data-required-for="student,lecturer,staff"', false);
+
+        $this->from(route('register'))->post(route('register'), [])
+            ->assertRedirect(route('register'))
+            ->assertSessionHasErrors();
+
+        $this->get(route('register'))
+            ->assertOk()
+            ->assertSee('form-error-summary', false)
+            ->assertSee('Mohon periksa kembali formulir Anda.');
     }
 
     public function test_registration_uses_interactive_native_select_components(): void

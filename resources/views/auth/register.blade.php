@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.auth')
 
 @section('title', 'Daftar sebagai Pelapor | AksesLoka')
 
@@ -17,37 +17,53 @@
                 <p class="mt-2 font-sans text-sm leading-6 text-slate-600">Buat akun untuk melaporkan dan memantau kendala fasilitas kampus.</p>
             </div>
 
-            <form class="px-6 py-8 sm:px-10" method="post" action="{{ route('register') }}" novalidate>
+            <form class="px-6 py-8 sm:px-10" method="post" action="{{ route('register') }}" data-validated-form novalidate>
             @csrf
+            @if ($errors->any())
+                <div class="form-error-summary mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800" role="alert">
+                    <p class="font-bold">Mohon periksa kembali formulir Anda.</p>
+                    <p class="mt-1">Terdapat data yang belum terisi atau tidak sesuai ketentuan.</p>
+                </div>
+            @endif
+            <div data-client-error-summary class="form-error-summary mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800" role="alert" hidden>
+                <p class="font-bold">Mohon periksa kembali formulir Anda.</p>
+                <p class="mt-1">Lengkapi seluruh field wajib sebelum melanjutkan.</p>
+            </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-5">
             <div class="field">
-                <label for="name">Nama lengkap</label>
+                <label for="name">Nama lengkap <span class="required-mark text-red-600" aria-hidden="true">*</span><span class="sr-only"> wajib</span></label>
                 <input id="name" name="name" type="text" value="{{ old('name') }}" autocomplete="name" required aria-describedby="name-error">
                 @error('name')<p class="field-error" id="name-error">{{ $message }}</p>@enderror
             </div>
             <div class="field">
-                <label for="email">Email</label>
+                <label for="email">Email <span class="required-mark text-red-600" aria-hidden="true">*</span><span class="sr-only"> wajib</span></label>
                 <input id="email" name="email" type="email" value="{{ old('email') }}" autocomplete="email" required aria-describedby="email-error">
                 @error('email')<p class="field-error" id="email-error">{{ $message }}</p>@enderror
             </div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-5">
             <div class="field">
-                <label for="password">Password</label>
-                <input id="password" name="password" type="password" autocomplete="new-password" required aria-describedby="password-help password-error">
+                <label for="password">Password <span class="required-mark text-red-600" aria-hidden="true">*</span><span class="sr-only"> wajib</span></label>
+                <div class="relative">
+                    <input class="pr-14" id="password" name="password" type="password" autocomplete="new-password" required aria-describedby="password-help password-error">
+                    <button type="button" data-password-toggle="password" aria-label="Tampilkan password" aria-pressed="false" class="absolute inset-y-0 right-0 min-h-11 px-4 text-sm font-semibold text-navy-900 hover:text-orange-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-600">Lihat</button>
+                </div>
                 <p class="field-help" id="password-help">Minimal 8 karakter.</p>
                 @error('password')<p class="field-error" id="password-error">{{ $message }}</p>@enderror
             </div>
             <div class="field">
-                <label for="password_confirmation">Konfirmasi password</label>
-                <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required>
+                <label for="password_confirmation">Konfirmasi password <span class="required-mark text-red-600" aria-hidden="true">*</span><span class="sr-only"> wajib</span></label>
+                <div class="relative">
+                    <input class="pr-14" id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required>
+                    <button type="button" data-password-toggle="password_confirmation" aria-label="Tampilkan password" aria-pressed="false" class="absolute inset-y-0 right-0 min-h-11 px-4 text-sm font-semibold text-navy-900 hover:text-orange-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-600">Lihat</button>
+                </div>
             </div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-5">
             <div class="field">
-                <label for="affiliation_type">Afiliasi</label>
+                <label for="affiliation_type">Afiliasi <span class="required-mark text-red-600" aria-hidden="true">*</span><span class="sr-only"> wajib</span></label>
                 <x-select-shell>
-                <select id="affiliation_type" name="affiliation_type" required aria-describedby="affiliation_type-error" class="hover:border-navy-900 focus:border-navy-900 focus:ring-4 focus:ring-orange-500/20 focus:outline-none">
+                <select id="affiliation_type" name="affiliation_type" required aria-describedby="affiliation_type-error" class="hover:border-navy-900 focus:border-navy-900 focus:ring-4 focus:ring-orange-500/20 focus:outline-none" data-affiliation-campus>
                     <option value="">Pilih afiliasi</option>
                     <option value="student" @selected(old('affiliation_type') === 'student')>Mahasiswa</option>
                     <option value="lecturer" @selected(old('affiliation_type') === 'lecturer')>Dosen</option>
@@ -57,8 +73,8 @@
                 </x-select-shell>
                 @error('affiliation_type')<p class="field-error" id="affiliation_type-error">{{ $message }}</p>@enderror
             </div>
-            <div class="field">
-                <label for="campus_id">Kampus</label>
+            <div class="field" data-campus-field data-required-for="student,lecturer,staff">
+                <label for="campus_id">Kampus <span class="required-mark text-red-600" aria-hidden="true">*</span><span class="sr-only"> wajib untuk mahasiswa, dosen, dan staf</span></label>
                 <x-select-shell>
                 <select id="campus_id" name="campus_id" aria-describedby="campus-help campus_id-error" class="hover:border-navy-900 focus:border-navy-900 focus:ring-4 focus:ring-orange-500/20 focus:outline-none">
                     <option value="">Tidak memilih kampus</option>
@@ -67,7 +83,7 @@
                     @endforeach
                 </select>
                 </x-select-shell>
-                <p class="field-help" id="campus-help">Wajib untuk mahasiswa, dosen, dan staf. Opsional untuk pengunjung.</p>
+                <p class="field-help" id="campus-help">Wajib untuk mahasiswa, dosen, dan staf. Tidak diperlukan untuk pengunjung.</p>
                 @error('campus_id')<p class="field-error" id="campus_id-error">{{ $message }}</p>@enderror
             </div>
             </div>
