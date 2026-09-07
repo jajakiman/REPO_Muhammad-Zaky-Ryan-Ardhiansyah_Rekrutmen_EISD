@@ -57,6 +57,7 @@ class OfficerAccountController extends Controller
         abort_unless($officer->role === 'officer', 404);
 
         $areas = CampusArea::active()
+            ->where('campus_id', $officer->campus_id)
             ->whereHas('campus', fn ($q) => $q->active())
             ->with('campus')
             ->orderBy('name')
@@ -73,7 +74,6 @@ class OfficerAccountController extends Controller
 
         $officer->update([
             'name' => $request->validated('name'),
-            'campus_id' => $area->campus_id,
             'campus_area_id' => $area->id,
             'is_active' => (bool) $request->validated('is_active'),
         ]);

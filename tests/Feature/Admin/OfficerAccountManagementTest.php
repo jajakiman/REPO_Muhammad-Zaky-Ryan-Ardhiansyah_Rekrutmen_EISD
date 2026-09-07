@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Models\AccessibilityReport;
 use App\Models\Campus;
 use App\Models\CampusArea;
 use App\Models\User;
@@ -112,18 +111,16 @@ class OfficerAccountManagementTest extends TestCase
         $response->assertSessionHasErrors(['name', 'email', 'password', 'campus_area_id']);
     }
 
-    public function test_admin_can_reassign_officer_area_and_update_profile(): void
+    public function test_admin_can_reassign_officer_within_the_same_campus_and_update_profile(): void
     {
-        $campus1 = Campus::factory()->create();
-        $area1 = CampusArea::factory()->create(['campus_id' => $campus1->id]);
-
-        $campus2 = Campus::factory()->create();
-        $area2 = CampusArea::factory()->create(['campus_id' => $campus2->id]);
+        $campus = Campus::factory()->create();
+        $area1 = CampusArea::factory()->create(['campus_id' => $campus->id]);
+        $area2 = CampusArea::factory()->create(['campus_id' => $campus->id]);
 
         $officer = User::factory()->create([
             'role' => 'officer',
             'name' => 'Nama Awal',
-            'campus_id' => $campus1->id,
+            'campus_id' => $campus->id,
             'campus_area_id' => $area1->id,
         ]);
 
@@ -140,9 +137,39 @@ class OfficerAccountManagementTest extends TestCase
             'id' => $officer->id,
             'name' => 'Nama Baru',
             'campus_area_id' => $area2->id,
-            'campus_id' => $campus2->id,
+            'campus_id' => $campus->id,
             'is_active' => true,
         ]);
+    }
+
+    public function test_edit_only_offers_and_accepts_areas_from_the_officers_campus(): void
+    {
+        $campus = Campus::factory()->create(['name' => 'Telkom University Bandung']);
+        $currentArea = CampusArea::factory()->create(['campus_id' => $campus->id, 'name' => 'Area Lama']);
+        $otherArea = CampusArea::factory()->create(['campus_id' => $campus->id, 'name' => 'Area Baru']);
+        $foreignCampus = Campus::factory()->create(['name' => 'Kampus Lain']);
+        $foreignArea = CampusArea::factory()->create(['campus_id' => $foreignCampus->id, 'name' => 'Area Asing']);
+        $officer = User::factory()->create([
+            'role' => 'officer',
+            'campus_id' => $campus->id,
+            'campus_area_id' => $currentArea->id,
+        ]);
+
+        $this->actingAs($this->admin())->get(route('admin.officers.edit', $officer))
+            ->assertOk()
+            ->assertSee('Telkom University Bandung - Area Lama')
+            ->assertSee('Telkom University Bandung - Area Baru')
+            ->assertDontSee('Kampus Lain')
+            ->assertDontSee('Area Asing');
+
+        $this->actingAs($this->admin())->put(route('admin.officers.update', $officer), [
+            'name' => $officer->name,
+            'campus_area_id' => $foreignArea->id,
+            'is_active' => '1',
+        ])->assertSessionHasErrors('campus_area_id');
+
+        $this->assertSame($currentArea->id, $officer->fresh()->campus_area_id);
+        $this->assertSame($campus->id, $officer->fresh()->campus_id);
     }
 
     public function test_admin_can_deactivate_an_officer(): void

@@ -44,6 +44,14 @@
             </a>
         </div>
 
+        @if(auth()->user()?->role === 'admin')
+            <nav class="flex flex-wrap gap-3" aria-label="Aksi pengelolaan lokasi">
+                <a class="button button-secondary" href="{{ route('admin.campuses.areas.locations.index', [$location->campusArea->campus, $location->campusArea]) }}">Kembali ke daftar lokasi</a>
+                <a class="button button-secondary" href="{{ route('admin.campuses.areas.locations.edit', [$location->campusArea->campus, $location->campusArea, $location]) }}">Ubah lokasi</a>
+                <a class="button button-primary" href="{{ route('admin.locations.features.index', $location) }}">Kelola fasilitas</a>
+            </nav>
+        @endif
+
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             <div class="lg:col-span-8 rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm space-y-4">
                 <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider">{{ $location->campusArea->campus->name }} &bull; {{ $location->campusArea->name }}</p>
@@ -58,6 +66,10 @@
                 </div>
                 @if($location->description)
                     <p class="text-slate-600 text-base leading-relaxed pt-2">{{ $location->description }}</p>
+                @else
+                    <div class="rounded-xl border border-dashed border-slate-300 bg-slate-50 px-4 py-3 text-sm text-slate-600" role="status">
+                        Deskripsi lokasi belum tersedia.
+                    </div>
                 @endif
                 <div class="pt-2 border-t border-slate-100 flex items-center gap-2 text-xs text-slate-500">
                     <span>Koordinat:</span>
@@ -116,8 +128,8 @@
                                             {{ $conditionLabels[$laf->condition] ?? $laf->condition }}
                                         </span>
                                     </td>
-                                    <td data-label="Catatan" class="text-sm text-slate-600">{{ $laf->notes ?: '-' }}</td>
-                                    <td data-label="Terakhir Diperiksa" class="text-xs text-slate-500">{{ $laf->last_checked_at ? $laf->last_checked_at->format('d M Y, H:i') : '-' }}</td>
+                                    <td data-label="Catatan" class="text-sm text-slate-600">{{ $laf->notes ?: 'Catatan belum tersedia' }}</td>
+                                    <td data-label="Terakhir Diperiksa" class="text-xs text-slate-500">{{ $laf->last_checked_at ? $laf->last_checked_at->format('d M Y, H:i') : 'Belum pernah diperiksa' }}</td>
                                     <td data-label="Aksi Pelaporan">
                                         @auth
                                             @if(auth()->user()->role === 'reporter')

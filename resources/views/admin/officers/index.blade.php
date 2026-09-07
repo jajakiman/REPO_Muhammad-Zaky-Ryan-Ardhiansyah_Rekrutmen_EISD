@@ -39,8 +39,8 @@
                             <tr>
                                 <th scope="row" data-label="Nama">{{ $officer->name }}</th>
                                 <td data-label="Email">{{ $officer->email }}</td>
-                                <td data-label="Kampus">{{ $officer->campus?->name ?? '-' }}</td>
-                                <td data-label="Area tugas">{{ $officer->campusArea?->name ?? '-' }}</td>
+                                <td data-label="Kampus">{{ $officer->campus?->name ?? 'Kampus belum ditetapkan' }}</td>
+                                <td data-label="Area tugas">{{ $officer->campusArea?->name ?? 'Area belum ditetapkan' }}</td>
                                 <td data-label="Status">
                                     <span class="badge {{ $officer->is_active ? 'badge-positive' : 'badge-neutral' }}">
                                         {{ $officer->is_active ? 'Aktif' : 'Nonaktif' }}

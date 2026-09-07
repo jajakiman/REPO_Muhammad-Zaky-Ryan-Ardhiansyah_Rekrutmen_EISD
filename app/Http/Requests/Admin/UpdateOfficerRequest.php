@@ -23,6 +23,8 @@ class UpdateOfficerRequest extends FormRequest
                     $area = CampusArea::with('campus')->find($value);
                     if (! $area || ! $area->is_active || ! $area->campus?->is_active) {
                         $fail('Area dan kampus yang dipilih harus berstatus aktif.');
+                    } elseif ($area->campus_id !== $this->route('officer')?->campus_id) {
+                        $fail('Area tugas harus berada dalam kampus petugas saat ini.');
                     }
                 },
             ],

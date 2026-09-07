@@ -162,6 +162,55 @@ class PublicMapTest extends TestCase
             ->assertSee('Laporkan Masalah');
     }
 
+    public function test_location_detail_shows_admin_shortcuts_only_to_admin(): void
+    {
+        $location = CampusLocation::factory()->create();
+        $editUrl = route('admin.campuses.areas.locations.edit', [
+            $location->campusArea->campus,
+            $location->campusArea,
+            $location,
+        ]);
+        $facilitiesUrl = route('admin.locations.features.index', $location);
+        $locationsUrl = route('admin.campuses.areas.locations.index', [
+            $location->campusArea->campus,
+            $location->campusArea,
+        ]);
+
+        $this->actingAs(User::factory()->create(['role' => 'admin']))
+            ->get(route('locations.show', $location))
+            ->assertOk()
+            ->assertSee($editUrl)
+            ->assertSee($facilitiesUrl)
+            ->assertSee($locationsUrl);
+
+        foreach (['reporter', 'officer'] as $role) {
+            $this->actingAs(User::factory()->create(['role' => $role]))
+                ->get(route('locations.show', $location))
+                ->assertOk()
+                ->assertDontSee($editUrl)
+                ->assertDontSee($facilitiesUrl)
+                ->assertDontSee($locationsUrl);
+        }
+    }
+
+    public function test_location_detail_uses_informative_empty_states_for_missing_optional_fields(): void
+    {
+        $location = CampusLocation::factory()->create(['description' => null]);
+        $feature = AccessibilityFeature::factory()->create();
+        LocationAccessibilityFeature::factory()->create([
+            'campus_location_id' => $location->id,
+            'accessibility_feature_id' => $feature->id,
+            'notes' => null,
+            'last_checked_at' => null,
+        ]);
+
+        $this->get(route('locations.show', $location))
+            ->assertOk()
+            ->assertSee('Deskripsi lokasi belum tersedia')
+            ->assertSee('Catatan belum tersedia')
+            ->assertSee('Belum pernah diperiksa');
+    }
+
     public function test_viewing_inactive_location_or_inactive_campus_returns_404(): void
     {
         $campus = Campus::factory()->create(['is_active' => false]);
