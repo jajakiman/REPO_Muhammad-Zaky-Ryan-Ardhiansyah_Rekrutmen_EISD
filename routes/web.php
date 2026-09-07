@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Reporter\ProfileController;
 use App\Http\Controllers\Admin\CampusController;
+use App\Http\Controllers\Admin\CampusAreaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -32,5 +33,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/kampus/{campus}/ubah', [CampusController::class, 'edit'])->name('campuses.edit');
         Route::put('/kampus/{campus}', [CampusController::class, 'update'])->name('campuses.update');
         Route::patch('/kampus/{campus}/nonaktifkan', [CampusController::class, 'deactivate'])->name('campuses.deactivate');
+        Route::get('/kampus/{campus}/area', [CampusAreaController::class, 'index'])->name('campuses.areas.index');
+        Route::get('/kampus/{campus}/area/tambah', [CampusAreaController::class, 'create'])->name('campuses.areas.create');
+        Route::post('/kampus/{campus}/area', [CampusAreaController::class, 'store'])->name('campuses.areas.store');
+        Route::get('/kampus/{campus}/area/{area}/ubah', [CampusAreaController::class, 'edit'])->name('campuses.areas.edit');
+        Route::put('/kampus/{campus}/area/{area}', [CampusAreaController::class, 'update'])->name('campuses.areas.update');
+        Route::patch('/kampus/{campus}/area/{area}/nonaktifkan', [CampusAreaController::class, 'deactivate'])->name('campuses.areas.deactivate');
     });
 });
