@@ -1,0 +1,15 @@
+.git
+.gitignore
+.editorconfig
+.phpunit.result.cache
+.env
+.env.*
+!.env.example
+tests
+docs
+.superpowers
+PRD-AksesLoka.md
+node_modules
+public/build
+public/storage
+storage/*.key
