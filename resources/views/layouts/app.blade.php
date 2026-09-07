@@ -20,6 +20,12 @@
                 @guest
                     <a href="{{ route('login') }}">Masuk</a>
                     <a href="{{ route('register') }}">Daftar</a>
+                @else
+                    <a href="{{ route(auth()->user()->role.'.dashboard') }}">Area saya</a>
+                    <form method="post" action="{{ route('logout') }}">
+                        @csrf
+                        <button class="nav-button" type="submit">Keluar</button>
+                    </form>
                 @endguest
             </div>
         </nav>
