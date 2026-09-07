@@ -29,11 +29,13 @@ class AdminAccessibilitySemanticsTest extends TestCase
         $feature = AccessibilityFeature::factory()->create();
         IssueCategory::factory()->create();
         LocationAccessibilityFeature::factory()->create(['campus_location_id' => $location->id, 'accessibility_feature_id' => $feature->id]);
+        User::factory()->create(['role' => 'officer', 'campus_id' => $campus->id, 'campus_area_id' => $area->id]);
 
         $routes = [
             route('admin.campuses.index'), route('admin.campuses.areas.index', $campus),
             route('admin.campuses.areas.locations.index', [$campus, $area]), route('admin.features.index'),
             route('admin.issue-categories.index'), route('admin.locations.features.index', $location),
+            route('admin.officers.index'),
         ];
 
         foreach ($routes as $route) {
@@ -66,6 +68,7 @@ class AdminAccessibilitySemanticsTest extends TestCase
         $feature = AccessibilityFeature::factory()->create();
         $category = IssueCategory::factory()->create();
         $assignment = LocationAccessibilityFeature::factory()->create(['campus_location_id' => $location->id, 'accessibility_feature_id' => $feature->id]);
+        $officer = User::factory()->create(['role' => 'officer', 'campus_id' => $campus->id, 'campus_area_id' => $area->id]);
         AccessibilityFeature::factory()->create();
 
         $forms = [
@@ -76,6 +79,8 @@ class AdminAccessibilitySemanticsTest extends TestCase
             [route('admin.issue-categories.edit', $category), ['name', 'is_active']],
             [route('admin.locations.features.create', $location), ['accessibility_feature_id', 'availability_status', 'condition', 'notes', 'last_checked_at']],
             [route('admin.locations.features.edit', [$location, $assignment]), ['availability_status', 'condition', 'notes', 'last_checked_at']],
+            [route('admin.officers.create'), ['name', 'email', 'password', 'campus_area_id']],
+            [route('admin.officers.edit', $officer), ['name', 'campus_area_id', 'is_active']],
         ];
 
         foreach ($forms as [$route, $fields]) {
