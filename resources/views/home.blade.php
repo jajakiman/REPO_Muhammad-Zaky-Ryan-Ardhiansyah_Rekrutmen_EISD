@@ -10,6 +10,7 @@
                 <h1>Temukan fasilitas yang mendukung perjalanan Anda.</h1>
                 <p class="lead">Lihat informasi fasilitas aksesibilitas dan laporkan masalah yang Anda temukan di lingkungan kampus.</p>
                 <div class="actions">
+                    <a class="button button-primary" href="{{ route('map.index') }}">Lihat peta</a>
                     <a class="button button-secondary" href="#tentang">Pelajari layanan</a>
                 </div>
             </div>

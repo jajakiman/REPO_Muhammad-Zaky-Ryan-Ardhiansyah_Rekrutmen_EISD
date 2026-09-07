@@ -10,10 +10,13 @@ use App\Http\Controllers\Admin\OfficerAccountController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PublicMapController;
 use App\Http\Controllers\Reporter\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
+Route::get('/peta', [PublicMapController::class, 'index'])->name('map.index');
+Route::get('/lokasi/{location}', [PublicMapController::class, 'show'])->name('locations.show');
 
 Route::middleware('guest')->group(function () {
     Route::get('/daftar', [RegisteredUserController::class, 'create'])->name('register');

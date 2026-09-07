@@ -16,6 +16,7 @@
                 AksesLoka
             </a>
             <div class="nav-links">
+                <a href="{{ route('map.index') }}">Peta</a>
                 <a href="#tentang">Tentang</a>
                 @guest
                     <a href="{{ route('login') }}">Masuk</a>

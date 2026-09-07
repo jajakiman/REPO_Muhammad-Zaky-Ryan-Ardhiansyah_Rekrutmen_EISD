@@ -16,11 +16,12 @@ class FoundationTest extends TestCase
             ->assertSee('href="#main-content"', false);
     }
 
-    public function test_home_page_does_not_advertise_an_unavailable_map(): void
+    public function test_home_page_advertises_the_available_map(): void
     {
         $this->get('/')
             ->assertOk()
-            ->assertDontSee('Lihat peta');
+            ->assertSee('Lihat peta')
+            ->assertSee(route('map.index'));
     }
 
     public function test_flash_messages_use_appropriate_live_region_roles(): void
