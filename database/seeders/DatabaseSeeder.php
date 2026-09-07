@@ -2,22 +2,25 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\AccessibilityFeature;
+use App\Models\Campus;
+use App\Models\IssueCategory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        foreach (['Telkom University Bandung', 'Universitas Pendidikan Indonesia', 'Universitas Teknologi Bandung'] as $name) {
+            Campus::updateOrCreate(['name' => $name], ['is_active' => true]);
+        }
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        foreach (['Ramp', 'Lift', 'Guiding Block', 'Toilet Aksesibel', 'Handrail', 'Parkir Disabilitas', 'Pintu Aksesibel'] as $name) {
+            AccessibilityFeature::updateOrCreate(['name' => $name], ['is_active' => true]);
+        }
+
+        foreach (['Fasilitas Rusak', 'Akses Terhalang', 'Tidak Dapat Digunakan', 'Permukaan Tidak Aman', 'Penerangan Tidak Memadai', 'Signage Tidak Jelas'] as $name) {
+            IssueCategory::updateOrCreate(['name' => $name], ['is_active' => true]);
+        }
     }
 }

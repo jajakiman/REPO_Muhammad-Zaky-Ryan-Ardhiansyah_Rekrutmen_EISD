@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\AccessibilityFeature;
+use App\Models\AccessibilityReport;
 use App\Models\Campus;
 use App\Models\CampusArea;
 use App\Models\CampusLocation;
@@ -11,6 +12,7 @@ use App\Models\LocationAccessibilityFeature;
 use App\Models\User;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class DataModelTest extends TestCase
@@ -76,5 +78,62 @@ class DataModelTest extends TestCase
 
         $this->assertEquals([$feature->id], AccessibilityFeature::active()->pluck('id')->all());
         $this->assertEquals([$category->id], IssueCategory::active()->pluck('id')->all());
+    }
+
+    public function test_reports_belong_to_reporters_officers_categories_and_location_features(): void
+    {
+        $reporter = User::factory()->create();
+        $officer = User::factory()->create(['role' => 'officer']);
+        $category = IssueCategory::factory()->create();
+        $locationFeature = LocationAccessibilityFeature::factory()->create();
+        $report = AccessibilityReport::factory()
+            ->for($reporter, 'reporter')
+            ->for($officer, 'officer')
+            ->for($category)
+            ->for($locationFeature)
+            ->create(['priority' => 'high', 'verified_at' => '2026-09-07 10:00:00']);
+
+        $this->assertTrue($report->reporter->is($reporter));
+        $this->assertTrue($report->officer->is($officer));
+        $this->assertTrue($report->issueCategory->is($category));
+        $this->assertTrue($report->locationAccessibilityFeature->is($locationFeature));
+        $this->assertTrue($reporter->reports->contains($report));
+        $this->assertTrue($officer->handledReports->contains($report));
+        $this->assertTrue($category->reports->contains($report));
+        $this->assertTrue($locationFeature->reports->contains($report));
+        $this->assertNotNull($report->verified_at);
+    }
+
+    public function test_database_seeder_is_idempotent_and_contains_only_listed_master_values(): void
+    {
+        $this->seed();
+        $this->seed();
+
+        $this->assertSame([
+            'Telkom University Bandung',
+            'Universitas Pendidikan Indonesia',
+            'Universitas Teknologi Bandung',
+        ], Campus::orderBy('id')->pluck('name')->all());
+        $this->assertSame([
+            'Ramp',
+            'Lift',
+            'Guiding Block',
+            'Toilet Aksesibel',
+            'Handrail',
+            'Parkir Disabilitas',
+            'Pintu Aksesibel',
+        ], AccessibilityFeature::orderBy('id')->pluck('name')->all());
+        $this->assertSame([
+            'Fasilitas Rusak',
+            'Akses Terhalang',
+            'Tidak Dapat Digunakan',
+            'Permukaan Tidak Aman',
+            'Penerangan Tidak Memadai',
+            'Signage Tidak Jelas',
+        ], IssueCategory::orderBy('id')->pluck('name')->all());
+
+        foreach (['campus_areas', 'campus_locations', 'location_accessibility_features', 'accessibility_reports', 'users'] as $table) {
+            $this->assertSame(0, DB::table($table)->count(), $table.' should not contain fabricated records.');
+        }
     }
 }
