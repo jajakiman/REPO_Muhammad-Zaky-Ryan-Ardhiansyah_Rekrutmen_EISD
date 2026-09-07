@@ -3,62 +3,49 @@
 @section('title', 'AksesLoka | Aksesibilitas Kampus')
 
 @section('content')
-    <!-- Hero Section -->
-    <section class="hero relative overflow-hidden bg-gradient-to-br from-navy-950 via-navy-900 to-slate-900 text-white py-16 md:py-24" id="mulai">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                <div class="lg:col-span-7 space-y-6">
-                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-orange-400 text-xs font-bold uppercase tracking-wider">
-                        <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
-                        Informasi Aksesibilitas Kampus Bandung
-                    </div>
-                    <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.15] text-white">
-                        Temukan fasilitas yang mendukung perjalanan Anda.
-                    </h1>
-                    <p class="text-lg sm:text-xl text-slate-300 max-w-2xl leading-relaxed">
-                        Lihat informasi fasilitas aksesibilitas dan laporkan masalah fasilitas yang Anda temukan di lingkungan kampus secara terpusat dan transparan.
-                    </p>
-                    <div class="actions flex flex-wrap items-center gap-4 pt-2">
-                        <a class="button button-primary inline-flex items-center gap-2 bg-orange-700 hover:bg-orange-800 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-orange-950/30 transition-all text-base" href="{{ route('map.index') }}">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>
-                            Lihat peta
-                        </a>
-                        <a class="button button-secondary inline-flex items-center text-slate-200 hover:text-white bg-white/10 hover:bg-white/15 border border-white/20 font-semibold px-5 py-3.5 rounded-xl transition-all text-base" href="#tentang">
-                            Pelajari layanan
-                        </a>
-                    </div>
+    <section class="hero relative overflow-hidden bg-gradient-to-b from-navy-950 via-slate-950 to-navy-950 pt-16 pb-24 text-white lg:pt-24 lg:pb-36" id="mulai">
+        <div class="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-blue-800/20 via-orange-600/10 to-transparent pointer-events-none" aria-hidden="true"></div>
+        <div class="relative z-10 px-6 mx-auto sm:px-8 lg:px-12 max-w-7xl">
+            <div class="text-left md:max-w-4xl md:mx-auto md:text-center">
+                <p class="inline-flex px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-orange-400 text-xs font-bold uppercase tracking-wider mb-6">
+                    Pelaporan Fasilitas Kampus Bandung
+                </p>
+                <h1 class="tracking-tighter text-white max-w-none">
+                    <span class="font-sans font-medium text-5xl sm:text-6xl lg:text-7xl">Temukan &amp; Pantau</span><br>
+                    <span class="font-display italic font-normal leading-[1.15] text-6xl sm:text-7xl lg:text-8xl text-orange-400">Fasilitas Kampus</span>
+                </h1>
+                <p class="mt-6 font-sans text-base sm:text-lg leading-7 text-slate-300 max-w-2xl md:mx-auto">
+                    Temukan fasilitas kampus, laporkan kendala, dan pantau tindak lanjut petugas dalam satu layanan yang transparan.
+                </p>
+                <div class="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center md:justify-center gap-3">
+                    <a href="{{ route('map.index') }}" class="inline-flex min-h-11 items-center justify-center px-8 py-3 font-sans text-base font-semibold rounded-full bg-orange-700 text-white hover:bg-orange-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:ring-offset-navy-950 transition-colors">Lihat peta</a>
+                    <a href="#tentang" class="inline-flex min-h-11 items-center justify-center px-8 py-3 font-sans text-base font-semibold rounded-full bg-white/10 text-white border border-white/20 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-navy-950 transition-colors">Pelajari layanan</a>
                 </div>
+            </div>
+        </div>
 
-                <!-- Preview / Highlights Card -->
-                <aside class="lg:col-span-5 bg-white text-slate-900 p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-xl" aria-labelledby="service-title">
-                    <div class="flex items-center gap-3 mb-4">
-                        <x-logo variant="mark" size="sm" />
-                        <div>
-                            <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider m-0">Layanan publik</p>
-                            <h2 id="service-title" class="font-display text-xl font-bold text-slate-900 m-0">Informasi praktis sebelum berkunjung</h2>
+        <div class="relative z-20 max-w-5xl px-6 mx-auto mt-14 -mb-16 sm:px-8 sm:-mb-20 lg:px-12 lg:-mb-28">
+            <div class="overflow-hidden rounded-2xl border border-white/20 bg-slate-900 shadow-2xl p-2 sm:p-4">
+                <div class="relative overflow-hidden rounded-xl bg-white min-h-72 sm:min-h-80">
+                    <div class="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50 to-orange-50" aria-hidden="true"></div>
+                    <div class="relative grid min-h-72 sm:min-h-80 grid-cols-1 md:grid-cols-[0.8fr_1.2fr] items-center gap-6 p-6 sm:p-10">
+                        <div class="flex justify-center">
+                            <x-logo variant="badge" size="lg" />
+                        </div>
+                        <div class="text-center md:text-left">
+                            <p class="font-sans text-xs font-bold uppercase tracking-wider text-orange-700">Informasi Terpusat</p>
+                            <h2 class="font-display text-3xl font-bold text-slate-900 mt-2">Pemetaan Kampus Bandung</h2>
+                            <p class="font-sans text-slate-600 mt-3 max-w-xl">Lihat lokasi dan kondisi fasilitas pada kampus yang sudah terdata, lalu buka detailnya sebelum berkunjung.</p>
+                            <a href="{{ route('map.index') }}" class="mt-6 inline-flex min-h-11 items-center justify-center px-6 py-2.5 rounded-xl bg-navy-900 text-white font-sans font-semibold text-sm hover:bg-navy-950 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-600">Buka peta interaktif</a>
                         </div>
                     </div>
-                    <ul class="feature-list space-y-3.5 text-slate-700 text-sm sm:text-base">
-                        <li class="flex items-start gap-3">
-                            <span class="w-6 h-6 rounded-full bg-blue-50 text-navy-900 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">&check;</span>
-                            <span>Periksa ketersediaan ramp, lift, guiding block, toilet, dan fasilitas lain.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="w-6 h-6 rounded-full bg-blue-50 text-navy-900 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">&check;</span>
-                            <span>Ketahui kondisi aktual fasilitas (baik, rusak, terhalang) sebelum tiba di lokasi.</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="w-6 h-6 rounded-full bg-blue-50 text-navy-900 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">&check;</span>
-                            <span>Gunakan kanal pelaporan terstruktur dengan penanganan langsung oleh petugas.</span>
-                        </li>
-                    </ul>
-                </aside>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Statistik Operasional Real Database -->
-    <section class="info-section bg-white border-b border-slate-200 py-16">
+    <section class="info-section bg-white border-b border-slate-200 pt-28 pb-16 lg:pt-40">
         <div class="container mx-auto px-4">
             <div class="section-title-wrap text-center max-w-3xl mx-auto mb-12">
                 <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-2">Data Nyata</p>

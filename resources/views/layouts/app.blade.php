@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Informasi fasilitas aksesibilitas dan pelaporan masalah di lingkungan kampus.">
     <title>@yield('title', 'AksesLoka')</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}?v=2">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32x32.png') }}?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/apple-touch-icon.png') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -28,7 +28,7 @@
                         },
                     },
                     fontFamily: {
-                        sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
+                        sans: ['"PP Neue Montreal"', '"Neue Montreal"', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
                         display: ['"PP Editorial New"', 'Georgia', 'Cambria', '"Times New Roman"', 'serif'],
                     }
                 }
@@ -75,7 +75,7 @@
         <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-600">
             <div class="flex items-center gap-2">
                 <x-logo variant="mark" size="sm" />
-                <span class="font-semibold text-slate-800">AksesLoka</span> &bull; Sistem Informasi Fasilitas Aksesibilitas Kampus
+                <span class="font-semibold text-slate-800">AksesLoka</span> &bull; Sistem Pelaporan Fasilitas Kampus
             </div>
             <div>
                 Mendukung <strong>SDGs 11</strong> untuk mewujudkan ruang publik kampus yang inklusif dan aman.

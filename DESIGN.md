@@ -52,8 +52,9 @@ a focus outline rather than a text background.
 
 Use PP Editorial New for display headings when a licensed local font is
 available, with Georgia and Cambria as resilient editorial fallbacks. Body copy,
-forms, navigation, tables, status labels, and the logo wordmark use the system
-sans-serif stack for predictable rendering on low-bandwidth campus connections.
+forms, navigation, tables, status labels, and the logo wordmark use PP Neue
+Montreal when a licensed local font is available, with the system sans-serif
+stack as a predictable fallback on low-bandwidth campus connections.
 Headings use at least 1.15 line-height to preserve descenders. Body copy stays
 below 70 characters per line.
 

@@ -23,6 +23,23 @@ class AuthenticationTest extends TestCase
             ->assertDontSee('Kampus Nonaktif');
     }
 
+    public function test_auth_pages_use_branded_responsive_placement_without_emoji(): void
+    {
+        Campus::factory()->create(['name' => 'Kampus Aktif']);
+
+        foreach ([route('login'), route('register')] as $route) {
+            $response = $this->get($route);
+
+            $response->assertOk()
+                ->assertSee('auth-shell', false)
+                ->assertSee('auth-panel', false)
+                ->assertSee('logo-mark.webp', false)
+                ->assertDontSee('🚀')
+                ->assertDontSee('✨')
+                ->assertDontSee('✅');
+        }
+    }
+
     public function test_public_registration_creates_an_active_reporter_with_hashed_password(): void
     {
         $campus = Campus::factory()->create();

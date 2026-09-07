@@ -20,7 +20,7 @@
 @elseif($variant === 'horizontal')
     <picture class="inline-block shrink-0">
         <source srcset="{{ asset('images/logo-horizontal.webp') }}" type="image/webp">
-        <img src="{{ asset('images/logo-horizontal.png') }}" alt="AksesLoka - Aksesibilitas Kampus" class="{{ $dimensions['horiz'] }} object-contain" width="720" height="180" loading="eager">
+        <img src="{{ asset('images/logo-horizontal.png') }}" alt="AksesLoka - Pelaporan Fasilitas Kampus" class="{{ $dimensions['horiz'] }} object-contain" width="720" height="180" loading="eager">
     </picture>
 @elseif($variant === 'mark')
     <picture class="inline-block shrink-0">
@@ -39,7 +39,7 @@
                 Akses<span class="text-orange-500">Loka</span>
             </span>
             <span class="font-semibold tracking-wider uppercase {{ $dimensions['sub'] }} {{ $textColor === 'white' ? 'text-slate-300' : 'text-slate-500' }}">
-                Aksesibilitas Kampus
+                Pelaporan Fasilitas Kampus
             </span>
         </div>
     </div>

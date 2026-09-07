@@ -80,9 +80,14 @@ class FoundationTest extends TestCase
     {
         $this->get('/')
             ->assertOk()
-            ->assertSee('favicon-32x32.png')
+            ->assertSee('favicon-32x32.png?v=2')
+            ->assertSee('favicon.ico?v=2')
+            ->assertDontSee('favicon.svg')
             ->assertSee('logo-mark.webp')
-            ->assertSee('logo-mark.png');
+            ->assertSee('logo-mark.png')
+            ->assertSee('Pelaporan Fasilitas Kampus')
+            ->assertSee('Masuk')
+            ->assertSee('Daftar');
 
         $this->assertFileExists(public_path('images/logo-mark.png'));
         $this->assertFileExists(public_path('images/logo-mark.webp'));

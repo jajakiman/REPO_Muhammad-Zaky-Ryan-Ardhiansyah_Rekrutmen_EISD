@@ -57,9 +57,24 @@ class LandingPageTest extends TestCase
 
         $response->assertOk()
             ->assertSee('fontFamily', false)
-            ->assertSee('PP Editorial New', false);
+            ->assertSee('PP Editorial New', false)
+            ->assertSee('PP Neue Montreal', false);
         $this->assertStringContainsString('--font-display: "PP Editorial New"', $css);
+        $this->assertStringContainsString('--font-sans: "PP Neue Montreal"', $css);
         $this->assertStringContainsString('font-family: var(--font-display)', $css);
         $this->assertStringContainsString('font-display: swap', $css);
+    }
+
+    public function test_hero_uses_dual_type_and_a_real_map_showcase(): void
+    {
+        $this->get(route('home'))
+            ->assertOk()
+            ->assertSee('Temukan &amp; Pantau', false)
+            ->assertSee('Fasilitas Kampus')
+            ->assertSee('font-sans', false)
+            ->assertSee('font-display italic', false)
+            ->assertSee('Pemetaan Kampus Bandung')
+            ->assertSee(route('map.index'))
+            ->assertDontSee('Play trailer');
     }
 }
