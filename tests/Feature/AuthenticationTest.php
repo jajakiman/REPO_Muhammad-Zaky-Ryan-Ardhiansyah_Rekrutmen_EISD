@@ -124,6 +124,47 @@ class AuthenticationTest extends TestCase
             ->assertRedirect(route('reporter.dashboard'));
     }
 
+    public function test_login_is_locked_after_five_failed_attempts_for_the_same_email_and_ip(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'locked@example.test',
+            'password' => 'correct-password',
+        ]);
+
+        for ($attempt = 0; $attempt < 5; $attempt++) {
+            $this->post(route('login'), ['email' => $user->email, 'password' => 'wrong-password'])
+                ->assertSessionHasErrors(['email' => 'Email atau password tidak sesuai.']);
+        }
+
+        $this->post(route('login'), ['email' => $user->email, 'password' => 'correct-password'])
+            ->assertSessionHasErrors(['email' => 'Terlalu banyak percobaan masuk. Silakan coba lagi nanti.']);
+        $this->assertGuest();
+    }
+
+    public function test_successful_login_resets_the_failed_attempt_counter(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'reset@example.test',
+            'password' => 'correct-password',
+        ]);
+
+        for ($attempt = 0; $attempt < 4; $attempt++) {
+            $this->post(route('login'), ['email' => $user->email, 'password' => 'wrong-password']);
+        }
+
+        $this->post(route('login'), ['email' => $user->email, 'password' => 'correct-password'])
+            ->assertRedirect(route('reporter.dashboard'));
+        auth()->logout();
+
+        for ($attempt = 0; $attempt < 4; $attempt++) {
+            $this->post(route('login'), ['email' => $user->email, 'password' => 'wrong-password']);
+        }
+
+        $this->post(route('login'), ['email' => $user->email, 'password' => 'correct-password'])
+            ->assertRedirect(route('reporter.dashboard'));
+        $this->assertAuthenticatedAs($user);
+    }
+
     public function test_logout_invalidates_session_and_regenerates_csrf_token(): void
     {
         $user = User::factory()->create();
