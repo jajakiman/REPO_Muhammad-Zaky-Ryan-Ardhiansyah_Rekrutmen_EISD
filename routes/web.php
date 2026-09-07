@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Reporter\ProfileController;
+use App\Http\Controllers\Admin\CampusController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -23,5 +24,13 @@ Route::middleware('auth')->group(function () {
         Route::put('/profil', [ProfileController::class, 'update'])->name('profile.update');
     });
     Route::view('/petugas', 'dashboards.officer')->middleware('role:officer')->name('officer.dashboard');
-    Route::view('/admin', 'dashboards.admin')->middleware('role:admin')->name('admin.dashboard');
+    Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::view('/', 'dashboards.admin')->name('dashboard');
+        Route::get('/kampus', [CampusController::class, 'index'])->name('campuses.index');
+        Route::get('/kampus/tambah', [CampusController::class, 'create'])->name('campuses.create');
+        Route::post('/kampus', [CampusController::class, 'store'])->name('campuses.store');
+        Route::get('/kampus/{campus}/ubah', [CampusController::class, 'edit'])->name('campuses.edit');
+        Route::put('/kampus/{campus}', [CampusController::class, 'update'])->name('campuses.update');
+        Route::patch('/kampus/{campus}/nonaktifkan', [CampusController::class, 'deactivate'])->name('campuses.deactivate');
+    });
 });
