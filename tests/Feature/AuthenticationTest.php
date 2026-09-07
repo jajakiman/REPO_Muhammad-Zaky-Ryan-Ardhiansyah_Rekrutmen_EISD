@@ -33,13 +33,25 @@ class AuthenticationTest extends TestCase
             $response->assertOk()
                 ->assertSee('auth-shell', false)
                 ->assertSee('auth-panel', false)
-                ->assertSee('bg-slate-950', false)
+                ->assertSee('bg-navy-950', false)
                 ->assertSee('logo-mark.webp', false)
                 ->assertDontSee('site-header', false)
                 ->assertDontSee('site-footer', false)
                 ->assertDontSee('🚀')
                 ->assertDontSee('✨')
                 ->assertDontSee('✅');
+        }
+    }
+
+    public function test_auth_pages_fill_the_viewport_and_return_to_the_home_page(): void
+    {
+        foreach ([route('login'), route('register')] as $route) {
+            $this->get($route)
+                ->assertOk()
+                ->assertSee('min-h-[100dvh]', false)
+                ->assertSee('Kembali ke Halaman Utama')
+                ->assertSee('href="'.route('home').'"', false)
+                ->assertDontSee('Kembali ke peta kampus');
         }
     }
 

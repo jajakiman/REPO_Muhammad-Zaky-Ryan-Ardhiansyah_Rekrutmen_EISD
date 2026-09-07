@@ -55,22 +55,22 @@
 
             <div class="stat-grid grid grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="service-card bg-slate-50 hover:bg-white rounded-2xl border border-slate-200 p-6 text-center shadow-sm hover:shadow-md transition-all">
-                    <p class="text-4xl lg:text-5xl font-black text-navy-900 tracking-tight">{{ $stats['totalCampuses'] }}</p>
+                    <p class="stat-number text-4xl lg:text-5xl font-black text-navy-900 tracking-tight">{{ $stats['totalCampuses'] }}</p>
                     <p class="font-bold text-slate-700 mt-2 text-sm uppercase tracking-wide">Kampus Terpetakan</p>
                     <p class="text-xs text-slate-500 mt-1">Telkom, UPI, UTB Bandung</p>
                 </div>
                 <div class="service-card bg-slate-50 hover:bg-white rounded-2xl border border-slate-200 p-6 text-center shadow-sm hover:shadow-md transition-all">
-                    <p class="text-4xl lg:text-5xl font-black text-navy-900 tracking-tight">{{ $stats['totalLocations'] }}</p>
+                    <p class="stat-number text-4xl lg:text-5xl font-black text-navy-900 tracking-tight">{{ $stats['totalLocations'] }}</p>
                     <p class="font-bold text-slate-700 mt-2 text-sm uppercase tracking-wide">Lokasi Kampus</p>
                     <p class="text-xs text-slate-500 mt-1">Gedung, Ruang Terbuka, Halte</p>
                 </div>
                 <div class="service-card bg-slate-50 hover:bg-white rounded-2xl border border-slate-200 p-6 text-center shadow-sm hover:shadow-md transition-all">
-                    <p class="text-4xl lg:text-5xl font-black text-navy-900 tracking-tight">{{ $stats['totalFacilities'] }}</p>
+                    <p class="stat-number text-4xl lg:text-5xl font-black text-navy-900 tracking-tight">{{ $stats['totalFacilities'] }}</p>
                     <p class="font-bold text-slate-700 mt-2 text-sm uppercase tracking-wide">Fasilitas Terdata</p>
                     <p class="text-xs text-slate-500 mt-1">Ramp, Lift, Toilet, Guiding Block</p>
                 </div>
                 <div class="service-card bg-slate-50 hover:bg-white rounded-2xl border border-slate-200 p-6 text-center shadow-sm hover:shadow-md transition-all">
-                    <p class="text-4xl lg:text-5xl font-black text-emerald-800 tracking-tight">{{ $stats['totalResolvedReports'] }}</p>
+                    <p class="stat-number text-4xl lg:text-5xl font-black text-emerald-800 tracking-tight">{{ $stats['totalResolvedReports'] }}</p>
                     <p class="font-bold text-slate-700 mt-2 text-sm uppercase tracking-wide">Laporan Diselesaikan</p>
                     <p class="text-xs text-slate-500 mt-1">Kondisi fasilitas ter-update</p>
                 </div>
@@ -89,22 +89,22 @@
 
             <div class="workflow-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="workflow-card service-card flex h-full flex-col items-center bg-white p-6 text-center rounded-2xl border border-slate-200 shadow-sm hover:border-navy-900/30 transition-all">
-                    <div class="mx-auto w-10 h-10 rounded-xl bg-navy-50 text-navy-900 font-extrabold flex items-center justify-center text-sm mb-4 border border-blue-100">01</div>
+                    <div class="workflow-number mx-auto w-10 h-10 rounded-xl bg-navy-50 text-navy-900 font-extrabold flex items-center justify-center text-sm mb-4 border border-blue-100">01</div>
                     <h3 class="text-center text-lg font-bold text-slate-900 mb-2">Fasilitas Terdata</h3>
                     <p class="text-center text-slate-600 text-sm leading-relaxed">Admin memetakan fasilitas seperti ramp, lift, guiding block, dan toilet aksesibel pada setiap lokasi kampus.</p>
                 </div>
                 <div class="workflow-card service-card flex h-full flex-col items-center bg-white p-6 text-center rounded-2xl border border-slate-200 shadow-sm hover:border-navy-900/30 transition-all">
-                    <div class="mx-auto w-10 h-10 rounded-xl bg-orange-50 text-orange-700 font-extrabold flex items-center justify-center text-sm mb-4 border border-orange-100">02</div>
+                    <div class="workflow-number mx-auto w-10 h-10 rounded-xl bg-navy-50 text-navy-900 font-extrabold flex items-center justify-center text-sm mb-4 border border-blue-100">02</div>
                     <h3 class="text-center text-lg font-bold text-slate-900 mb-2">Masalah Dilaporkan</h3>
                     <p class="text-center text-slate-600 text-sm leading-relaxed">Sivitas dan pengunjung kampus membuat laporan kendala fasilitas secara terstruktur dengan menyertakan bukti foto.</p>
                 </div>
                 <div class="workflow-card service-card flex h-full flex-col items-center bg-white p-6 text-center rounded-2xl border border-slate-200 shadow-sm hover:border-navy-900/30 transition-all">
-                    <div class="mx-auto w-10 h-10 rounded-xl bg-blue-50 text-blue-800 font-extrabold flex items-center justify-center text-sm mb-4 border border-blue-100">03</div>
+                    <div class="workflow-number mx-auto w-10 h-10 rounded-xl bg-navy-50 text-navy-900 font-extrabold flex items-center justify-center text-sm mb-4 border border-blue-100">03</div>
                     <h3 class="text-center text-lg font-bold text-slate-900 mb-2">Verifikasi & Klaim</h3>
                     <p class="text-center text-slate-600 text-sm leading-relaxed">Petugas area memverifikasi kendala, menentukan skala prioritas, dan mengambil tanggung jawab penanganan.</p>
                 </div>
                 <div class="workflow-card service-card flex h-full flex-col items-center bg-white p-6 text-center rounded-2xl border border-slate-200 shadow-sm hover:border-navy-900/30 transition-all">
-                    <div class="mx-auto w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 font-extrabold flex items-center justify-center text-sm mb-4 border border-emerald-100">04</div>
+                    <div class="workflow-number mx-auto w-10 h-10 rounded-xl bg-navy-50 text-navy-900 font-extrabold flex items-center justify-center text-sm mb-4 border border-blue-100">04</div>
                     <h3 class="text-center text-lg font-bold text-slate-900 mb-2">Penanganan & Selesai</h3>
                     <p class="text-center text-slate-600 text-sm leading-relaxed">Tindakan perbaikan dilakukan. Kondisi fasilitas pada peta diperbarui secara otomatis setelah penanganan tuntas.</p>
                 </div>

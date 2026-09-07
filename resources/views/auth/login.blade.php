@@ -3,12 +3,15 @@
 @section('title', 'Masuk | AksesLoka')
 
 @section('content')
-<section class="auth-shell relative isolate min-h-[calc(100dvh-4.75rem)] overflow-hidden bg-slate-950 py-12 sm:py-16">
+<section class="auth-shell relative isolate flex min-h-[100dvh] items-center overflow-hidden bg-navy-950 py-12 sm:py-16">
     <div class="absolute inset-0 -z-10 bg-gradient-to-br from-slate-950 via-navy-950 to-slate-900" aria-hidden="true"></div>
     <div class="absolute -left-24 top-20 -z-10 h-72 w-72 rounded-full bg-blue-800/20 blur-3xl" aria-hidden="true"></div>
     <div class="absolute -right-24 bottom-10 -z-10 h-72 w-72 rounded-full bg-orange-600/10 blur-3xl" aria-hidden="true"></div>
     <div class="container mx-auto px-4 max-w-md">
-        <a href="{{ route('map.index') }}" class="mb-5 inline-flex min-h-11 items-center text-sm font-semibold text-slate-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-lg">Kembali ke peta kampus</a>
+        <a href="{{ route('home') }}" class="mb-5 inline-flex min-h-11 items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2.5 text-sm font-semibold text-slate-200 shadow-sm transition-colors hover:bg-white/20 hover:text-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+            <svg class="h-4 w-4" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m15 18-6-6 6-6" /></svg>
+            Kembali ke Halaman Utama
+        </a>
         <div class="auth-panel bg-white border border-slate-200 rounded-2xl shadow-xl shadow-slate-200/60 overflow-hidden">
             <div class="px-6 pt-8 text-center sm:px-8">
                 <x-logo variant="mark" size="lg" />

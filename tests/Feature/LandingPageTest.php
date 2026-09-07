@@ -105,4 +105,13 @@ class LandingPageTest extends TestCase
             ->assertSee(route('home').'#faq-title', false)
             ->assertSee('Sistem Pelaporan Fasilitas Kampus');
     }
+
+    public function test_landing_numbers_follow_the_semantic_three_plus_one_palette(): void
+    {
+        $html = $this->get(route('home'))->assertOk()->getContent();
+
+        $this->assertSame(3, substr_count($html, 'stat-number text-4xl lg:text-5xl font-black text-navy-900'));
+        $this->assertSame(1, substr_count($html, 'stat-number text-4xl lg:text-5xl font-black text-emerald-800'));
+        $this->assertSame(4, substr_count($html, 'workflow-number mx-auto w-10 h-10 rounded-xl bg-navy-50 text-navy-900'));
+    }
 }
