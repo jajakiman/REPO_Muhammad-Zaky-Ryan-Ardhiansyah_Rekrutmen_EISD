@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\AccessibilityFeatureController;
+use App\Http\Controllers\Admin\CampusAreaController;
+use App\Http\Controllers\Admin\CampusController;
+use App\Http\Controllers\Admin\CampusLocationController;
+use App\Http\Controllers\Admin\IssueCategoryController;
+use App\Http\Controllers\Admin\LocationAccessibilityFeatureController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Reporter\ProfileController;
-use App\Http\Controllers\Admin\CampusController;
-use App\Http\Controllers\Admin\CampusAreaController;
-use App\Http\Controllers\Admin\CampusLocationController;
-use App\Http\Controllers\Admin\AccessibilityFeatureController;
-use App\Http\Controllers\Admin\IssueCategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -60,5 +61,10 @@ Route::middleware('auth')->group(function () {
         Route::get('/kategori-masalah/{issue_category}/ubah', [IssueCategoryController::class, 'edit'])->name('issue-categories.edit');
         Route::put('/kategori-masalah/{issue_category}', [IssueCategoryController::class, 'update'])->name('issue-categories.update');
         Route::patch('/kategori-masalah/{issue_category}/nonaktifkan', [IssueCategoryController::class, 'deactivate'])->name('issue-categories.deactivate');
+        Route::get('/lokasi/{location}/fasilitas', [LocationAccessibilityFeatureController::class, 'index'])->name('locations.features.index');
+        Route::get('/lokasi/{location}/fasilitas/tambah', [LocationAccessibilityFeatureController::class, 'create'])->name('locations.features.create');
+        Route::post('/lokasi/{location}/fasilitas', [LocationAccessibilityFeatureController::class, 'store'])->name('locations.features.store');
+        Route::get('/lokasi/{location}/fasilitas/{locationFeature}/ubah', [LocationAccessibilityFeatureController::class, 'edit'])->name('locations.features.edit');
+        Route::put('/lokasi/{location}/fasilitas/{locationFeature}', [LocationAccessibilityFeatureController::class, 'update'])->name('locations.features.update');
     });
 });
