@@ -17,6 +17,10 @@
             </a>
             <div class="nav-links">
                 <a href="#tentang">Tentang</a>
+                @guest
+                    <a href="{{ route('login') }}">Masuk</a>
+                    <a href="{{ route('register') }}">Daftar</a>
+                @endguest
             </div>
         </nav>
     </header>
