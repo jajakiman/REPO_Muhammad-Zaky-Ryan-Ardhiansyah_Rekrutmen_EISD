@@ -111,6 +111,19 @@ class AuthenticationTest extends TestCase
         }
     }
 
+    public function test_login_ignores_an_intended_url_and_always_redirects_to_the_users_role_route(): void
+    {
+        $reporter = User::factory()->create([
+            'email' => 'reporter@example.test',
+            'password' => 'correct-password',
+            'role' => 'reporter',
+        ]);
+
+        $this->withSession(['url.intended' => route('admin.dashboard')])
+            ->post(route('login'), ['email' => $reporter->email, 'password' => 'correct-password'])
+            ->assertRedirect(route('reporter.dashboard'));
+    }
+
     public function test_logout_invalidates_session_and_regenerates_csrf_token(): void
     {
         $user = User::factory()->create();

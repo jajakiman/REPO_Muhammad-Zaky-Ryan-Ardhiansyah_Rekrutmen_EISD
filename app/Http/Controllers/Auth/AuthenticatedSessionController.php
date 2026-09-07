@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route(Auth::user()->role.'.dashboard'));
+        return redirect()->route(Auth::user()->role.'.dashboard');
     }
 
     public function destroy(Request $request): RedirectResponse
