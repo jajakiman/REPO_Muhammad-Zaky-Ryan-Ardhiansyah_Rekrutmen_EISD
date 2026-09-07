@@ -12,6 +12,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PublicMapController;
 use App\Http\Controllers\Reporter\ProfileController;
+use App\Http\Controllers\Reporter\ReportController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -31,6 +32,11 @@ Route::middleware('auth')->group(function () {
     Route::middleware('role:reporter')->prefix('pelapor')->name('reporter.')->group(function () {
         Route::get('/profil', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::put('/profil', [ProfileController::class, 'update'])->name('profile.update');
+        Route::get('/laporan', [ReportController::class, 'index'])->name('reports.index');
+        Route::get('/laporan/buat', [ReportController::class, 'create'])->name('reports.create');
+        Route::post('/laporan', [ReportController::class, 'store'])->name('reports.store');
+        Route::get('/laporan/{report}', [ReportController::class, 'show'])->name('reports.show');
+        Route::patch('/laporan/{report}/batal', [ReportController::class, 'cancel'])->name('reports.cancel');
     });
     Route::view('/petugas', 'dashboards.officer')->middleware('role:officer')->name('officer.dashboard');
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {

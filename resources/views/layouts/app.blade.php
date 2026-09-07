@@ -24,6 +24,7 @@
                 @else
                     <a href="{{ route(auth()->user()->role.'.dashboard') }}">Area saya</a>
                     @if (auth()->user()->role === 'reporter')
+                        <a href="{{ route('reporter.reports.index') }}">Laporan saya</a>
                         <a href="{{ route('reporter.profile.edit') }}">Profil</a>
                     @endif
                     <form method="post" action="{{ route('logout') }}">

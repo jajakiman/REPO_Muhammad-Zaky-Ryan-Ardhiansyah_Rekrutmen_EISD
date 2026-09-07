@@ -60,6 +60,15 @@ return [
             'report' => false,
         ],
 
+        'report-photos' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/report-photos'),
+            'url' => env('APP_URL').'/storage/report-photos',
+            'visibility' => 'public',
+            'throw' => false,
+            'report' => false,
+        ],
+
     ],
 
     /*
