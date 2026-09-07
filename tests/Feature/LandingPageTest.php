@@ -39,7 +39,7 @@ class LandingPageTest extends TestCase
 
         $response->assertOk()
             ->assertSee('AksesLoka')
-            ->assertSee('SDG 11.7')
+            ->assertSee('SDGs 11')
             ->assertSee('Alur Kerja Penanganan')
             ->assertSee('Lihat peta')
             ->assertSee(route('map.index'))

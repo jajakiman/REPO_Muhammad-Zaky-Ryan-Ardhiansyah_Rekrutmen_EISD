@@ -1,6 +1,6 @@
 # AksesLoka
 
-AksesLoka adalah aplikasi sistem informasi berbasis web (Laravel 12) untuk pemetaan fasilitas aksesibilitas dan penanganan laporan masalah fasilitas di lingkungan kampus (SDG 11.7).
+AksesLoka adalah aplikasi sistem informasi berbasis web (Laravel 12) untuk pemetaan fasilitas aksesibilitas dan penanganan laporan masalah fasilitas di lingkungan kampus (SDGs 11).
 
 ## Menjalankan secara Lokal
 
