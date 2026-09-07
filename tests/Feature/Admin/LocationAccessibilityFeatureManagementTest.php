@@ -66,6 +66,54 @@ class LocationAccessibilityFeatureManagementTest extends TestCase
         $this->actingAs($this->admin())->get(route('admin.locations.features.create', $location))->assertDontSee($inactive->name);
     }
 
+    public function test_assignment_rejects_inactive_location_hierarchy_in_ui_create_and_store(): void
+    {
+        $admin = $this->admin();
+        $feature = AccessibilityFeature::factory()->create();
+
+        foreach (['location', 'area', 'campus'] as $inactiveLevel) {
+            $location = CampusLocation::factory()->create();
+            match ($inactiveLevel) {
+                'location' => $location->update(['is_active' => false]),
+                'area' => $location->campusArea->update(['is_active' => false]),
+                'campus' => $location->campusArea->campus->update(['is_active' => false]),
+            };
+
+            $this->actingAs($admin)->get(route('admin.locations.features.index', $location))
+                ->assertOk()
+                ->assertDontSee('Pasang fasilitas')
+                ->assertSee('Kampus, area, dan lokasi harus aktif');
+            $this->actingAs($admin)->get(route('admin.locations.features.create', $location))
+                ->assertRedirect(route('admin.locations.features.index', $location))
+                ->assertSessionHas('error');
+            $this->actingAs($admin)->post(route('admin.locations.features.store', $location), $this->data($feature))
+                ->assertSessionHasErrors('location');
+            $this->assertDatabaseMissing('location_accessibility_features', ['campus_location_id' => $location->id]);
+        }
+    }
+
+    public function test_assignment_workflow_is_not_offered_when_no_eligible_feature_remains(): void
+    {
+        $admin = $this->admin();
+        $location = CampusLocation::factory()->create();
+        $assigned = AccessibilityFeature::factory()->create();
+        AccessibilityFeature::factory()->create(['is_active' => false]);
+        LocationAccessibilityFeature::factory()->create([
+            'campus_location_id' => $location->id,
+            'accessibility_feature_id' => $assigned->id,
+        ]);
+
+        $this->actingAs($admin)->get(route('admin.locations.features.index', $location))
+            ->assertOk()
+            ->assertDontSee('Pasang fasilitas')
+            ->assertSee('Semua fasilitas aktif sudah terpasang');
+        $this->actingAs($admin)->get(route('admin.locations.features.create', $location))
+            ->assertRedirect(route('admin.locations.features.index', $location))
+            ->assertSessionHas('error');
+        $this->actingAs($admin)->post(route('admin.locations.features.store', $location), $this->data($assigned))
+            ->assertSessionHasErrors('accessibility_feature_id');
+    }
+
     public function test_pivot_validation_enforces_exact_enums_and_allows_nullable_metadata(): void
     {
         $location = CampusLocation::factory()->create();

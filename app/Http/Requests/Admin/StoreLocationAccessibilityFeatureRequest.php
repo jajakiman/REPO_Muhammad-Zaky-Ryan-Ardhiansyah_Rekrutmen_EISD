@@ -14,7 +14,10 @@ class StoreLocationAccessibilityFeatureRequest extends FormRequest
 
     public function rules(): array
     {
+        $location = $this->route('location');
+
         return [
+            'location' => [fn ($attribute, $value, $fail) => ($location->is_active && $location->campusArea->is_active && $location->campusArea->campus->is_active) ?: $fail('Kampus, area, dan lokasi harus aktif.')],
             'accessibility_feature_id' => [
                 'required',
                 Rule::exists('accessibility_features', 'id')->where('is_active', true),
@@ -27,8 +30,13 @@ class StoreLocationAccessibilityFeatureRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation(): void
+    {
+        $this->merge(['location' => $this->route('location')->id]);
+    }
+
     public function attributes(): array
     {
-        return ['accessibility_feature_id' => 'fasilitas', 'availability_status' => 'ketersediaan', 'condition' => 'kondisi', 'notes' => 'catatan', 'last_checked_at' => 'waktu pemeriksaan'];
+        return ['location' => 'lokasi', 'accessibility_feature_id' => 'fasilitas', 'availability_status' => 'ketersediaan', 'condition' => 'kondisi', 'notes' => 'catatan', 'last_checked_at' => 'waktu pemeriksaan'];
     }
 }
