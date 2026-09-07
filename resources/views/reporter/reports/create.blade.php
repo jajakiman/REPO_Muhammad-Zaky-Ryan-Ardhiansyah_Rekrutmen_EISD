@@ -8,21 +8,44 @@
         <div class="form-intro">
             <p class="eyebrow">Form Pelaporan</p>
             <h1>Buat Laporan Masalah</h1>
-            <p class="lead">Sampaikan kendala fasilitas aksesibilitas yang Anda temukan agar dapat segera ditindaklanjuti oleh petugas terkait.</p>
-
-            <div class="service-card" style="margin-top: 1.5rem;">
-                <p class="eyebrow">Objek Laporan</p>
-                <h2 style="font-size: 1.25rem;">{{ $facility->accessibilityFeature->name }}</h2>
-                <p><strong>Lokasi:</strong> {{ $facility->campusLocation->name }}</p>
-                <p><strong>Area:</strong> {{ $facility->campusLocation->campusArea->name }}</p>
-                <p><strong>Kampus:</strong> {{ $facility->campusLocation->campusArea->campus->name }}</p>
+            <p class="lead">Pilih fasilitas yang bermasalah, jelaskan kendalanya, lalu sertakan foto bukti jika tersedia.</p>
+            <div class="mt-6 rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm leading-6 text-slate-700">
+                Laporan otomatis diteruskan ke petugas yang bertanggung jawab atas area lokasi tersebut.
             </div>
         </div>
 
-        <div class="form-card">
+        @if($facilities->isEmpty())
+        <div class="empty-state text-center">
+            <h2>Belum ada fasilitas yang dapat dilaporkan</h2>
+            <p>Fasilitas aktif belum tersedia. Anda tetap dapat melihat lokasi kampus yang sudah dipetakan.</p>
+            <a class="button button-secondary mt-5" href="{{ route('map.index') }}">Lihat Peta Kampus</a>
+        </div>
+        @else
+        <div class="form-card min-w-0">
             <form method="post" action="{{ route('reporter.reports.store') }}" enctype="multipart/form-data">
                 @csrf
-                <input type="hidden" name="location_accessibility_feature_id" value="{{ $facility->id }}">
+
+                <div class="field">
+                    <label for="location_accessibility_feature_id">Lokasi dan Fasilitas <span class="required-mark text-red-600" aria-hidden="true">*</span></label>
+                    <x-select-shell>
+                    <select id="location_accessibility_feature_id" name="location_accessibility_feature_id" required @error('location_accessibility_feature_id') aria-describedby="location_accessibility_feature_id-error" aria-invalid="true" @enderror>
+                        <option value="">Pilih lokasi dan fasilitas</option>
+                        @foreach($facilities->groupBy(fn ($item) => $item->campusLocation->campusArea->campus->name) as $campusName => $campusFacilities)
+                            <optgroup label="{{ $campusName }}">
+                                @foreach($campusFacilities as $item)
+                                    <option value="{{ $item->id }}" @selected((string) old('location_accessibility_feature_id', $facilityId) === (string) $item->id)>
+                                        {{ $item->campusLocation->name }} - {{ $item->accessibilityFeature->name }}
+                                    </option>
+                                @endforeach
+                            </optgroup>
+                        @endforeach
+                    </select>
+                    </x-select-shell>
+                    <p class="field-hint">Nama kampus digunakan sebagai kelompok agar lokasi lebih mudah ditemukan.</p>
+                    @error('location_accessibility_feature_id')
+                        <p class="field-error" id="location_accessibility_feature_id-error">{{ $message }}</p>
+                    @enderror
+                </div>
 
                 <div class="field">
                     <label for="issue_category_id">Kategori Masalah <span class="required-mark text-red-600" aria-hidden="true">*</span></label>
@@ -60,10 +83,11 @@
 
                 <div class="actions" style="margin-top: 2rem;">
                     <button class="button button-primary" type="submit">Kirim Laporan</button>
-                    <a class="button button-secondary" href="{{ route('locations.show', $facility->campusLocation) }}">Batal</a>
+                    <a class="button button-secondary" href="{{ route('reporter.dashboard') }}">Batal</a>
                 </div>
             </form>
         </div>
+        @endif
     </div>
 </section>
 @endsection

@@ -35,24 +35,28 @@ class ReportController extends Controller
     public function create(Request $request): View
     {
         $facilityId = $request->query('facility_id');
-        abort_unless($facilityId, 404);
 
-        $facility = LocationAccessibilityFeature::with([
+        $facilities = LocationAccessibilityFeature::with([
             'campusLocation.campusArea.campus',
             'accessibilityFeature',
-        ])->findOrFail($facilityId);
+        ])->whereHas('accessibilityFeature', fn ($query) => $query->active())
+            ->whereHas('campusLocation', fn ($query) => $query->active()
+                ->whereHas('campusArea', fn ($area) => $area->active()
+                    ->whereHas('campus', fn ($campus) => $campus->active())))
+            ->get()
+            ->sortBy(fn ($facility) => implode('|', [
+                $facility->campusLocation->campusArea->campus->name,
+                $facility->campusLocation->name,
+                $facility->accessibilityFeature->name,
+            ]));
 
-        abort_unless(
-            $facility->accessibilityFeature?->is_active &&
-            $facility->campusLocation?->is_active &&
-            $facility->campusLocation?->campusArea?->is_active &&
-            $facility->campusLocation?->campusArea?->campus?->is_active,
-            404
-        );
+        if ($facilityId && ! $facilities->contains('id', (int) $facilityId)) {
+            abort(404);
+        }
 
         $categories = IssueCategory::active()->orderBy('name')->get();
 
-        return view('reporter.reports.create', compact('facility', 'categories'));
+        return view('reporter.reports.create', compact('facilities', 'facilityId', 'categories'));
     }
 
     public function store(StoreReportRequest $request): RedirectResponse

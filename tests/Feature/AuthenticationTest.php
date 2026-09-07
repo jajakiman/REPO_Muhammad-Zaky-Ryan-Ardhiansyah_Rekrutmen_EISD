@@ -152,6 +152,9 @@ class AuthenticationTest extends TestCase
             ->assertSee('data-auth-success-dialog', false)
             ->assertSee('data-redirect-url="'.route('reporter.dashboard').'"', false)
             ->assertSee('data-auto-close="3000"', false)
+            ->assertSee('Registrasi Berhasil')
+            ->assertSee('data-auth-progress', false)
+            ->assertSee('logo-mark.webp', false)
             ->assertDontSee('>OK</button>', false);
         $this->assertSame('reporter', $user->role);
         $this->assertTrue($user->is_active);
@@ -220,6 +223,9 @@ class AuthenticationTest extends TestCase
                 ->assertOk()
                 ->assertSee('data-auth-success-dialog', false)
                 ->assertSee('data-redirect-url="'.route($destination).'"', false)
+                ->assertSee('Login Berhasil')
+                ->assertSee('data-auth-progress', false)
+                ->assertSee('logo-mark.webp', false)
                 ->assertDontSee('>OK</button>', false);
 
             $this->assertAuthenticatedAs($user);

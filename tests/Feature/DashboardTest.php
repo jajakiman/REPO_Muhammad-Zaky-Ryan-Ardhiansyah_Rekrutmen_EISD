@@ -51,7 +51,7 @@ class DashboardTest extends TestCase
             ->assertSee('5')
             ->assertSee('Laporan Selesai')
             ->assertSee('1')
-            ->assertSee('Buka Peta Kampus')
+            ->assertSee('Buat Laporan Baru')
             ->assertSee('Laporan ke-6')
             ->assertDontSee('Laporan ke-1'); // Cap at 5 most recent
     }
@@ -65,14 +65,10 @@ class DashboardTest extends TestCase
             ->assertSee('reporter-dashboard-intro', false)
             ->assertSee('text-slate-600', false)
             ->assertSee('reporter-metric-card', false)
-            ->assertSee('Cara Membuat Laporan')
-            ->assertSeeInOrder([
-                'Buka Peta Kampus',
-                'Pilih Lokasi dan Fasilitas',
-                'Kirim Laporan',
-            ])
-            ->assertSee('Temukan Fasilitas untuk Dilaporkan')
-            ->assertSee('href="'.route('map.index').'"', false);
+            ->assertSee('Pelaporan Cepat')
+            ->assertSee('Buat Laporan Baru')
+            ->assertSee('Buat Laporan Pertama')
+            ->assertSee('href="'.route('reporter.reports.create').'"', false);
     }
 
     public function test_officer_dashboard_displays_area_metrics_and_queue_snapshot(): void

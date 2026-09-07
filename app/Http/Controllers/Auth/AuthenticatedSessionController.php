@@ -41,6 +41,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         return view('auth.success', [
+            'title' => 'Login Berhasil',
             'message' => 'Berhasil masuk. Selamat datang di AksesLoka.',
             'redirectUrl' => route(Auth::user()->role.'.dashboard'),
         ]);

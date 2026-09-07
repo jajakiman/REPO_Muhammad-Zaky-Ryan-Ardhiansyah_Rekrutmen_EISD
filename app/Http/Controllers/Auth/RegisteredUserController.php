@@ -28,6 +28,7 @@ class RegisteredUserController extends Controller
         $request->session()->regenerate();
 
         return view('auth.success', [
+            'title' => 'Registrasi Berhasil',
             'message' => 'Registrasi berhasil. Selamat datang di AksesLoka.',
             'redirectUrl' => route('reporter.dashboard'),
         ]);

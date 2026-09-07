@@ -23,7 +23,8 @@
                 <p class="reporter-dashboard-intro mt-2 max-w-2xl text-base leading-7 text-slate-600">Selamat datang di AksesLoka. Temukan fasilitas kampus, kirim laporan kendala, dan pantau progres penanganannya dari satu tempat.</p>
             </div>
             <div class="actions">
-                <a class="button button-primary" href="{{ route('map.index') }}">Buka Peta Kampus</a>
+                <a class="button button-primary" href="{{ route('reporter.reports.create') }}">Buat Laporan Baru</a>
+                <a class="button button-secondary" href="{{ route('map.index') }}">Lihat Peta</a>
                 <a class="button button-secondary" href="{{ route('reporter.reports.index') }}">Semua Laporan Saya</a>
             </div>
         </div>
@@ -44,29 +45,13 @@
             </div>
         </div>
 
-        <section class="mt-8 rounded-2xl border border-blue-200 bg-blue-50/70 p-6 sm:p-8" aria-labelledby="report-guide-title">
-            <div class="max-w-2xl">
-                <p class="text-xs font-bold uppercase tracking-wider text-orange-700">Panduan Pelapor</p>
-                <h2 id="report-guide-title" class="mt-2 text-2xl font-bold text-slate-900">Cara Membuat Laporan</h2>
-                <p class="mt-2 text-sm leading-6 text-slate-600">Laporan harus menunjuk fasilitas yang sudah terdata agar otomatis masuk ke petugas area yang benar.</p>
+        <section class="mt-8 grid gap-5 rounded-2xl bg-navy-950 p-6 text-white sm:grid-cols-[1fr_auto] sm:items-center sm:p-8" aria-labelledby="report-action-title">
+            <div>
+                <p class="text-xs font-bold uppercase tracking-wider text-orange-400">Pelaporan Cepat</p>
+                <h2 id="report-action-title" class="mt-2 text-2xl font-bold text-white">Temukan kendala fasilitas?</h2>
+                <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-200">Pilih lokasi dan fasilitas langsung pada formulir, jelaskan kendalanya, lalu sertakan foto jika tersedia.</p>
             </div>
-            <ol class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-3">
-                <li class="rounded-xl border border-white bg-white p-5 shadow-sm">
-                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-navy-50 text-sm font-black text-navy-900">01</span>
-                    <h3 class="mt-4 text-base font-bold text-slate-900">Buka Peta Kampus</h3>
-                    <p class="mt-2 text-sm leading-6 text-slate-600">Cari kampus atau lokasi yang fasilitasnya ingin Anda laporkan.</p>
-                </li>
-                <li class="rounded-xl border border-white bg-white p-5 shadow-sm">
-                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-navy-50 text-sm font-black text-navy-900">02</span>
-                    <h3 class="mt-4 text-base font-bold text-slate-900">Pilih Lokasi dan Fasilitas</h3>
-                    <p class="mt-2 text-sm leading-6 text-slate-600">Buka detail lokasi, lalu pilih fasilitas yang mengalami kendala.</p>
-                </li>
-                <li class="rounded-xl border border-white bg-white p-5 shadow-sm">
-                    <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-navy-50 text-sm font-black text-navy-900">03</span>
-                    <h3 class="mt-4 text-base font-bold text-slate-900">Kirim Laporan</h3>
-                    <p class="mt-2 text-sm leading-6 text-slate-600">Pilih kategori, jelaskan masalah, lalu tambahkan foto jika tersedia.</p>
-                </li>
-            </ol>
+            <a class="button button-primary min-h-11 justify-center" href="{{ route('reporter.reports.create') }}">Buat Laporan Baru</a>
         </section>
 
         <!-- Recent Reports Table -->
@@ -82,7 +67,7 @@
                 <div class="empty-state text-center">
                     <h3 class="text-lg font-bold text-slate-900">Belum ada laporan</h3>
                     <p class="mt-2 text-sm text-slate-600">Anda belum membuat laporan kendala fasilitas.</p>
-                    <a href="{{ route('map.index') }}" class="mt-5 inline-flex min-h-11 items-center justify-center rounded-xl bg-orange-700 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-orange-800 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-offset-2">Temukan Fasilitas untuk Dilaporkan</a>
+                    <a href="{{ route('reporter.reports.create') }}" class="mt-5 inline-flex min-h-11 items-center justify-center rounded-xl bg-orange-700 px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-colors hover:bg-orange-800 focus:outline-none focus:ring-2 focus:ring-orange-600 focus:ring-offset-2">Buat Laporan Pertama</a>
                 </div>
             @else
                 <div class="table-wrap">

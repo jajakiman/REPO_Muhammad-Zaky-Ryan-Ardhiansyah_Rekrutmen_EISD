@@ -72,6 +72,43 @@ class ReporterReportTest extends TestCase
             ->assertSee('Fasilitas Rusak');
     }
 
+    public function test_reporter_can_open_report_form_directly_and_choose_an_active_facility(): void
+    {
+        $facility = $this->createFacility();
+        $facility->campusLocation->update(['name' => 'Gedung Tokong Nanas']);
+        $facility->accessibilityFeature->update(['name' => 'Ramp']);
+        IssueCategory::factory()->create(['is_active' => true]);
+
+        $this->actingAs(User::factory()->create(['role' => 'reporter']))
+            ->get(route('reporter.reports.create'))
+            ->assertOk()
+            ->assertSee('name="location_accessibility_feature_id"', false)
+            ->assertSee('Gedung Tokong Nanas - Ramp')
+            ->assertSee('Foto Bukti (Opsional)');
+    }
+
+    public function test_report_form_preselects_a_facility_from_the_map(): void
+    {
+        $facility = $this->createFacility();
+        IssueCategory::factory()->create(['is_active' => true]);
+
+        $this->actingAs(User::factory()->create(['role' => 'reporter']))
+            ->get(route('reporter.reports.create', ['facility_id' => $facility->id]))
+            ->assertOk()
+            ->assertSee('value="'.$facility->id.'" selected', false);
+    }
+
+    public function test_report_form_shows_an_actionable_empty_state_without_active_facilities(): void
+    {
+        $this->actingAs(User::factory()->create(['role' => 'reporter']))
+            ->get(route('reporter.reports.create'))
+            ->assertOk()
+            ->assertSee('empty-state', false)
+            ->assertSee('Belum ada fasilitas yang dapat dilaporkan')
+            ->assertSee(route('map.index'))
+            ->assertDontSee('Kirim Laporan');
+    }
+
     public function test_reporter_cannot_create_report_for_inactive_facility_hierarchy(): void
     {
         $campus = Campus::factory()->create(['is_active' => false]);
