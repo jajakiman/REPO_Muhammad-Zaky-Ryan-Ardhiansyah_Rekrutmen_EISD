@@ -8,9 +8,9 @@
     @else
         <div class="table-wrap"><table><caption class="sr-only">Daftar seluruh kampus</caption><thead><tr><th scope="col">Nama</th><th scope="col">Alamat</th><th scope="col">Koordinat</th><th scope="col">Status</th><th scope="col">Aksi</th></tr></thead><tbody>
         @foreach ($campuses as $campus)<tr>
-            <th scope="row">{{ $campus->name }}</th><td>{{ $campus->address ?: '-' }}</td><td>{{ $campus->latitude !== null ? $campus->latitude.', '.$campus->longitude : '-' }}</td>
-            <td><span class="badge {{ $campus->is_active ? 'badge-positive' : 'badge-neutral' }}">{{ $campus->is_active ? 'Aktif' : 'Nonaktif' }}</span></td>
-            <td><div class="table-actions"><a href="{{ route('admin.campuses.areas.index', $campus) }}">Area</a><a href="{{ route('admin.campuses.edit', $campus) }}">Ubah</a>@if ($campus->is_active)<form method="post" action="{{ route('admin.campuses.deactivate', $campus) }}">@csrf @method('patch')<button class="link-button" type="submit">Nonaktifkan</button></form>@endif</div></td>
+            <th scope="row" data-label="Nama">{{ $campus->name }}</th><td data-label="Alamat">{{ $campus->address ?: '-' }}</td><td data-label="Koordinat">{{ $campus->latitude !== null ? $campus->latitude.', '.$campus->longitude : '-' }}</td>
+            <td data-label="Status"><span class="badge {{ $campus->is_active ? 'badge-positive' : 'badge-neutral' }}">{{ $campus->is_active ? 'Aktif' : 'Nonaktif' }}</span></td>
+            <td data-label="Aksi"><div class="table-actions"><a href="{{ route('admin.campuses.areas.index', $campus) }}">Area</a><a href="{{ route('admin.campuses.edit', $campus) }}">Ubah</a>@if ($campus->is_active)<form method="post" action="{{ route('admin.campuses.deactivate', $campus) }}">@csrf @method('patch')<button class="link-button" type="submit">Nonaktifkan</button></form>@endif</div></td>
         </tr>@endforeach
         </tbody></table></div>
     @endif

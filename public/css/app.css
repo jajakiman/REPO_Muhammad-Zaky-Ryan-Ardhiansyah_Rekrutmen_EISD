@@ -116,6 +116,7 @@ h2 { font-size: clamp(1.65rem, 3vw, 2.25rem); }
 .flash { margin-block: 1rem; padding: 1rem; border-radius: var(--radius-badge); }
 .flash-positive { background: var(--emerald-50); color: var(--emerald-800); }
 .flash-critical { background: var(--red-50); color: var(--red-800); }
+.flash-neutral { background: var(--slate-100); color: var(--slate-700); }
 .form-section { padding-block: clamp(2.5rem, 6vw, 5rem); }
 .form-layout { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(20rem, 1.2fr); gap: clamp(2rem, 6vw, 5rem); align-items: start; }
 .form-intro { position: sticky; top: 2rem; }
@@ -167,7 +168,9 @@ tbody tr:last-child > * { border-bottom: 0; }
     table, thead, tbody, tr, th, td { display: block; }
     thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); }
     tbody tr { margin-bottom: 1rem; padding: 0.75rem; border: 1px solid var(--slate-200); border-radius: var(--radius-card); background: var(--white); }
-    tbody tr > * { padding: 0.45rem; border: 0; }
+    tbody tr > * { display: grid; grid-template-columns: minmax(7rem, 0.4fr) minmax(0, 1fr); gap: 0.75rem; padding: 0.45rem; border: 0; overflow-wrap: anywhere; }
+    tbody tr > *::before { content: attr(data-label); color: var(--slate-700); font-weight: 700; }
+    .table-actions { flex-wrap: wrap; white-space: normal; }
 }
 
 @media (prefers-reduced-motion: reduce) {
