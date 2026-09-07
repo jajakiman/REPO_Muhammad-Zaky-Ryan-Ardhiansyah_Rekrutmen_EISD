@@ -6,7 +6,7 @@ PORT=${PORT:-8080}
 export PORT
 
 # Configure Nginx port dynamically
-sed -i "s/\${PORT}/$PORT/g" /etc/nginx/conf.d/default.conf
+sed -i "s/\${PORT}/$PORT/g" /etc/nginx/nginx.conf
 
 # Set permissions
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
@@ -19,10 +19,12 @@ if [ "$APP_ENV" = "production" ]; then
     php artisan view:cache || true
 fi
 
-# Run database migrations if RUN_MIGRATIONS=true
+# Run database migrations and seeders if RUN_MIGRATIONS=true
 if [ "$RUN_MIGRATIONS" = "true" ]; then
     echo "Running database migrations..."
     php artisan migrate --force || true
+    echo "Running database seeders..."
+    php artisan db:seed --force || true
 fi
 
 echo "Starting PHP-FPM..."

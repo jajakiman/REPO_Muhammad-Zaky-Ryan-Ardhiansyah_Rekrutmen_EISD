@@ -32,7 +32,8 @@ COPY . /var/www/html
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress
 
 # Configure Nginx and Entrypoint
-COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+RUN rm -rf /etc/nginx/http.d /etc/nginx/conf.d
+COPY docker/nginx.conf /etc/nginx/nginx.conf
 COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
