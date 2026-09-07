@@ -67,4 +67,12 @@ class FoundationTest extends TestCase
         $this->assertStringNotContainsString('npm ', $readme);
         $this->assertStringNotContainsString('Vite', $readme);
     }
+
+    public function test_https_scheme_is_forced_when_app_url_is_https(): void
+    {
+        config(['app.url' => 'https://aksesloka.onrender.com']);
+        (new \App\Providers\AppServiceProvider($this->app))->boot();
+
+        $this->assertStringStartsWith('https://', asset('css/app.css'));
+    }
 }
