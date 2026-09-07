@@ -127,6 +127,7 @@ h2 { font-size: clamp(1.65rem, 3vw, 2.25rem); }
 .field label { display: block; margin-bottom: 0.35rem; font-weight: 700; }
 .field input,
 .field select { width: 100%; min-height: 44px; padding: 0.65rem 0.75rem; border: 1px solid var(--slate-700); border-radius: var(--radius-control); background: var(--white); color: var(--slate-900); font: inherit; }
+.field input[readonly] { border-color: var(--slate-200); background: var(--slate-100); color: var(--slate-700); }
 .field-help,
 .field-error { margin: 0.35rem 0 0; font-size: 0.9rem; }
 .field-help { color: var(--slate-700); }
