@@ -104,7 +104,7 @@ class DataModelTest extends TestCase
         $this->assertNotNull($report->verified_at);
     }
 
-    public function test_database_seeder_is_idempotent_and_contains_only_listed_master_values(): void
+    public function test_database_seeder_is_idempotent_and_contains_listed_master_and_demo_values(): void
     {
         $this->seed();
         $this->seed();
@@ -132,8 +132,10 @@ class DataModelTest extends TestCase
             'Signage Tidak Jelas',
         ], IssueCategory::orderBy('id')->pluck('name')->all());
 
-        foreach (['campus_areas', 'campus_locations', 'location_accessibility_features', 'accessibility_reports', 'users'] as $table) {
-            $this->assertSame(0, DB::table($table)->count(), $table.' should not contain fabricated records.');
-        }
+        $this->assertSame(3, DB::table('campus_areas')->count());
+        $this->assertSame(3, DB::table('campus_locations')->count());
+        $this->assertSame(9, DB::table('location_accessibility_features')->count());
+        $this->assertSame(4, DB::table('users')->count());
+        $this->assertSame(0, DB::table('accessibility_reports')->count());
     }
 }
