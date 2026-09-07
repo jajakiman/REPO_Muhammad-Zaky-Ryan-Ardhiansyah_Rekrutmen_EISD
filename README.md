@@ -4,26 +4,16 @@ AksesLoka adalah aplikasi Laravel 12 untuk informasi fasilitas aksesibilitas dan
 
 ## Menjalankan secara lokal
 
-Persyaratan: PHP 8.2 atau lebih baru, Composer, serta Node.js dan npm.
+Persyaratan: PHP 8.2 atau lebih baru dan Composer.
 
 ```bash
 composer install
 cp .env.example .env
 php artisan key:generate
-npm install
-npm run build
 php artisan serve
 ```
 
 Buka `http://127.0.0.1:8000`. Nilai rahasia harus diatur melalui `.env` dan tidak boleh dikomit.
-
-## Pengembangan
-
-Jalankan server aplikasi dan Vite bersama-sama dengan:
-
-```bash
-composer run dev
-```
 
 Jalankan pengujian dengan:
 

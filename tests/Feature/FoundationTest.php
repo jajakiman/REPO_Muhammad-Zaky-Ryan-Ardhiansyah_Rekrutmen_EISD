@@ -50,4 +50,18 @@ class FoundationTest extends TestCase
 
         $this->assertFileExists(public_path('css/app.css'));
     }
+
+    public function test_project_configuration_has_no_node_or_vite_runtime(): void
+    {
+        $composer = file_get_contents(base_path('composer.json'));
+        $environment = file_get_contents(base_path('.env.example'));
+        $readme = file_get_contents(base_path('README.md'));
+
+        $this->assertStringNotContainsString('npx', $composer);
+        $this->assertStringNotContainsString('npm ', $composer);
+        $this->assertStringNotContainsString('VITE_', $environment);
+        $this->assertStringNotContainsString('Node.js', $readme);
+        $this->assertStringNotContainsString('npm ', $readme);
+        $this->assertStringNotContainsString('Vite', $readme);
+    }
 }
