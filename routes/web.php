@@ -7,6 +7,8 @@ use App\Http\Controllers\Reporter\ProfileController;
 use App\Http\Controllers\Admin\CampusController;
 use App\Http\Controllers\Admin\CampusAreaController;
 use App\Http\Controllers\Admin\CampusLocationController;
+use App\Http\Controllers\Admin\AccessibilityFeatureController;
+use App\Http\Controllers\Admin\IssueCategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -46,5 +48,17 @@ Route::middleware('auth')->group(function () {
         Route::get('/kampus/{campus}/area/{area}/lokasi/{location}/ubah', [CampusLocationController::class, 'edit'])->name('campuses.areas.locations.edit');
         Route::put('/kampus/{campus}/area/{area}/lokasi/{location}', [CampusLocationController::class, 'update'])->name('campuses.areas.locations.update');
         Route::patch('/kampus/{campus}/area/{area}/lokasi/{location}/nonaktifkan', [CampusLocationController::class, 'deactivate'])->name('campuses.areas.locations.deactivate');
+        Route::get('/fasilitas', [AccessibilityFeatureController::class, 'index'])->name('features.index');
+        Route::get('/fasilitas/tambah', [AccessibilityFeatureController::class, 'create'])->name('features.create');
+        Route::post('/fasilitas', [AccessibilityFeatureController::class, 'store'])->name('features.store');
+        Route::get('/fasilitas/{feature}/ubah', [AccessibilityFeatureController::class, 'edit'])->name('features.edit');
+        Route::put('/fasilitas/{feature}', [AccessibilityFeatureController::class, 'update'])->name('features.update');
+        Route::patch('/fasilitas/{feature}/nonaktifkan', [AccessibilityFeatureController::class, 'deactivate'])->name('features.deactivate');
+        Route::get('/kategori-masalah', [IssueCategoryController::class, 'index'])->name('issue-categories.index');
+        Route::get('/kategori-masalah/tambah', [IssueCategoryController::class, 'create'])->name('issue-categories.create');
+        Route::post('/kategori-masalah', [IssueCategoryController::class, 'store'])->name('issue-categories.store');
+        Route::get('/kategori-masalah/{issue_category}/ubah', [IssueCategoryController::class, 'edit'])->name('issue-categories.edit');
+        Route::put('/kategori-masalah/{issue_category}', [IssueCategoryController::class, 'update'])->name('issue-categories.update');
+        Route::patch('/kategori-masalah/{issue_category}/nonaktifkan', [IssueCategoryController::class, 'deactivate'])->name('issue-categories.deactivate');
     });
 });
