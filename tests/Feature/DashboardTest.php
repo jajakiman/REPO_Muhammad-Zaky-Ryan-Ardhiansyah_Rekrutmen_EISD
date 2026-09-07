@@ -56,6 +56,25 @@ class DashboardTest extends TestCase
             ->assertDontSee('Laporan ke-1'); // Cap at 5 most recent
     }
 
+    public function test_new_reporter_dashboard_explains_the_reporting_flow_and_offers_a_real_start_action(): void
+    {
+        $reporter = User::factory()->create(['role' => 'reporter']);
+
+        $this->actingAs($reporter)->get(route('reporter.dashboard'))
+            ->assertOk()
+            ->assertSee('reporter-dashboard-intro', false)
+            ->assertSee('text-slate-600', false)
+            ->assertSee('reporter-metric-card', false)
+            ->assertSee('Cara Membuat Laporan')
+            ->assertSeeInOrder([
+                'Buka Peta Kampus',
+                'Pilih Lokasi dan Fasilitas',
+                'Kirim Laporan',
+            ])
+            ->assertSee('Temukan Fasilitas untuk Dilaporkan')
+            ->assertSee('href="'.route('map.index').'"', false);
+    }
+
     public function test_officer_dashboard_displays_area_metrics_and_queue_snapshot(): void
     {
         $campus = Campus::factory()->create(['name' => 'Telkom University']);
