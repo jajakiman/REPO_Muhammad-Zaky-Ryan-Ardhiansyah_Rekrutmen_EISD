@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class CampusLocation extends Model
+class AccessibilityFeature extends Model
 {
     use HasFactory;
 
@@ -17,17 +16,12 @@ class CampusLocation extends Model
 
     protected function casts(): array
     {
-        return ['latitude' => 'decimal:7', 'longitude' => 'decimal:7', 'is_active' => 'boolean'];
+        return ['is_active' => 'boolean'];
     }
 
-    public function campusArea(): BelongsTo
+    public function campusLocations(): BelongsToMany
     {
-        return $this->belongsTo(CampusArea::class);
-    }
-
-    public function accessibilityFeatures(): BelongsToMany
-    {
-        return $this->belongsToMany(AccessibilityFeature::class, 'location_accessibility_features')
+        return $this->belongsToMany(CampusLocation::class, 'location_accessibility_features')
             ->withPivot(['id', 'availability_status', 'condition', 'notes', 'last_checked_at'])
             ->withTimestamps();
     }
