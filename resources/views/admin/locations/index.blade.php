@@ -1,0 +1,9 @@
+@extends('layouts.app')
+@section('title', 'Lokasi '.$area->name.' | AksesLoka')
+@section('content')
+<section class="admin-section"><div class="container"><div class="page-heading"><div><p class="eyebrow">{{ $campus->name }} / {{ $area->name }}</p><h1>Lokasi kampus</h1></div><div class="actions"><a class="button button-secondary" href="{{ route('admin.campuses.areas.index', $campus) }}">Kembali ke area</a>@if($campus->is_active && $area->is_active)<a class="button button-primary" href="{{ route('admin.campuses.areas.locations.create', [$campus, $area]) }}">Tambah lokasi</a>@endif</div></div>
+@if($locations->isEmpty())<div class="empty-state"><h2>Belum ada lokasi</h2><p>Belum ada lokasi yang tercatat untuk area ini.</p></div>@else
+<div class="table-wrap"><table><caption class="sr-only">Daftar lokasi {{ $area->name }}</caption><thead><tr><th scope="col">Nama</th><th scope="col">Tipe</th><th scope="col">Koordinat</th><th scope="col">Aksesibilitas</th><th scope="col">Status</th><th scope="col">Aksi</th></tr></thead><tbody>
+@foreach($locations as $location)<tr><th scope="row">{{ $location->name }}</th><td>{{ str_replace('_', ' ', $location->location_type) }}</td><td>{{ $location->latitude }}, {{ $location->longitude }}</td><td>{{ str_replace('_', ' ', $location->accessibility_status) }}</td><td><span class="badge {{ $location->is_active ? 'badge-positive' : 'badge-neutral' }}">{{ $location->is_active ? 'Aktif' : 'Nonaktif' }}</span></td><td><div class="table-actions"><a href="{{ route('admin.campuses.areas.locations.edit', [$campus, $area, $location]) }}">Ubah</a>@if($location->is_active)<form method="post" action="{{ route('admin.campuses.areas.locations.deactivate', [$campus, $area, $location]) }}">@csrf @method('patch')<button class="link-button" type="submit">Nonaktifkan</button></form>@endif</div></td></tr>@endforeach
+</tbody></table></div>@endif</div></section>
+@endsection

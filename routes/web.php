@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Reporter\ProfileController;
 use App\Http\Controllers\Admin\CampusController;
 use App\Http\Controllers\Admin\CampusAreaController;
+use App\Http\Controllers\Admin\CampusLocationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
@@ -39,5 +40,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/kampus/{campus}/area/{area}/ubah', [CampusAreaController::class, 'edit'])->name('campuses.areas.edit');
         Route::put('/kampus/{campus}/area/{area}', [CampusAreaController::class, 'update'])->name('campuses.areas.update');
         Route::patch('/kampus/{campus}/area/{area}/nonaktifkan', [CampusAreaController::class, 'deactivate'])->name('campuses.areas.deactivate');
+        Route::get('/kampus/{campus}/area/{area}/lokasi', [CampusLocationController::class, 'index'])->name('campuses.areas.locations.index');
+        Route::get('/kampus/{campus}/area/{area}/lokasi/tambah', [CampusLocationController::class, 'create'])->name('campuses.areas.locations.create');
+        Route::post('/kampus/{campus}/area/{area}/lokasi', [CampusLocationController::class, 'store'])->name('campuses.areas.locations.store');
+        Route::get('/kampus/{campus}/area/{area}/lokasi/{location}/ubah', [CampusLocationController::class, 'edit'])->name('campuses.areas.locations.edit');
+        Route::put('/kampus/{campus}/area/{area}/lokasi/{location}', [CampusLocationController::class, 'update'])->name('campuses.areas.locations.update');
+        Route::patch('/kampus/{campus}/area/{area}/lokasi/{location}/nonaktifkan', [CampusLocationController::class, 'deactivate'])->name('campuses.areas.locations.deactivate');
     });
 });
