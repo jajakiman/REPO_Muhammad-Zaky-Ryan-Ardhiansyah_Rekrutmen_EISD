@@ -17,29 +17,40 @@
         var mapContainer = document.getElementById('map');
         if (!mapContainer || typeof L === 'undefined') return;
 
+        // Default Bandung coordinates
         var defaultLat = -6.9175;
         var defaultLng = 107.6191;
-        var zoomLevel = 12;
+        var defaultZoom = 12;
 
-        if (markersData && markersData.length > 0) {
+        if (markersData && markersData.length === 1) {
             defaultLat = markersData[0].lat;
             defaultLng = markersData[0].lng;
-            zoomLevel = 14;
+            defaultZoom = 15;
         }
 
         var map = L.map('map', {
             center: [defaultLat, defaultLng],
-            zoom: zoomLevel,
+            zoom: defaultZoom,
             scrollWheelZoom: false
         });
 
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        var tileLayer = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> kontributor'
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> kontributor'
         }).addTo(map);
 
-        var bounds = [];
+        tileLayer.on('tileerror', function () {
+            var note = document.querySelector('.map-attribution-note');
+            if (note && !document.getElementById('tile-error-hint')) {
+                var err = document.createElement('span');
+                err.id = 'tile-error-hint';
+                err.className = 'text-amber-700 font-semibold ml-2';
+                err.textContent = '(Tile peta lambat dimuat, gunakan daftar lokasi di bawah)';
+                note.appendChild(err);
+            }
+        });
 
+        var bounds = [];
         var statusColors = {
             accessible: '#065f46',
             partially_accessible: '#92400e',
@@ -54,18 +65,18 @@
                     radius: 9,
                     fillColor: color,
                     color: '#ffffff',
-                    weight: 2,
+                    weight: 2.5,
                     opacity: 1,
-                    fillOpacity: 0.9,
+                    fillOpacity: 0.95,
                     title: m.name,
                     alt: m.name + ' - ' + m.status_label
                 }).addTo(map);
 
-                var popupContent = '<div class="map-popup">' +
-                    '<h3>' + escapeHtml(m.name) + '</h3>' +
-                    '<p class="popup-meta">' + escapeHtml(m.campus_name) + ' &bull; ' + escapeHtml(m.area_name) + '</p>' +
-                    '<p><span class="badge badge-' + escapeHtml(m.status) + '">' + escapeHtml(m.status_label) + '</span></p>' +
-                    '<p><a class="button button-primary button-sm" href="' + escapeHtml(m.url) + '">Lihat Detail Fasilitas</a></p>' +
+                var popupContent = '<div class="p-2 space-y-1.5 font-sans">' +
+                    '<h4 class="font-bold text-sm text-slate-900 leading-tight m-0">' + escapeHtml(m.name) + '</h4>' +
+                    '<p class="text-xs text-slate-600 m-0">' + escapeHtml(m.campus_name) + ' &bull; ' + escapeHtml(m.area_name) + '</p>' +
+                    '<p class="m-0"><span class="badge badge-' + escapeHtml(m.status) + ' text-[11px] font-bold">' + escapeHtml(m.status_label) + '</span></p>' +
+                    '<p class="pt-1.5 m-0"><a class="button button-primary inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold text-white bg-orange-700 hover:bg-orange-800 no-underline shadow-xs" href="' + escapeHtml(m.url) + '">Detail Fasilitas &rarr;</a></p>' +
                     '</div>';
 
                 circleMarker.bindPopup(popupContent);
@@ -73,17 +84,30 @@
             });
 
             if (bounds.length > 1) {
-                map.fitBounds(bounds, { padding: [30, 30] });
+                map.fitBounds(bounds, { padding: [40, 40] });
+            } else if (bounds.length === 1) {
+                map.setView(bounds[0], 15);
             }
         }
 
-        // GPS Sort
+        // Invalidate map size so tiles always occupy 100% width/height without visual clipping
+        setTimeout(function () {
+            map.invalidateSize();
+        }, 250);
+
+        window.addEventListener('resize', function () {
+            map.invalidateSize();
+        });
+
+        // GPS Proximity Sorting
         var gpsBtn = document.getElementById('gps-sort-btn');
         var gpsStatus = document.getElementById('gps-status');
 
         if (gpsBtn && navigator.geolocation) {
             gpsBtn.addEventListener('click', function () {
-                gpsStatus.textContent = 'Mencari koordinat Anda...';
+                gpsStatus.textContent = 'Mencari koordinat lokasi Anda...';
+                gpsStatus.className = 'field-hint text-sm text-blue-800 font-medium';
+
                 navigator.geolocation.getCurrentPosition(
                     function (position) {
                         var userLat = position.coords.latitude;
@@ -127,9 +151,11 @@
                         }
 
                         gpsStatus.textContent = 'Lokasi berhasil diurutkan berdasarkan jarak terdekat dari Anda.';
+                        gpsStatus.className = 'field-hint text-sm text-emerald-800 font-bold';
                     },
-                    function (error) {
-                        gpsStatus.textContent = 'Izin lokasi tidak diberikan atau tidak tersedia. Anda tetap dapat menggunakan filter kampus.';
+                    function () {
+                        gpsStatus.textContent = 'Izin lokasi tidak diberikan. Anda tetap dapat menggunakan filter pencarian kampus di atas.';
+                        gpsStatus.className = 'field-hint text-sm text-amber-800 font-medium';
                     },
                     { enableHighAccuracy: true, timeout: 10000 }
                 );

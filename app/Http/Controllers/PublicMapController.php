@@ -13,16 +13,28 @@ class PublicMapController extends Controller
     {
         $campuses = Campus::active()->orderBy('name')->get();
 
+        $hasAnyLocations = CampusLocation::active()
+            ->whereHas('campusArea', function ($q) {
+                $q->active()->whereHas('campus', fn ($c) => $c->active());
+            })->exists();
+
+        $selectedCampusId = null;
+        if ($request->filled('campus_id')) {
+            $selectedCampusId = $request->input('campus_id');
+        } elseif (! $request->filled('q') && auth()->check() && auth()->user()->campus_id) {
+            $selectedCampusId = auth()->user()->campus_id;
+        }
+
+        $selectedCampus = $selectedCampusId ? Campus::find($selectedCampusId) : null;
+
         $query = CampusLocation::active()
             ->whereHas('campusArea', function ($q) {
                 $q->active()->whereHas('campus', fn ($c) => $c->active());
             })
             ->with(['campusArea.campus']);
 
-        if (! $request->filled('campus_id') && ! $request->filled('q') && auth()->check() && auth()->user()->campus_id) {
-            $query->whereHas('campusArea', fn ($q) => $q->where('campus_id', auth()->user()->campus_id));
-        } elseif ($request->filled('campus_id')) {
-            $query->whereHas('campusArea', fn ($q) => $q->where('campus_id', $request->input('campus_id')));
+        if ($selectedCampusId) {
+            $query->whereHas('campusArea', fn ($q) => $q->where('campus_id', $selectedCampusId));
         }
 
         if ($request->filled('q')) {
@@ -69,12 +81,17 @@ class PublicMapController extends Controller
             'url' => route('locations.show', $loc),
         ]);
 
+        $hasActiveFilter = $request->filled('q') || $request->filled('location_type') || $request->filled('accessibility_status') || ($request->filled('campus_id') && (!auth()->check() || !auth()->user()->campus_id || (string)auth()->user()->campus_id !== (string)$request->input('campus_id')));
+
         return view('map.index', compact(
             'locations',
             'campuses',
             'locationTypes',
             'accessibilityStatuses',
-            'mapMarkers'
+            'mapMarkers',
+            'hasAnyLocations',
+            'selectedCampus',
+            'hasActiveFilter'
         ));
     }
 

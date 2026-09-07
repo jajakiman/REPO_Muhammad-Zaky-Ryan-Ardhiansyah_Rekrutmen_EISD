@@ -185,4 +185,69 @@ class PublicMapTest extends TestCase
         $response->assertOk()
             ->assertSee(route('login'));
     }
+
+    public function test_authenticated_users_see_dashboard_sidebar_layout_on_map(): void
+    {
+        $reporter = User::factory()->create(['role' => 'reporter']);
+        $officer = User::factory()->create(['role' => 'officer']);
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        // Guest sees public shell with site-footer
+        $this->get(route('map.index'))
+            ->assertOk()
+            ->assertSee('site-footer', false);
+
+        // Reporter sees dashboard-sidebar and no site-footer
+        $this->actingAs($reporter)->get(route('map.index'))
+            ->assertOk()
+            ->assertSee('dashboard-sidebar', false)
+            ->assertDontSee('site-footer', false);
+
+        // Officer sees dashboard-sidebar
+        $this->actingAs($officer)->get(route('map.index'))
+            ->assertOk()
+            ->assertSee('dashboard-sidebar', false)
+            ->assertDontSee('site-footer', false);
+
+        // Admin sees dashboard-sidebar
+        $this->actingAs($admin)->get(route('map.index'))
+            ->assertOk()
+            ->assertSee('dashboard-sidebar', false)
+            ->assertDontSee('site-footer', false);
+    }
+
+    public function test_map_empty_states_distinguish_global_campus_and_filter_causes(): void
+    {
+        $campus1 = Campus::factory()->create(['name' => 'Telkom University Bandung']);
+        $campus2 = Campus::factory()->create(['name' => 'UPI Bandung']);
+
+        // 1. Global empty state: zero locations in entire database
+        $this->get(route('map.index'))
+            ->assertOk()
+            ->assertSee('Belum ada lokasi kampus yang terdata')
+            ->assertSee('Belum ada lokasi aksesibilitas aktif yang dicatat dalam sistem.');
+
+        // Add 1 location for campus 2
+        $area2 = CampusArea::factory()->create(['campus_id' => $campus2->id]);
+        $loc2 = CampusLocation::factory()->create(['campus_area_id' => $area2->id, 'name' => 'Gedung Isola']);
+
+        // 2. Campus empty state: campus 1 has 0 locations
+        $this->get(route('map.index', ['campus_id' => $campus1->id]))
+            ->assertOk()
+            ->assertSee('Belum ada lokasi untuk kampus ini')
+            ->assertSee('Telkom University Bandung')
+            ->assertSee('Lihat Semua Kampus');
+
+        // Admin visiting empty campus sees manage locations link
+        $admin = User::factory()->create(['role' => 'admin']);
+        $this->actingAs($admin)->get(route('map.index', ['campus_id' => $campus1->id]))
+            ->assertOk()
+            ->assertSee(route('admin.campuses.index'));
+
+        // 3. Filter mismatch empty state
+        $this->get(route('map.index', ['q' => 'NamaTidakDitemukan']))
+            ->assertOk()
+            ->assertSee('Tidak ada lokasi yang sesuai dengan filter pencarian.')
+            ->assertSee('Reset Filter');
+    }
 }
