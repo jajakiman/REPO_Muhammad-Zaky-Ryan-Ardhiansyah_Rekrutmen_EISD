@@ -94,4 +94,20 @@ class FoundationTest extends TestCase
         $this->assertFileExists(public_path('images/logo-horizontal.webp'));
         $this->assertFileExists(public_path('images/favicon-32x32.png'));
     }
+
+    public function test_css_tokens_define_complete_badges_and_button_variants(): void
+    {
+        $css = file_get_contents(public_path('css/app.css'));
+
+        $this->assertStringContainsString('.badge-submitted', $css);
+        $this->assertStringContainsString('.badge-resolved', $css);
+        $this->assertStringContainsString('.badge-in_progress', $css);
+        $this->assertStringContainsString('.badge-rejected', $css);
+        $this->assertStringContainsString('.badge-priority-high', $css);
+        $this->assertStringContainsString('.badge-accessible', $css);
+        $this->assertStringContainsString('.badge-needs_repair', $css);
+        $this->assertStringContainsString('.button-danger', $css);
+        $this->assertStringContainsString('.button-sm', $css);
+        $this->assertStringContainsString('.hero .lead', $css);
+    }
 }
