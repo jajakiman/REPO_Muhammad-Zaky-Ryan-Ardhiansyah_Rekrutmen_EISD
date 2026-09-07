@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Officer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Officer\RejectReportRequest;
+use App\Http\Requests\Officer\ResolveReportRequest;
 use App\Http\Requests\Officer\VerifyReportRequest;
 use App\Models\AccessibilityReport;
 use App\Services\ReportWorkflowService;
 use DomainException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class OfficerReportQueueController extends Controller
@@ -90,6 +92,69 @@ class OfficerReportQueueController extends Controller
             return redirect()->route('officer.reports.show', $report)
                 ->with('error', $e->getMessage());
         }
+    }
+
+    public function start(AccessibilityReport $report, ReportWorkflowService $service): RedirectResponse
+    {
+        $this->ensureAreaAccess($report);
+
+        try {
+            $service->start($report, auth()->user());
+
+            return redirect()->route('officer.reports.show', $report)
+                ->with('success', 'Penanganan laporan telah dimulai.');
+        } catch (DomainException $e) {
+            return redirect()->route('officer.reports.show', $report)
+                ->with('error', $e->getMessage());
+        }
+    }
+
+    public function resolve(ResolveReportRequest $request, AccessibilityReport $report, ReportWorkflowService $service): RedirectResponse
+    {
+        $this->ensureAreaAccess($report);
+
+        $photoPath = null;
+        if ($request->hasFile('resolution_photo')) {
+            $photoPath = $request->file('resolution_photo')->store('resolutions', 'report-photos');
+        }
+
+        try {
+            $service->resolve($report, auth()->user(), $request->validated(), $photoPath);
+
+            return redirect()->route('officer.reports.show', $report)
+                ->with('success', 'Laporan berhasil diselesaikan dan kondisi fasilitas diperbarui.');
+        } catch (DomainException $e) {
+            if ($photoPath && Storage::disk('report-photos')->exists($photoPath)) {
+                Storage::disk('report-photos')->delete($photoPath);
+            }
+
+            return redirect()->route('officer.reports.show', $report)
+                ->with('error', $e->getMessage());
+        }
+    }
+
+    public function history(Request $request): View
+    {
+        $officer = auth()->user();
+        abort_unless($officer->campus_area_id, 403, 'Anda belum ditugaskan pada area kampus manapun.');
+
+        $reports = AccessibilityReport::whereHas('locationAccessibilityFeature.campusLocation', function ($q) use ($officer) {
+            $q->where('campus_area_id', $officer->campus_area_id);
+        })->whereIn('status', ['resolved', 'rejected', 'cancelled'])
+            ->with([
+                'locationAccessibilityFeature.campusLocation.campusArea.campus',
+                'locationAccessibilityFeature.accessibilityFeature',
+                'issueCategory',
+                'reporter',
+                'officer',
+            ])
+            ->latest()
+            ->get();
+
+        return view('officer.history.index', [
+            'reports' => $reports,
+            'area' => $officer->campusArea,
+        ]);
     }
 
     private function ensureAreaAccess(AccessibilityReport $report): void

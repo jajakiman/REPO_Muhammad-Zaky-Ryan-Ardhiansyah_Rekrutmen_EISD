@@ -157,6 +157,93 @@
                 @endif
             </div>
         @endif
+
+        <!-- Aksi Mulai Penanganan (status verified dan petugas penanggung jawab) -->
+        @if($report->status === 'verified' && $report->officer_id === auth()->id())
+            <div class="form-card" style="margin-top: 2rem;">
+                <h2 style="font-size: 1.25rem;">Mulai Penanganan</h2>
+                <p class="field-hint">Mulai proses perbaikan atau penanganan kendala fasilitas ini. Status laporan akan diperbarui menjadi 'Sedang Ditangani'.</p>
+                <form method="post" action="{{ route('officer.reports.start', $report) }}" style="margin-top: 1rem;">
+                    @csrf
+                    <button type="submit" class="button button-primary">
+                        Mulai Penanganan Laporan
+                    </button>
+                </form>
+            </div>
+        @endif
+
+        <!-- Form Penyelesaian Penanganan (status in_progress dan petugas penanggung jawab) -->
+        @if($report->status === 'in_progress' && $report->officer_id === auth()->id())
+            <div class="form-card" style="margin-top: 2rem;">
+                <h2 style="font-size: 1.25rem;">Penyelesaian Penanganan Laporan</h2>
+                <p class="field-hint">Catat hasil penanganan dan tentukan kondisi fasilitas terkini setelah perbaikan dilakukan.</p>
+
+                <form method="post" action="{{ route('officer.reports.resolve', $report) }}" enctype="multipart/form-data" style="margin-top: 1rem;">
+                    @csrf
+                    <div class="field">
+                        <label for="condition">Kondisi Fasilitas Terkini</label>
+                        <select id="condition" name="condition" required @error('condition') aria-describedby="condition-error" aria-invalid="true" @enderror>
+                            <option value="">Pilih kondisi fasilitas</option>
+                            <option value="good" @selected(old('condition') === 'good')>Baik (Normal / Siap Digunakan)</option>
+                            <option value="needs_repair" @selected(old('condition') === 'needs_repair')>Perlu Perbaikan Lanjutan</option>
+                            <option value="blocked" @selected(old('condition') === 'blocked')>Terhalang</option>
+                            <option value="broken" @selected(old('condition') === 'broken')>Rusak / Belum Berfungsi</option>
+                        </select>
+                        @error('condition')
+                            <p class="field-error" id="condition-error">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="field">
+                        <label for="resolution_notes">Catatan Hasil Penanganan</label>
+                        <textarea id="resolution_notes" name="resolution_notes" rows="4" required placeholder="Jelaskan tindakan perbaikan yang telah dilakukan dan catatan penting terkait kondisi fasilitas..." @error('resolution_notes') aria-describedby="resolution_notes-error" aria-invalid="true" @enderror>{{ old('resolution_notes') }}</textarea>
+                        @error('resolution_notes')
+                            <p class="field-error" id="resolution_notes-error">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="field">
+                        <label for="resolution_photo">Foto Hasil Penanganan (Opsional)</label>
+                        <input id="resolution_photo" name="resolution_photo" type="file" accept="image/jpeg,image/png,image/webp" @error('resolution_photo') aria-describedby="resolution_photo-error" aria-invalid="true" @enderror>
+                        <p class="field-hint">Format yang diterima: JPEG, PNG, WebP. Maksimal 2 MB.</p>
+                        @error('resolution_photo')
+                            <p class="field-error" id="resolution_photo-error">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <div class="actions" style="margin-top: 2rem;">
+                        <button type="submit" class="button button-primary">
+                            Selesaikan Laporan & Perbarui Fasilitas
+                        </button>
+                    </div>
+                </form>
+            </div>
+        @endif
+
+        <!-- Tampilan Hasil Penanganan jika status resolved -->
+        @if($report->status === 'resolved')
+            <div class="service-card" style="margin-top: 2rem; border-color: var(--emerald-200);">
+                <h2 style="font-size: 1.25rem; color: var(--emerald-800);">Hasil Penanganan Selesai</h2>
+                <dl class="detail-list">
+                    <div>
+                        <dt>Waktu Selesai</dt>
+                        <dd>{{ $report->resolved_at ? $report->resolved_at->format('d M Y, H:i') : '-' }}</dd>
+                    </div>
+                    <div>
+                        <dt>Catatan Hasil</dt>
+                        <dd style="white-space: pre-wrap;">{{ $report->resolution_notes }}</dd>
+                    </div>
+                    @if($report->resolution_photo_path)
+                        <div>
+                            <dt>Foto Hasil</dt>
+                            <dd>
+                                <img src="{{ Storage::disk('report-photos')->url($report->resolution_photo_path) }}" alt="Foto hasil penanganan fasilitas" style="max-width: 100%; max-height: 360px; border-radius: var(--radius-card); border: 1px solid var(--slate-200);">
+                            </dd>
+                        </div>
+                    @endif
+                </dl>
+            </div>
+        @endif
     </div>
 </section>
 @endsection

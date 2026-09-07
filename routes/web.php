@@ -45,6 +45,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/laporan/{report}', [OfficerReportQueueController::class, 'show'])->name('reports.show');
         Route::post('/laporan/{report}/verifikasi', [OfficerReportQueueController::class, 'verify'])->name('reports.verify');
         Route::post('/laporan/{report}/tolak', [OfficerReportQueueController::class, 'reject'])->name('reports.reject');
+        Route::post('/laporan/{report}/mulai', [OfficerReportQueueController::class, 'start'])->name('reports.start');
+        Route::post('/laporan/{report}/selesai', [OfficerReportQueueController::class, 'resolve'])->name('reports.resolve');
+        Route::get('/riwayat', [OfficerReportQueueController::class, 'history'])->name('history.index');
     });
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
         Route::view('/', 'dashboards.admin')->name('dashboard');

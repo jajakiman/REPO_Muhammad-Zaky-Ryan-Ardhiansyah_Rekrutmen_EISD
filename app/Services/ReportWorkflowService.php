@@ -72,4 +72,66 @@ class ReportWorkflowService
             ]);
         });
     }
+
+    /**
+     * Start handling a verified report.
+     */
+    public function start(AccessibilityReport $report, User $officer): void
+    {
+        DB::transaction(function () use ($report, $officer) {
+            /** @var AccessibilityReport $locked */
+            $locked = AccessibilityReport::where('id', $report->id)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            if ($locked->status !== 'verified') {
+                throw new DomainException('Hanya laporan berstatus terverifikasi yang dapat dimulai penanganannya.');
+            }
+
+            if ($locked->officer_id !== $officer->id) {
+                throw new DomainException('Hanya petugas penanggung jawab yang dapat memulai penanganan laporan ini.');
+            }
+
+            $locked->update([
+                'status' => 'in_progress',
+                'handling_started_at' => now(),
+            ]);
+        });
+    }
+
+    /**
+     * Resolve an in-progress report and atomically update the facility condition.
+     */
+    public function resolve(AccessibilityReport $report, User $officer, array $data, ?string $photoPath = null): void
+    {
+        DB::transaction(function () use ($report, $officer, $data, $photoPath) {
+            /** @var AccessibilityReport $locked */
+            $locked = AccessibilityReport::where('id', $report->id)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            if ($locked->status !== 'in_progress') {
+                throw new DomainException('Hanya laporan yang sedang dalam penanganan yang dapat diselesaikan.');
+            }
+
+            if ($locked->officer_id !== $officer->id) {
+                throw new DomainException('Hanya petugas penanggung jawab yang dapat menyelesaikan laporan ini.');
+            }
+
+            $locked->update([
+                'status' => 'resolved',
+                'resolution_notes' => $data['resolution_notes'],
+                'resolution_photo_path' => $photoPath,
+                'resolved_at' => now(),
+            ]);
+
+            $facility = $locked->locationAccessibilityFeature;
+            if ($facility) {
+                $facility->update([
+                    'condition' => $data['condition'],
+                    'last_checked_at' => now(),
+                ]);
+            }
+        });
+    }
 }

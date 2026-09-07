@@ -29,6 +29,7 @@
                     @endif
                     @if (auth()->user()->role === 'officer')
                         <a href="{{ route('officer.queue.index') }}">Antrean area</a>
+                        <a href="{{ route('officer.history.index') }}">Riwayat area</a>
                     @endif
                     <form method="post" action="{{ route('logout') }}">
                         @csrf
