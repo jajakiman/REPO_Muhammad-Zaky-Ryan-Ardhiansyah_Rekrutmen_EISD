@@ -25,7 +25,8 @@
                 <input type="hidden" name="location_accessibility_feature_id" value="{{ $facility->id }}">
 
                 <div class="field">
-                    <label for="issue_category_id">Kategori Masalah</label>
+                    <label for="issue_category_id">Kategori Masalah <span class="required-mark text-red-600" aria-hidden="true">*</span></label>
+                    <x-select-shell>
                     <select id="issue_category_id" name="issue_category_id" required @error('issue_category_id') aria-describedby="issue_category_id-error" aria-invalid="true" @enderror>
                         <option value="">Pilih kategori masalah</option>
                         @foreach($categories as $cat)
@@ -34,13 +35,14 @@
                             </option>
                         @endforeach
                     </select>
+                    </x-select-shell>
                     @error('issue_category_id')
                         <p class="field-error" id="issue_category_id-error">{{ $message }}</p>
                     @enderror
                 </div>
 
                 <div class="field">
-                    <label for="description">Deskripsi Masalah</label>
+                    <label for="description">Deskripsi Masalah <span class="required-mark text-red-600" aria-hidden="true">*</span></label>
                     <textarea id="description" name="description" rows="4" required placeholder="Jelaskan secara rinci kendala yang terjadi pada fasilitas ini..." @error('description') aria-describedby="description-error" aria-invalid="true" @enderror>{{ old('description') }}</textarea>
                     @error('description')
                         <p class="field-error" id="description-error">{{ $message }}</p>

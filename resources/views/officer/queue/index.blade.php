@@ -23,8 +23,9 @@
                 <p class="lead">Daftar laporan kendala fasilitas aksesibilitas pada area tanggung jawab Anda.</p>
             </div>
             <div class="actions">
-                <form method="get" action="{{ route('officer.queue.index') }}" class="inline-filter-form" style="display: flex; gap: 0.5rem; align-items: center;">
+                <form method="get" action="{{ route('officer.queue.index') }}" class="inline-filter-form flex items-center gap-2">
                     <label for="queue-status" class="sr-only">Status Laporan</label>
+                    <x-select-shell class="min-w-[15rem]">
                     <select id="queue-status" name="status" onchange="this.form.submit()">
                         <option value="submitted" @selected(request('status', 'submitted') === 'submitted')>Menunggu Verifikasi (Submitted)</option>
                         <option value="verified" @selected(request('status') === 'verified')>Terverifikasi (Verified)</option>
@@ -33,6 +34,7 @@
                         <option value="rejected" @selected(request('status') === 'rejected')>Ditolak (Rejected)</option>
                         <option value="cancelled" @selected(request('status') === 'cancelled')>Dibatalkan (Cancelled)</option>
                     </select>
+                    </x-select-shell>
                 </form>
             </div>
         </div>

@@ -18,32 +18,38 @@
             <form method="get" action="{{ route('admin.reports.index') }}" class="filter-grid">
                 <div class="field">
                     <label for="filter-campus">Kampus</label>
+                    <x-select-shell>
                     <select id="filter-campus" name="campus_id">
                         <option value="">Semua Kampus</option>
                         @foreach($campuses as $c)
                             <option value="{{ $c->id }}" @selected(request('campus_id') == $c->id)>{{ $c->name }}</option>
                         @endforeach
                     </select>
+                    </x-select-shell>
                 </div>
 
                 <div class="field">
                     <label for="filter-status">Status Laporan</label>
+                    <x-select-shell>
                     <select id="filter-status" name="status">
                         <option value="">Semua Status</option>
                         @foreach($statusLabels as $value => $label)
                             <option value="{{ $value }}" @selected(request('status') === $value)>{{ $label }}</option>
                         @endforeach
                     </select>
+                    </x-select-shell>
                 </div>
 
                 <div class="field">
                     <label for="filter-priority">Prioritas</label>
+                    <x-select-shell>
                     <select id="filter-priority" name="priority">
                         <option value="">Semua Prioritas</option>
                         @foreach($priorityLabels as $value => $label)
                             <option value="{{ $value }}" @selected(request('priority') === $value)>{{ $label }}</option>
                         @endforeach
                     </select>
+                    </x-select-shell>
                 </div>
 
                 <div class="filter-actions">

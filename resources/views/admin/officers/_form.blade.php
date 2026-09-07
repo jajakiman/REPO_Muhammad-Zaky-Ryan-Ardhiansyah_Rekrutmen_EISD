@@ -4,7 +4,7 @@
 @endisset
 
 <div class="field">
-    <label for="name">Nama petugas</label>
+    <label for="name">Nama petugas <span class="required-mark text-red-600" aria-hidden="true">*</span></label>
     <input id="name" name="name" value="{{ old('name', $officer->name ?? '') }}" required @error('name') aria-describedby="name-error" aria-invalid="true" @enderror>
     @error('name')
         <p class="field-error" id="name-error">{{ $message }}</p>
@@ -12,7 +12,7 @@
 </div>
 
 <div class="field">
-    <label for="email">Alamat email</label>
+    <label for="email">Alamat email <span class="required-mark text-red-600" aria-hidden="true">*</span></label>
     @isset($officer)
         <input id="email" value="{{ $officer->email }}" readonly class="readonly-input">
         <p class="field-hint">Alamat email petugas tidak dapat diubah setelah dibuat.</p>
@@ -26,7 +26,7 @@
 
 @empty($officer)
     <div class="field">
-        <label for="password">Kata sandi</label>
+        <label for="password">Kata sandi <span class="required-mark text-red-600" aria-hidden="true">*</span></label>
         <input id="password" name="password" type="password" required @error('password') aria-describedby="password-error" aria-invalid="true" @enderror>
         @error('password')
             <p class="field-error" id="password-error">{{ $message }}</p>
@@ -34,13 +34,14 @@
     </div>
 
     <div class="field">
-        <label for="password_confirmation">Konfirmasi kata sandi</label>
+        <label for="password_confirmation">Konfirmasi kata sandi <span class="required-mark text-red-600" aria-hidden="true">*</span></label>
         <input id="password_confirmation" name="password_confirmation" type="password" required>
     </div>
 @endempty
 
 <div class="field">
-    <label for="campus_area_id">Area tugas</label>
+    <label for="campus_area_id">Area tugas <span class="required-mark text-red-600" aria-hidden="true">*</span></label>
+    <x-select-shell>
     <select id="campus_area_id" name="campus_area_id" required @error('campus_area_id') aria-describedby="campus_area_id-error" aria-invalid="true" @enderror>
         <option value="">Pilih area tugas</option>
         @foreach($areas as $area)
@@ -49,6 +50,7 @@
             </option>
         @endforeach
     </select>
+    </x-select-shell>
     @error('campus_area_id')
         <p class="field-error" id="campus_area_id-error">{{ $message }}</p>
     @enderror
@@ -56,11 +58,13 @@
 
 @isset($officer)
     <div class="field">
-        <label for="is_active">Status akun</label>
+        <label for="is_active">Status akun <span class="required-mark text-red-600" aria-hidden="true">*</span></label>
+        <x-select-shell>
         <select id="is_active" name="is_active" required @error('is_active') aria-describedby="is_active-error" aria-invalid="true" @enderror>
             <option value="1" @selected((string) old('is_active', (int) $officer->is_active) === '1')>Aktif</option>
             <option value="0" @selected((string) old('is_active', (int) $officer->is_active) === '0')>Nonaktif</option>
         </select>
+        </x-select-shell>
         @error('is_active')
             <p class="field-error" id="is_active-error">{{ $message }}</p>
         @enderror

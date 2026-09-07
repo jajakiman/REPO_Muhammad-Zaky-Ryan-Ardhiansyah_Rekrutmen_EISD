@@ -102,13 +102,15 @@
                 <form method="post" action="{{ route('officer.reports.verify', $report) }}" style="margin-top: 1rem;">
                     @csrf
                     <div class="field">
-                        <label for="priority">Tingkat Prioritas</label>
+                        <label for="priority">Tingkat Prioritas <span class="required-mark text-red-600" aria-hidden="true">*</span></label>
+                        <x-select-shell>
                         <select id="priority" name="priority" required @error('priority') aria-describedby="priority-error" aria-invalid="true" @enderror>
                             <option value="">Pilih prioritas</option>
                             <option value="low" @selected(old('priority') === 'low')>Rendah (Low)</option>
                             <option value="medium" @selected(old('priority') === 'medium')>Sedang (Medium)</option>
                             <option value="high" @selected(old('priority') === 'high')>Tinggi (High)</option>
                         </select>
+                        </x-select-shell>
                         @error('priority')
                             <p class="field-error" id="priority-error">{{ $message }}</p>
                         @enderror
@@ -181,7 +183,8 @@
                 <form method="post" action="{{ route('officer.reports.resolve', $report) }}" enctype="multipart/form-data" style="margin-top: 1rem;">
                     @csrf
                     <div class="field">
-                        <label for="condition">Kondisi Fasilitas Terkini</label>
+                        <label for="condition">Kondisi Fasilitas Terkini <span class="required-mark text-red-600" aria-hidden="true">*</span></label>
+                        <x-select-shell>
                         <select id="condition" name="condition" required @error('condition') aria-describedby="condition-error" aria-invalid="true" @enderror>
                             <option value="">Pilih kondisi fasilitas</option>
                             <option value="good" @selected(old('condition') === 'good')>Baik (Normal / Siap Digunakan)</option>
@@ -189,13 +192,14 @@
                             <option value="blocked" @selected(old('condition') === 'blocked')>Terhalang</option>
                             <option value="broken" @selected(old('condition') === 'broken')>Rusak / Belum Berfungsi</option>
                         </select>
+                        </x-select-shell>
                         @error('condition')
                             <p class="field-error" id="condition-error">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <div class="field">
-                        <label for="resolution_notes">Catatan Hasil Penanganan</label>
+                        <label for="resolution_notes">Catatan Hasil Penanganan <span class="required-mark text-red-600" aria-hidden="true">*</span></label>
                         <textarea id="resolution_notes" name="resolution_notes" rows="4" required placeholder="Jelaskan tindakan perbaikan yang telah dilakukan dan catatan penting terkait kondisi fasilitas..." @error('resolution_notes') aria-describedby="resolution_notes-error" aria-invalid="true" @enderror>{{ old('resolution_notes') }}</textarea>
                         @error('resolution_notes')
                             <p class="field-error" id="resolution_notes-error">{{ $message }}</p>

@@ -109,6 +109,37 @@ class AdminAccessibilitySemanticsTest extends TestCase
         $this->assertSame(1, $edit->query('//input[@id="feature_name" and @readonly]')->length);
     }
 
+    public function test_all_admin_and_workflow_selects_are_wrapped_in_select_shells(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        $campus = Campus::factory()->create();
+        $area = CampusArea::factory()->create(['campus_id' => $campus->id]);
+        $location = CampusLocation::factory()->create(['campus_area_id' => $area->id]);
+        $feature = AccessibilityFeature::factory()->create();
+        $officer = User::factory()->create(['role' => 'officer', 'campus_area_id' => $area->id]);
+
+        $routes = [
+            route('admin.campuses.edit', $campus),
+            route('admin.campuses.areas.edit', [$campus, $area]),
+            route('admin.campuses.areas.locations.create', [$campus, $area]),
+            route('admin.features.edit', $feature),
+            route('admin.officers.create'),
+            route('admin.reports.index'),
+        ];
+
+        foreach ($routes as $route) {
+            $html = $this->actingAs($admin)->get($route)->assertOk()->getContent();
+            $xpath = $this->xpath($html);
+            $selects = $xpath->query('//select');
+            $this->assertGreaterThan(0, $selects->length, "No selects on $route");
+            foreach ($selects as $select) {
+                $name = $select->getAttribute('name') ?: $select->getAttribute('id');
+                $parentClass = $select->parentNode->getAttribute('class');
+                $this->assertStringContainsString('select-shell', $parentClass, "$route select $name is not in select-shell");
+            }
+        }
+    }
+
     private function xpath(string $html): DOMXPath
     {
         $document = new DOMDocument;
