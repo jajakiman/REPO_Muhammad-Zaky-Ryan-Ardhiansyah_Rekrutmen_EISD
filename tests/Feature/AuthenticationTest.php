@@ -67,6 +67,19 @@ class AuthenticationTest extends TestCase
             ->assertSee('data-password-toggle="password_confirmation"', false);
     }
 
+    public function test_password_visibility_controls_use_eye_icons_without_visible_text(): void
+    {
+        foreach ([route('login'), route('register')] as $route) {
+            $response = $this->get($route);
+
+            $response->assertOk()
+                ->assertSee('data-eye-open', false)
+                ->assertSee('data-eye-closed', false)
+                ->assertDontSee('>Lihat</button>', false)
+                ->assertDontSee('>Sembunyikan</button>', false);
+        }
+    }
+
     public function test_standalone_auth_layout_keeps_flash_feedback(): void
     {
         $this->withSession(['success' => 'Registrasi berhasil. Silakan masuk ke AksesLoka.'])

@@ -39,7 +39,8 @@
                 input.type = visible ? 'password' : 'text';
                 button.setAttribute('aria-label', visible ? 'Tampilkan password' : 'Sembunyikan password');
                 button.setAttribute('aria-pressed', String(!visible));
-                button.textContent = visible ? 'Lihat' : 'Sembunyikan';
+                button.querySelector('[data-eye-open]').classList.toggle('hidden', !visible);
+                button.querySelector('[data-eye-closed]').classList.toggle('hidden', visible);
             });
         });
     });

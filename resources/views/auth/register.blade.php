@@ -46,7 +46,7 @@
                 <label for="password">Password <span class="required-mark text-red-600" aria-hidden="true">*</span><span class="sr-only"> wajib</span></label>
                 <div class="relative">
                     <input class="pr-14" id="password" name="password" type="password" autocomplete="new-password" required aria-describedby="password-help password-error">
-                    <button type="button" data-password-toggle="password" aria-label="Tampilkan password" aria-pressed="false" class="absolute inset-y-0 right-0 min-h-11 px-4 text-sm font-semibold text-navy-900 hover:text-orange-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-600">Lihat</button>
+                    <x-password-toggle target="password" />
                 </div>
                 <p class="field-help" id="password-help">Minimal 8 karakter.</p>
                 @error('password')<p class="field-error" id="password-error">{{ $message }}</p>@enderror
@@ -55,7 +55,7 @@
                 <label for="password_confirmation">Konfirmasi password <span class="required-mark text-red-600" aria-hidden="true">*</span><span class="sr-only"> wajib</span></label>
                 <div class="relative">
                     <input class="pr-14" id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password" required>
-                    <button type="button" data-password-toggle="password_confirmation" aria-label="Tampilkan password" aria-pressed="false" class="absolute inset-y-0 right-0 min-h-11 px-4 text-sm font-semibold text-navy-900 hover:text-orange-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-orange-600">Lihat</button>
+                    <x-password-toggle target="password_confirmation" />
                 </div>
             </div>
             </div>

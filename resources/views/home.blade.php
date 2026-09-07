@@ -50,7 +50,7 @@
             <div class="section-title-wrap text-center max-w-3xl mx-auto mb-12">
                 <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-2">Data Nyata</p>
                 <h2 class="font-display text-3xl font-bold text-slate-900 tracking-tight">Statistik Operasional</h2>
-                <p class="lead text-slate-600 mt-2 text-base sm:text-lg">Data operasional fasilitas dan laporan penanganan yang terdata langsung di sistem AksesLoka.</p>
+                <p class="lead mx-auto max-w-2xl text-center text-slate-600 mt-2 text-base sm:text-lg">Data operasional fasilitas dan laporan penanganan yang terdata langsung di sistem AksesLoka.</p>
             </div>
 
             <div class="stat-grid grid grid-cols-2 lg:grid-cols-4 gap-6">
@@ -84,29 +84,29 @@
             <div class="section-title-wrap text-center max-w-3xl mx-auto mb-14">
                 <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-2">Alur Kerja Penanganan</p>
                 <h2 class="font-display text-3xl font-bold text-slate-900 tracking-tight">Sistem Penanganan Tertutup</h2>
-                <p class="lead text-slate-600 mt-2 text-base sm:text-lg">Bagaimana kendala fasilitas ditangani secara transparan dari awal pelaporan hingga selesai diperbaiki.</p>
+                <p class="lead mx-auto max-w-2xl text-center text-slate-600 mt-2 text-base sm:text-lg">Bagaimana kendala fasilitas ditangani secara transparan dari awal pelaporan hingga selesai diperbaiki.</p>
             </div>
 
             <div class="workflow-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="service-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:border-navy-900/30 transition-all">
-                    <div class="w-10 h-10 rounded-xl bg-navy-50 text-navy-900 font-extrabold flex items-center justify-center text-sm mb-4 border border-blue-100">01</div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">Fasilitas Terdata</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">Admin memetakan fasilitas seperti ramp, lift, guiding block, dan toilet aksesibel pada setiap lokasi kampus.</p>
+                <div class="workflow-card service-card flex h-full flex-col items-center bg-white p-6 text-center rounded-2xl border border-slate-200 shadow-sm hover:border-navy-900/30 transition-all">
+                    <div class="mx-auto w-10 h-10 rounded-xl bg-navy-50 text-navy-900 font-extrabold flex items-center justify-center text-sm mb-4 border border-blue-100">01</div>
+                    <h3 class="text-center text-lg font-bold text-slate-900 mb-2">Fasilitas Terdata</h3>
+                    <p class="text-center text-slate-600 text-sm leading-relaxed">Admin memetakan fasilitas seperti ramp, lift, guiding block, dan toilet aksesibel pada setiap lokasi kampus.</p>
                 </div>
-                <div class="service-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:border-navy-900/30 transition-all">
-                    <div class="w-10 h-10 rounded-xl bg-orange-50 text-orange-700 font-extrabold flex items-center justify-center text-sm mb-4 border border-orange-100">02</div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">Masalah Dilaporkan</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">Sivitas dan pengunjung kampus membuat laporan kendala fasilitas secara terstruktur dengan menyertakan bukti foto.</p>
+                <div class="workflow-card service-card flex h-full flex-col items-center bg-white p-6 text-center rounded-2xl border border-slate-200 shadow-sm hover:border-navy-900/30 transition-all">
+                    <div class="mx-auto w-10 h-10 rounded-xl bg-orange-50 text-orange-700 font-extrabold flex items-center justify-center text-sm mb-4 border border-orange-100">02</div>
+                    <h3 class="text-center text-lg font-bold text-slate-900 mb-2">Masalah Dilaporkan</h3>
+                    <p class="text-center text-slate-600 text-sm leading-relaxed">Sivitas dan pengunjung kampus membuat laporan kendala fasilitas secara terstruktur dengan menyertakan bukti foto.</p>
                 </div>
-                <div class="service-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:border-navy-900/30 transition-all">
-                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-800 font-extrabold flex items-center justify-center text-sm mb-4 border border-blue-100">03</div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">Verifikasi & Klaim</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">Petugas area memverifikasi kendala, menentukan skala prioritas, dan mengambil tanggung jawab penanganan.</p>
+                <div class="workflow-card service-card flex h-full flex-col items-center bg-white p-6 text-center rounded-2xl border border-slate-200 shadow-sm hover:border-navy-900/30 transition-all">
+                    <div class="mx-auto w-10 h-10 rounded-xl bg-blue-50 text-blue-800 font-extrabold flex items-center justify-center text-sm mb-4 border border-blue-100">03</div>
+                    <h3 class="text-center text-lg font-bold text-slate-900 mb-2">Verifikasi & Klaim</h3>
+                    <p class="text-center text-slate-600 text-sm leading-relaxed">Petugas area memverifikasi kendala, menentukan skala prioritas, dan mengambil tanggung jawab penanganan.</p>
                 </div>
-                <div class="service-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:border-navy-900/30 transition-all">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 font-extrabold flex items-center justify-center text-sm mb-4 border border-emerald-100">04</div>
-                    <h3 class="text-lg font-bold text-slate-900 mb-2">Penanganan & Selesai</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">Tindakan perbaikan dilakukan. Kondisi fasilitas pada peta diperbarui secara otomatis setelah penanganan tuntas.</p>
+                <div class="workflow-card service-card flex h-full flex-col items-center bg-white p-6 text-center rounded-2xl border border-slate-200 shadow-sm hover:border-navy-900/30 transition-all">
+                    <div class="mx-auto w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 font-extrabold flex items-center justify-center text-sm mb-4 border border-emerald-100">04</div>
+                    <h3 class="text-center text-lg font-bold text-slate-900 mb-2">Penanganan & Selesai</h3>
+                    <p class="text-center text-slate-600 text-sm leading-relaxed">Tindakan perbaikan dilakukan. Kondisi fasilitas pada peta diperbarui secara otomatis setelah penanganan tuntas.</p>
                 </div>
             </div>
         </div>

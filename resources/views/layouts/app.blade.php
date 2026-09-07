@@ -71,14 +71,28 @@
         <div class="container mx-auto px-4"><x-flash /></div>
         @yield('content')
     </main>
-    <footer class="site-footer bg-white border-t border-slate-200 mt-auto py-8">
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-slate-600">
-            <div class="flex items-center gap-2">
-                <x-logo variant="mark" size="sm" />
-                <span class="font-semibold text-slate-800">AksesLoka</span> &bull; Sistem Pelaporan Fasilitas Kampus
+    <footer class="site-footer bg-white rounded-2xl shadow-sm border border-slate-200 m-4 lg:m-6 mt-auto">
+        <div class="w-full max-w-screen-xl mx-auto p-6 md:py-8">
+            <div class="gap-6 sm:flex sm:items-center sm:justify-between">
+                <a href="{{ route('home') }}" class="mb-6 inline-flex items-center text-slate-900 no-underline sm:mb-0" aria-label="AksesLoka, halaman utama">
+                    <x-logo variant="full" size="md" textColor="dark" />
+                </a>
+                <ul class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-semibold text-slate-600">
+                    <li><a href="{{ route('map.index') }}" class="hover:text-navy-900 hover:underline">Peta</a></li>
+                    <li><a href="{{ route('home') }}#tentang" class="hover:text-navy-900 hover:underline">Tentang</a></li>
+                    <li><a href="{{ route('home') }}#faq-title" class="hover:text-navy-900 hover:underline">FAQ</a></li>
+                    @guest
+                        <li><a href="{{ route('login') }}" class="hover:text-navy-900 hover:underline">Masuk</a></li>
+                        <li><a href="{{ route('register') }}" class="hover:text-navy-900 hover:underline">Daftar</a></li>
+                    @else
+                        <li><a href="{{ route(auth()->user()->role.'.dashboard') }}" class="hover:text-navy-900 hover:underline">Area saya</a></li>
+                    @endguest
+                </ul>
             </div>
-            <div>
-                Mendukung <strong>SDGs 11</strong> untuk mewujudkan ruang publik kampus yang inklusif dan aman.
+            <hr class="my-6 border-slate-200 lg:my-8">
+            <div class="flex flex-col items-center justify-between gap-3 text-center text-sm text-slate-500 sm:flex-row sm:text-left">
+                <span>&copy; {{ date('Y') }} <a href="{{ route('home') }}" class="font-bold text-navy-900 hover:underline">AksesLoka</a>. Sistem Pelaporan Fasilitas Kampus.</span>
+                <span>Mendukung <strong>SDGs 11</strong> untuk ruang publik kampus yang inklusif dan aman.</span>
             </div>
         </div>
     </footer>

@@ -89,4 +89,20 @@ class LandingPageTest extends TestCase
             ->assertSee('Apakah AksesLoka merupakan audit aksesibilitas resmi?')
             ->assertDontSee('<details', false);
     }
+
+    public function test_metric_workflow_and_footer_content_use_balanced_centered_layouts(): void
+    {
+        $this->get(route('home'))
+            ->assertOk()
+            ->assertSee('stat-grid', false)
+            ->assertSee('workflow-grid', false)
+            ->assertSee('workflow-card', false)
+            ->assertSee('items-center', false)
+            ->assertSee('text-center', false)
+            ->assertSee('site-footer', false)
+            ->assertSee('rounded-2xl shadow-sm border border-slate-200', false)
+            ->assertSee(route('map.index'))
+            ->assertSee(route('home').'#faq-title', false)
+            ->assertSee('Sistem Pelaporan Fasilitas Kampus');
+    }
 }
