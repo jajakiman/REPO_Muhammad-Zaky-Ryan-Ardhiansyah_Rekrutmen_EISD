@@ -12,7 +12,7 @@
                         <span class="w-2 h-2 rounded-full bg-orange-500 animate-pulse"></span>
                         Informasi Aksesibilitas Kampus Bandung
                     </div>
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight text-white">
+                    <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.15] text-white">
                         Temukan fasilitas yang mendukung perjalanan Anda.
                     </h1>
                     <p class="text-lg sm:text-xl text-slate-300 max-w-2xl leading-relaxed">
@@ -35,7 +35,7 @@
                         <x-logo variant="mark" size="sm" />
                         <div>
                             <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider m-0">Layanan publik</p>
-                            <h2 id="service-title" class="text-xl font-bold text-slate-900 m-0">Informasi praktis sebelum berkunjung</h2>
+                            <h2 id="service-title" class="font-display text-xl font-bold text-slate-900 m-0">Informasi praktis sebelum berkunjung</h2>
                         </div>
                     </div>
                     <ul class="feature-list space-y-3.5 text-slate-700 text-sm sm:text-base">
@@ -62,7 +62,7 @@
         <div class="container mx-auto px-4">
             <div class="section-title-wrap text-center max-w-3xl mx-auto mb-12">
                 <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-2">Data Nyata</p>
-                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Statistik Operasional</h2>
+                <h2 class="font-display text-3xl font-bold text-slate-900 tracking-tight">Statistik Operasional</h2>
                 <p class="lead text-slate-600 mt-2 text-base sm:text-lg">Data operasional fasilitas dan laporan penanganan yang terdata langsung di sistem AksesLoka.</p>
             </div>
 
@@ -96,7 +96,7 @@
         <div class="container mx-auto px-4">
             <div class="section-title-wrap text-center max-w-3xl mx-auto mb-14">
                 <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-2">Alur Kerja Penanganan</p>
-                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Sistem Penanganan Tertutup</h2>
+                <h2 class="font-display text-3xl font-bold text-slate-900 tracking-tight">Sistem Penanganan Tertutup</h2>
                 <p class="lead text-slate-600 mt-2 text-base sm:text-lg">Bagaimana kendala fasilitas ditangani secara transparan dari awal pelaporan hingga selesai diperbaiki.</p>
             </div>
 
@@ -131,7 +131,7 @@
             <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold uppercase tracking-wider mb-4">
                 Kota & Komunitas Berkelanjutan
             </div>
-            <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Mendukung SDGs 11</h2>
+            <h2 class="font-display text-3xl font-bold text-slate-900 tracking-tight">Mendukung SDGs 11</h2>
             <p class="text-slate-600 text-base sm:text-lg leading-relaxed mt-4">
                 AksesLoka berkontribusi pada pencapaian <strong>SDGs 11</strong>, yaitu mewujudkan lingkungan ruang publik kampus yang inklusif, aman, berketahanan, dan mudah diakses bagi seluruh sivitas akademika, lansia, dan penyandang disabilitas.
             </p>
@@ -148,7 +148,7 @@
         <div class="container mx-auto px-4 max-w-3xl">
             <div class="service-card bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
                 <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-2">Tentang AksesLoka</p>
-                <h2 id="about-title" class="text-2xl font-bold text-slate-900 mb-3">Wayfinding yang jelas, tanpa klaim berlebihan</h2>
+                <h2 id="about-title" class="font-display text-2xl font-bold text-slate-900 mb-3">Wayfinding yang jelas, tanpa klaim berlebihan</h2>
                 <p class="text-slate-600 leading-relaxed text-base">
                     AksesLoka menyediakan data fasilitas aksesibilitas, kondisi terkini, dan kanal tindak lanjut yang transparan. Sistem ini tidak menggantikan audit aksesibilitas profesional, melainkan menghubungkan pengguna dan pengelola kampus untuk mewujudkan fasilitas yang lebih terawat.
                 </p>

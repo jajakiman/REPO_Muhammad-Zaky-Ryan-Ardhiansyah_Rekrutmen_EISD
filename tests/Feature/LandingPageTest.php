@@ -49,4 +49,17 @@ class LandingPageTest extends TestCase
             ->assertSee('Fasilitas Terdata')
             ->assertSee('Laporan Diselesaikan');
     }
+
+    public function test_display_typography_uses_pp_editorial_with_a_resilient_fallback(): void
+    {
+        $response = $this->get(route('home'));
+        $css = file_get_contents(public_path('css/app.css'));
+
+        $response->assertOk()
+            ->assertSee('fontFamily', false)
+            ->assertSee('PP Editorial New', false);
+        $this->assertStringContainsString('--font-display: "PP Editorial New"', $css);
+        $this->assertStringContainsString('font-family: var(--font-display)', $css);
+        $this->assertStringContainsString('font-display: swap', $css);
+    }
 }

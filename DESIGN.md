@@ -44,9 +44,12 @@ a focus outline rather than a text background.
 
 ## Typography
 
-Use the system sans-serif stack. This avoids a remote font dependency and keeps
-text predictable across low-bandwidth campus connections. Headings are compact
-and left aligned. Body copy stays below 70 characters per line.
+Use PP Editorial New for display headings when a licensed local font is
+available, with Georgia and Cambria as resilient editorial fallbacks. Body copy,
+forms, navigation, tables, status labels, and the logo wordmark use the system
+sans-serif stack for predictable rendering on low-bandwidth campus connections.
+Headings use at least 1.15 line-height to preserve descenders. Body copy stays
+below 70 characters per line.
 
 ## Shape And Elevation
 

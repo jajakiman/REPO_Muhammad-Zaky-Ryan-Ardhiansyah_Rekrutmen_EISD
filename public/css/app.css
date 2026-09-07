@@ -1,4 +1,6 @@
 :root {
+    --font-display: "PP Editorial New", Georgia, Cambria, "Times New Roman", serif;
+    --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     --navy-950: #172554;
     --navy-900: #1e3a8a;
     --orange-700: #c2410c;
@@ -19,7 +21,7 @@
     --radius-control: 8px;
     --radius-badge: 6px;
     color: var(--slate-900);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-family: var(--font-sans);
     line-height: 1.6;
 }
 
@@ -100,8 +102,25 @@ textarea:focus-visible {
     gap: clamp(2rem, 6vw, 5rem);
     align-items: center;
 }
+@font-face {
+    font-family: "PP Editorial New";
+    src: local("PP Editorial New"), local("PPEditorialNew-Regular");
+    font-display: swap;
+    font-style: normal;
+    font-weight: 400 900;
+}
+
 h1,
-h2 { margin: 0 0 1rem; line-height: 1.15; letter-spacing: -0.025em; }
+h2,
+h3,
+.font-display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+}
+h1,
+h2 { margin: 0 0 1rem; }
 h1 { max-width: 15ch; font-size: clamp(2.4rem, 6vw, 4.75rem); }
 h2 { font-size: clamp(1.65rem, 3vw, 2.25rem); }
 .eyebrow { margin: 0 0 0.75rem; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }

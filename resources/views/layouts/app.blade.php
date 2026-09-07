@@ -22,7 +22,11 @@
                             700: '#C2410C',
                             600: '#EA580C',
                             500: '#F97316',
-                        }
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'sans-serif'],
+                        display: ['"PP Editorial New"', 'Georgia', 'Cambria', '"Times New Roman"', 'serif'],
                     }
                 }
             }
