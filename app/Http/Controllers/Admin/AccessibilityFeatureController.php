@@ -25,7 +25,8 @@ class AccessibilityFeatureController extends Controller
     {
         AccessibilityFeature::create($request->validated());
 
-        return $this->redirect('Fasilitas berhasil disimpan.');
+        return $this->redirect('Fasilitas berhasil ditambahkan.')
+            ->with('success_modal', true);
     }
 
     public function edit(AccessibilityFeature $feature): View

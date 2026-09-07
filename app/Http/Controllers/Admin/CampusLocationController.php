@@ -32,7 +32,8 @@ class CampusLocationController extends Controller
         $this->ensureAreaContext($campus, $area);
         $area->locations()->create($request->safe()->except('area'));
 
-        return $this->redirect($campus, $area, 'Lokasi kampus berhasil disimpan.');
+        return $this->redirect($campus, $area, 'Lokasi kampus berhasil ditambahkan.')
+            ->with('success_modal', true);
     }
 
     public function edit(Campus $campus, CampusArea $area, CampusLocation $location): View

@@ -17,14 +17,12 @@ class UpdateCampusRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255', Rule::unique('campuses')->ignore($this->route('campus'))],
             'address' => ['nullable', 'string'],
-            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
-            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
             'is_active' => ['required', 'boolean'],
         ];
     }
 
     public function attributes(): array
     {
-        return ['name' => 'nama kampus', 'address' => 'alamat', 'latitude' => 'latitude', 'longitude' => 'longitude', 'is_active' => 'status'];
+        return ['name' => 'nama kampus', 'address' => 'alamat', 'is_active' => 'status'];
     }
 }

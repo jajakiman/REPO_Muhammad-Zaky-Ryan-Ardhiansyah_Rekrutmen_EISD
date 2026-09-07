@@ -25,7 +25,8 @@ class IssueCategoryController extends Controller
     {
         IssueCategory::create($request->validated());
 
-        return $this->redirect('Kategori masalah berhasil disimpan.');
+        return $this->redirect('Kategori masalah berhasil ditambahkan.')
+            ->with('success_modal', true);
     }
 
     public function edit(IssueCategory $issueCategory): View

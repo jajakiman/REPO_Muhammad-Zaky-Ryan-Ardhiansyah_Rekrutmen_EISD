@@ -40,7 +40,10 @@ class AuthenticatedSessionController extends Controller
         RateLimiter::clear($throttleKey);
         $request->session()->regenerate();
 
-        return redirect()->route(Auth::user()->role.'.dashboard');
+        return redirect()->route(Auth::user()->role.'.dashboard')
+            ->with('success', 'Berhasil masuk. Selamat datang di AksesLoka.')
+            ->with('success_modal', true)
+            ->with('success_modal_auto_close', true);
     }
 
     public function destroy(Request $request): RedirectResponse
@@ -49,6 +52,8 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('home')->with('success', 'Anda telah keluar dari AksesLoka.');
+        return redirect()->route('home')
+            ->with('success', 'Anda telah keluar dari AksesLoka.')
+            ->with('success_modal', true);
     }
 }

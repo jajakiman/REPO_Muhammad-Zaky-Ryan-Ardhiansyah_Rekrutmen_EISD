@@ -16,13 +16,11 @@ class StoreCampusRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255', 'unique:campuses,name'],
             'address' => ['nullable', 'string'],
-            'latitude' => ['nullable', 'numeric', 'between:-90,90'],
-            'longitude' => ['nullable', 'numeric', 'between:-180,180'],
         ];
     }
 
     public function attributes(): array
     {
-        return ['name' => 'nama kampus', 'address' => 'alamat', 'latitude' => 'latitude', 'longitude' => 'longitude'];
+        return ['name' => 'nama kampus', 'address' => 'alamat'];
     }
 }

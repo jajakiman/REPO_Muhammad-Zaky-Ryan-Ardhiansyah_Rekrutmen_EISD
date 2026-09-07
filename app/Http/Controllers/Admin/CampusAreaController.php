@@ -26,7 +26,9 @@ class CampusAreaController extends Controller
     {
         $campus->areas()->create($request->safe()->only('name'));
 
-        return redirect()->route('admin.campuses.areas.index', $campus)->with('success', 'Area kampus berhasil disimpan.');
+        return redirect()->route('admin.campuses.areas.index', $campus)
+            ->with('success', 'Area kampus berhasil ditambahkan.')
+            ->with('success_modal', true);
     }
 
     public function edit(Campus $campus, CampusArea $area): View

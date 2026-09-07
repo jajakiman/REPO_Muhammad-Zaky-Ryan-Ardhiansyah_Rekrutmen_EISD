@@ -48,7 +48,8 @@ class OfficerAccountController extends Controller
         ]);
 
         return redirect()->route('admin.officers.index')
-            ->with('success', 'Akun petugas berhasil dibuat.');
+            ->with('success', 'Akun petugas berhasil dibuat.')
+            ->with('success_modal', true);
     }
 
     public function edit(User $officer): View

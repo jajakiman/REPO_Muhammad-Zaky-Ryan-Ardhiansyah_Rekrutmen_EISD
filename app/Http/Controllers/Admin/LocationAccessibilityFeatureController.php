@@ -49,7 +49,8 @@ class LocationAccessibilityFeatureController extends Controller
     {
         $location->locationAccessibilityFeatures()->create($request->safe()->except('location'));
 
-        return $this->redirect($location, 'Fasilitas berhasil dipasang pada lokasi.');
+        return $this->redirect($location, 'Fasilitas berhasil dipasang pada lokasi.')
+            ->with('success_modal', true);
     }
 
     public function edit(CampusLocation $location, LocationAccessibilityFeature $locationFeature): View

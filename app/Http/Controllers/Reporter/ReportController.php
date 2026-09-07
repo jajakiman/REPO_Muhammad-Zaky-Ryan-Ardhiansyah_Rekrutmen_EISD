@@ -81,7 +81,8 @@ class ReportController extends Controller
             });
 
             return redirect()->route('reporter.reports.show', $report)
-                ->with('success', 'Laporan masalah berhasil dibuat.');
+                ->with('success', 'Laporan masalah berhasil dibuat.')
+                ->with('success_modal', true);
         } catch (Exception $e) {
             if ($photoPath && Storage::disk('report-photos')->exists($photoPath)) {
                 Storage::disk('report-photos')->delete($photoPath);
@@ -123,7 +124,7 @@ class ReportController extends Controller
     {
         $datePrefix = date('Ymd');
         do {
-            $code = 'RPT-' . $datePrefix . '-' . strtoupper(Str::random(4));
+            $code = 'RPT-'.$datePrefix.'-'.strtoupper(Str::random(4));
         } while (AccessibilityReport::where('report_code', $code)->exists());
 
         return $code;

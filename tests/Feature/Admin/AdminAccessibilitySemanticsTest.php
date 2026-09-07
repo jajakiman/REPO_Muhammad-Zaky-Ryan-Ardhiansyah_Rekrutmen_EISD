@@ -78,7 +78,7 @@ class AdminAccessibilitySemanticsTest extends TestCase
         AccessibilityFeature::factory()->create();
 
         $forms = [
-            [route('admin.campuses.edit', $campus), ['name', 'address', 'latitude', 'longitude', 'is_active']],
+            [route('admin.campuses.edit', $campus), ['name', 'address', 'is_active']],
             [route('admin.campuses.areas.edit', [$campus, $area]), ['name', 'is_active']],
             [route('admin.campuses.areas.locations.edit', [$campus, $area, $location]), ['name', 'location_type', 'description', 'latitude', 'longitude', 'accessibility_status', 'is_active']],
             [route('admin.features.edit', $feature), ['name', 'is_active']],

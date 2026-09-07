@@ -25,7 +25,9 @@ class CampusController extends Controller
     {
         Campus::create($request->validated());
 
-        return redirect()->route('admin.campuses.index')->with('success', 'Data kampus berhasil disimpan.');
+        return redirect()->route('admin.campuses.index')
+            ->with('success', 'Data kampus berhasil ditambahkan.')
+            ->with('success_modal', true);
     }
 
     public function edit(Campus $campus): View

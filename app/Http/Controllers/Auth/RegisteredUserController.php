@@ -29,6 +29,8 @@ class RegisteredUserController extends Controller
         $request->session()->regenerate();
 
         return redirect()->route('reporter.dashboard')
-            ->with('success', 'Registrasi berhasil. Selamat datang di AksesLoka.');
+            ->with('success', 'Registrasi berhasil. Selamat datang di AksesLoka.')
+            ->with('success_modal', true)
+            ->with('success_modal_auto_close', true);
     }
 }

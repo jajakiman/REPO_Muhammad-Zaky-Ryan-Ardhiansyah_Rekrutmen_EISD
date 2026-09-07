@@ -148,7 +148,10 @@ class AuthenticationTest extends TestCase
         ]);
 
         $user = User::where('email', 'rina@example.test')->firstOrFail();
-        $response->assertRedirect(route('reporter.dashboard'))->assertSessionHas('success');
+        $response->assertRedirect(route('reporter.dashboard'))
+            ->assertSessionHas('success')
+            ->assertSessionHas('success_modal', true)
+            ->assertSessionHas('success_modal_auto_close', true);
         $this->assertSame('reporter', $user->role);
         $this->assertTrue($user->is_active);
         $this->assertTrue(Hash::check('rahasia123', $user->password));
@@ -213,7 +216,9 @@ class AuthenticationTest extends TestCase
             $oldSessionId = session()->getId();
 
             $this->post(route('login'), ['email' => $user->email, 'password' => 'correct-password'])
-                ->assertRedirect(route($destination));
+                ->assertRedirect(route($destination))
+                ->assertSessionHas('success_modal', true)
+                ->assertSessionHas('success_modal_auto_close', true);
 
             $this->assertAuthenticatedAs($user);
             $this->assertNotSame($oldSessionId, session()->getId());
@@ -281,11 +286,37 @@ class AuthenticationTest extends TestCase
         $this->actingAs($user)->withSession(['private_value' => 'secret']);
         $oldToken = session()->token();
 
-        $this->post(route('logout'))->assertRedirect(route('home'));
+        $this->post(route('logout'))
+            ->assertRedirect(route('home'))
+            ->assertSessionHas('success_modal', true)
+            ->assertSessionMissing('success_modal_auto_close');
 
         $this->assertGuest();
         $this->assertFalse(session()->has('private_value'));
         $this->assertNotSame($oldToken, session()->token());
+    }
+
+    public function test_success_modal_is_accessible_and_only_auto_closes_when_requested(): void
+    {
+        $this->withSession([
+            'success' => 'Berhasil masuk.',
+            'success_modal' => true,
+            'success_modal_auto_close' => true,
+        ])->get(route('home'))
+            ->assertOk()
+            ->assertSee('<dialog', false)
+            ->assertSee('data-success-dialog', false)
+            ->assertSee('data-auto-close="3000"', false)
+            ->assertSee('>OK</button>', false);
+
+        $this->withSession([
+            'success' => 'Data berhasil ditambahkan.',
+            'success_modal' => true,
+            'success_modal_auto_close' => false,
+        ])->get(route('home'))
+            ->assertOk()
+            ->assertSee('data-success-dialog', false)
+            ->assertDontSee('data-auto-close="3000"', false);
     }
 
     private function registrationData(string $affiliation): array
