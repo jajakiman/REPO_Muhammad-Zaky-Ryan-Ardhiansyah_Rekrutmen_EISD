@@ -114,4 +114,19 @@ class LandingPageTest extends TestCase
         $this->assertSame(1, substr_count($html, 'stat-number text-4xl lg:text-5xl font-black text-emerald-800'));
         $this->assertSame(4, substr_count($html, 'workflow-number mx-auto w-10 h-10 rounded-xl bg-navy-50 text-navy-900'));
     }
+
+    public function test_motion_dev_script_is_integrated_with_reduced_motion_fallback(): void
+    {
+        $response = $this->get(route('home'));
+
+        $response->assertOk()
+            ->assertSee('cdn.jsdelivr.net/npm/motion', false)
+            ->assertSee('motion-interactive.js', false);
+
+        $this->assertFileExists(public_path('js/motion-interactive.js'));
+
+        $scriptContent = file_get_contents(public_path('js/motion-interactive.js'));
+        $this->assertStringContainsString('prefers-reduced-motion', $scriptContent);
+        $this->assertStringContainsString('Motion', $scriptContent);
+    }
 }

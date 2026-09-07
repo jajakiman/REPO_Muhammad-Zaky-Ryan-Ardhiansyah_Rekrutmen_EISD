@@ -96,5 +96,7 @@
             </div>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/motion@11.11.17/dist/motion.js" defer></script>
+    <script src="{{ asset('js/motion-interactive.js') }}" defer></script>
 </body>
 </html>
