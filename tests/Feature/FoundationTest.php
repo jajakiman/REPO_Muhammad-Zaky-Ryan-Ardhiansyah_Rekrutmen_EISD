@@ -40,4 +40,14 @@ class FoundationTest extends TestCase
         $this->assertStringContainsString('SESSION_DRIVER=file', $environment);
         $this->assertStringContainsString('CACHE_STORE=file', $environment);
     }
+
+    public function test_home_page_uses_the_public_css_asset_without_vite(): void
+    {
+        $this->get('/')
+            ->assertOk()
+            ->assertSee('href="'.asset('css/app.css').'"', false)
+            ->assertDontSee('http://localhost:5173');
+
+        $this->assertFileExists(public_path('css/app.css'));
+    }
 }

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Informasi fasilitas aksesibilitas dan pelaporan masalah di lingkungan kampus.">
     <title>@yield('title', 'AksesLoka')</title>
-    @vite('resources/css/app.css')
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Langsung ke konten utama</a>
