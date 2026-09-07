@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\OfficerAccountController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Officer\OfficerReportQueueController;
 use App\Http\Controllers\PublicMapController;
 use App\Http\Controllers\Reporter\ProfileController;
 use App\Http\Controllers\Reporter\ReportController;
@@ -39,6 +40,12 @@ Route::middleware('auth')->group(function () {
         Route::patch('/laporan/{report}/batal', [ReportController::class, 'cancel'])->name('reports.cancel');
     });
     Route::view('/petugas', 'dashboards.officer')->middleware('role:officer')->name('officer.dashboard');
+    Route::middleware('role:officer')->prefix('petugas')->name('officer.')->group(function () {
+        Route::get('/antrean', [OfficerReportQueueController::class, 'index'])->name('queue.index');
+        Route::get('/laporan/{report}', [OfficerReportQueueController::class, 'show'])->name('reports.show');
+        Route::post('/laporan/{report}/verifikasi', [OfficerReportQueueController::class, 'verify'])->name('reports.verify');
+        Route::post('/laporan/{report}/tolak', [OfficerReportQueueController::class, 'reject'])->name('reports.reject');
+    });
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
         Route::view('/', 'dashboards.admin')->name('dashboard');
         Route::get('/kampus', [CampusController::class, 'index'])->name('campuses.index');

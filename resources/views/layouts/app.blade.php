@@ -27,6 +27,9 @@
                         <a href="{{ route('reporter.reports.index') }}">Laporan saya</a>
                         <a href="{{ route('reporter.profile.edit') }}">Profil</a>
                     @endif
+                    @if (auth()->user()->role === 'officer')
+                        <a href="{{ route('officer.queue.index') }}">Antrean area</a>
+                    @endif
                     <form method="post" action="{{ route('logout') }}">
                         @csrf
                         <button class="nav-button" type="submit">Keluar</button>

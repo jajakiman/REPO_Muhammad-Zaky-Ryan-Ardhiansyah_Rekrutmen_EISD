@@ -5,7 +5,10 @@
 @section('content')
 <section class="form-section"><div class="container narrow">
     <p class="eyebrow">Area petugas</p>
-    <h1>Dashboard area tugas</h1>
-    <p>Antrean laporan area tugas akan tersedia pada tahap berikutnya.</p>
+    <h1>Dashboard Area Tugas</h1>
+    <p>Kelola verifikasi, penugasan prioritas, dan penanganan laporan kendala fasilitas aksesibilitas pada area tanggung jawab Anda.</p>
+    <div class="actions" style="margin-top: 1.5rem;">
+        <a class="button button-primary" href="{{ route('officer.queue.index') }}">Buka Antrean Laporan Area</a>
+    </div>
 </div></section>
 @endsection
