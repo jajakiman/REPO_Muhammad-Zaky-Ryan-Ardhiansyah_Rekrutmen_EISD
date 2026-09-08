@@ -22,11 +22,17 @@
                 <h1>Antrean Laporan Area</h1>
                 <p class="lead">Daftar laporan kendala fasilitas aksesibilitas pada area tanggung jawab Anda.</p>
             </div>
-            <div class="actions">
-                <form method="get" action="{{ route('officer.queue.index') }}" class="inline-filter-form flex items-center gap-2">
-                    <label for="queue-status" class="sr-only">Status Laporan</label>
-                    <x-select-shell class="min-w-[15rem]">
-                    <select id="queue-status" name="status" onchange="this.form.submit()">
+        </div>
+
+        <!-- Filter Form Card -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-sm mb-6">
+            <form method="get" action="{{ route('officer.queue.index') }}" class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div class="flex flex-col sm:flex-row sm:items-center gap-3 w-full sm:w-auto">
+                    <label for="queue-status" class="text-xs font-bold uppercase tracking-wider text-slate-700 whitespace-nowrap">
+                        Filter Status
+                    </label>
+                    <x-select-shell class="w-full sm:w-72">
+                    <select id="queue-status" name="status" onchange="this.form.submit()" class="font-semibold text-slate-800">
                         <option value="" @selected(!request('status') || request('status') === 'all')>Semua Status</option>
                         <option value="submitted" @selected(request('status') === 'submitted')>Menunggu Verifikasi</option>
                         <option value="verified" @selected(request('status') === 'verified')>Terverifikasi</option>
@@ -36,8 +42,13 @@
                         <option value="cancelled" @selected(request('status') === 'cancelled')>Dibatalkan</option>
                     </select>
                     </x-select-shell>
-                </form>
-            </div>
+                </div>
+                @if(request()->filled('status') && request('status') !== 'all')
+                    <div>
+                        <a href="{{ route('officer.queue.index') }}" class="button button-secondary inline-flex min-h-11 items-center justify-center px-4 py-2 rounded-xl text-sm font-semibold bg-white text-navy-900 border border-slate-300 hover:bg-slate-50 transition-colors">Reset Filter</a>
+                    </div>
+                @endif
+            </form>
         </div>
 
         @if($reports->isEmpty())

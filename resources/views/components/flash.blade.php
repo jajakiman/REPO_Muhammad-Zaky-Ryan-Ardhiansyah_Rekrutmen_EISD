@@ -1,7 +1,7 @@
 @foreach (['success' => 'positive', 'error' => 'critical'] as $key => $tone)
     @if (session()->has($key))
         @if ($key === 'success' && session('success_modal'))
-        <dialog data-success-dialog @if (session('success_modal_auto_close')) data-auto-close="3000" @endif aria-labelledby="success-dialog-title" aria-describedby="success-dialog-message" class="w-[min(calc(100%-2rem),28rem)] rounded-2xl border-0 bg-white p-0 shadow-2xl backdrop:bg-slate-950/70">
+        <dialog data-success-dialog @if (session('success_modal_auto_close')) data-auto-close="3000" @endif aria-labelledby="success-dialog-title" aria-describedby="success-dialog-message" class="fixed inset-0 m-auto max-h-[calc(100dvh-2rem)] w-[min(calc(100%-2rem),28rem)] overflow-y-auto rounded-2xl border-0 bg-white p-0 shadow-2xl backdrop:bg-slate-950/70">
             <div class="p-6 text-center">
                 <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-emerald-800" aria-hidden="true">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>

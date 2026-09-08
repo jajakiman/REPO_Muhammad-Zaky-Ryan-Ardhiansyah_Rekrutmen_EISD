@@ -113,12 +113,12 @@
                 <h2 class="text-xl font-bold text-slate-900">Tindakan Laporan</h2>
                 <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-600">Periksa informasi laporan sebelum memilih tindakan. Verifikasi akan menetapkan Anda sebagai petugas penanggung jawab.</p>
                 <div class="mt-5 flex flex-col gap-3 sm:flex-row">
-                    <button type="button" data-open-verify-dialog class="button button-primary w-full sm:w-auto">Verifikasi &amp; Klaim</button>
-                    <button type="button" data-open-reject-dialog class="button button-danger w-full sm:w-auto">Tolak Laporan</button>
+                    <button type="button" data-open-verify-dialog class="button inline-flex min-h-11 items-center justify-center px-5 py-2.5 rounded-xl text-sm font-bold bg-emerald-800 text-white hover:bg-emerald-900 shadow-sm transition-colors w-full sm:w-auto">Verifikasi &amp; Klaim</button>
+                    <button type="button" data-open-reject-dialog class="button button-danger inline-flex min-h-11 items-center justify-center px-5 py-2.5 rounded-xl text-sm font-bold bg-red-800 text-white hover:bg-red-900 shadow-sm transition-colors w-full sm:w-auto">Tolak Laporan</button>
                 </div>
             </div>
 
-            <dialog data-verify-report-dialog @error('priority') data-open-on-load @enderror aria-labelledby="verify-dialog-title" aria-describedby="verify-dialog-description" class="m-auto max-h-[calc(100dvh-2rem)] w-[min(calc(100%-2rem),30rem)] overflow-y-auto rounded-2xl border-0 bg-white p-0 shadow-2xl backdrop:bg-slate-950/70">
+            <dialog data-verify-report-dialog @error('priority') data-open-on-load @enderror aria-labelledby="verify-dialog-title" aria-describedby="verify-dialog-description" class="fixed inset-0 m-auto max-h-[calc(100dvh-2rem)] w-[min(calc(100%-2rem),30rem)] overflow-y-auto rounded-2xl border-0 bg-white p-0 shadow-2xl backdrop:bg-slate-950/70">
                 <form method="post" action="{{ route('officer.reports.verify', $report) }}" class="p-6 sm:p-7">
                     @csrf
                     <h2 id="verify-dialog-title" class="text-xl font-bold text-slate-950">Verifikasi &amp; Klaim Laporan</h2>
@@ -137,12 +137,12 @@
                     </div>
                     <div class="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
                         <button type="button" data-close-dialog class="button button-secondary w-full sm:w-auto">Kembali</button>
-                        <button type="submit" class="button button-primary w-full sm:w-auto">Verifikasi &amp; Klaim Laporan</button>
+                        <button type="submit" class="button inline-flex min-h-11 items-center justify-center px-5 py-2.5 rounded-xl text-sm font-bold bg-emerald-800 text-white hover:bg-emerald-900 shadow-sm transition-colors w-full sm:w-auto">Verifikasi &amp; Klaim Laporan</button>
                     </div>
                 </form>
             </dialog>
 
-            <dialog data-reject-report-dialog @error('rejection_reason') data-open-on-load @enderror aria-labelledby="reject-dialog-title" aria-describedby="reject-dialog-description" class="m-auto max-h-[calc(100dvh-2rem)] w-[min(calc(100%-2rem),30rem)] overflow-y-auto rounded-2xl border-0 bg-white p-0 shadow-2xl backdrop:bg-slate-950/70">
+            <dialog data-reject-report-dialog @error('rejection_reason') data-open-on-load @enderror aria-labelledby="reject-dialog-title" aria-describedby="reject-dialog-description" class="fixed inset-0 m-auto max-h-[calc(100dvh-2rem)] w-[min(calc(100%-2rem),30rem)] overflow-y-auto rounded-2xl border-0 bg-white p-0 shadow-2xl backdrop:bg-slate-950/70">
                 <form method="post" action="{{ route('officer.reports.reject', $report) }}" class="p-6 sm:p-7">
                     @csrf
                     <h2 id="reject-dialog-title" class="text-xl font-bold text-red-800">Tolak Laporan</h2>
@@ -154,7 +154,7 @@
                     </div>
                     <div class="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
                         <button type="button" data-close-dialog class="button button-secondary w-full sm:w-auto">Kembali</button>
-                        <button type="submit" class="button button-danger w-full sm:w-auto">Ya, Tolak Laporan</button>
+                        <button type="submit" class="button button-danger inline-flex min-h-11 items-center justify-center px-5 py-2.5 rounded-xl text-sm font-bold bg-red-800 text-white hover:bg-red-900 shadow-sm transition-colors w-full sm:w-auto">Ya, Tolak Laporan</button>
                     </div>
                 </form>
             </dialog>

@@ -57,6 +57,7 @@ class OfficerVerificationTest extends TestCase
 
         $response->assertOk()
             ->assertSee('Antrean Laporan Area')
+            ->assertSee('Filter Status')
             ->assertSee('Semua Status')
             ->assertSee('Menunggu Verifikasi')
             ->assertDontSee('(Submitted)', false)
@@ -140,7 +141,9 @@ class OfficerVerificationTest extends TestCase
             ->assertSee('data-report-actions', false)
             ->assertSee('data-verify-report-dialog', false)
             ->assertSee('data-reject-report-dialog', false)
-            ->assertSee('m-auto', false)
+            ->assertSee('fixed inset-0 m-auto', false)
+            ->assertSee('bg-emerald-800', false)
+            ->assertSee('bg-red-800', false)
             ->assertSee('name="priority"', false)
             ->assertSee('name="rejection_reason"', false)
             ->assertSee('data-back-link', false);

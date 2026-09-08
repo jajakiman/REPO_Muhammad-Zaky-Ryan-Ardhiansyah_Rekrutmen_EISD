@@ -1,4 +1,4 @@
-<dialog data-logout-dialog aria-labelledby="logout-dialog-title" aria-describedby="logout-dialog-message" class="w-[min(calc(100%-2rem),28rem)] rounded-2xl border-0 bg-white p-0 shadow-2xl backdrop:bg-slate-950/70">
+<dialog data-logout-dialog aria-labelledby="logout-dialog-title" aria-describedby="logout-dialog-message" class="fixed inset-0 m-auto max-h-[calc(100dvh-2rem)] w-[min(calc(100%-2rem),28rem)] overflow-y-auto rounded-2xl border-0 bg-white p-0 shadow-2xl backdrop:bg-slate-950/70">
     <div class="p-6 text-center">
         <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-800" aria-hidden="true">
             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
