@@ -26,6 +26,8 @@ class HomeController extends Controller
             'totalResolvedReports' => AccessibilityReport::where('status', 'resolved')->count(),
         ];
 
-        return view('home', compact('stats'));
+        $campuses = Campus::active()->orderBy('id')->get();
+
+        return view('home', compact('stats', 'campuses'));
     }
 }

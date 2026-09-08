@@ -37,9 +37,11 @@
                             <h2 class="font-display text-3xl font-bold text-slate-900 mt-2">Pemetaan Kampus Bandung</h2>
                             <p class="font-sans text-slate-600 mt-3 max-w-xl">Lihat lokasi dan kondisi fasilitas pada kampus yang sudah terdata, lalu buka detailnya sebelum berkunjung.</p>
                             <div class="mt-5 flex flex-wrap items-center justify-center md:justify-start gap-2">
-                                <span class="badge badge-neutral text-xs font-medium">Telkom University</span>
-                                <span class="badge badge-neutral text-xs font-medium">UPI Bandung</span>
-                                <span class="badge badge-neutral text-xs font-medium">UTB Bandung</span>
+                                @forelse($campuses as $c)
+                                    <span class="badge badge-neutral text-xs font-medium">{{ $c->name }}</span>
+                                @empty
+                                    <span class="badge badge-neutral text-xs font-medium">Kampus Terdaftar</span>
+                                @endforelse
                             </div>
                         </div>
                     </div>
@@ -61,7 +63,13 @@
                 <div class="service-card bg-slate-50 hover:bg-white rounded-2xl border border-slate-200 p-6 text-center shadow-sm hover:shadow-md transition-all">
                     <p class="stat-number text-4xl lg:text-5xl font-black text-navy-900 tracking-tight">{{ $stats['totalCampuses'] }}</p>
                     <p class="font-bold text-slate-700 mt-2 text-sm uppercase tracking-wide">Kampus Terpetakan</p>
-                    <p class="text-xs text-slate-500 mt-1">Telkom, UPI, UTB Bandung</p>
+                    <p class="text-xs text-slate-500 mt-1">
+                        @if($campuses->isNotEmpty())
+                            {{ $campuses->pluck('name')->implode(', ') }}
+                        @else
+                            Kampus terdaftar di sistem
+                        @endif
+                    </p>
                 </div>
                 <div class="service-card bg-slate-50 hover:bg-white rounded-2xl border border-slate-200 p-6 text-center shadow-sm hover:shadow-md transition-all">
                     <p class="stat-number text-4xl lg:text-5xl font-black text-navy-900 tracking-tight">{{ $stats['totalLocations'] }}</p>

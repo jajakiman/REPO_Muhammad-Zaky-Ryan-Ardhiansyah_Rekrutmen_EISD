@@ -46,7 +46,10 @@ class LandingPageTest extends TestCase
             ->assertSee('Kampus Terpetakan')
             ->assertSee('Lokasi Kampus')
             ->assertSee('Fasilitas Terdata')
-            ->assertSee('Laporan Diselesaikan');
+            ->assertSee('Laporan Diselesaikan')
+            ->assertSee('Telkom University Bandung')
+            ->assertDontSee('UPI Bandung')
+            ->assertDontSee('UTB Bandung');
     }
 
     public function test_landing_page_sections_use_consistent_eyebrows_and_branding(): void
