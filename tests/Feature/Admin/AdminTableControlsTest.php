@@ -140,6 +140,9 @@ class AdminTableControlsTest extends TestCase
                 ->assertSee('data-status-switch', false)
                 ->assertSee('status-switch.js', false)
                 ->assertSee('data-toast-container', false)
+                ->assertSee('left-1/2', false)
+                ->assertSee('-translate-x-1/2', false)
+                ->assertDontSee('right-4 top-4', false)
                 ->assertSee('peer-checked:bg-emerald-700', false)
                 ->assertSee('class="button button-secondary button-sm"', false);
         }

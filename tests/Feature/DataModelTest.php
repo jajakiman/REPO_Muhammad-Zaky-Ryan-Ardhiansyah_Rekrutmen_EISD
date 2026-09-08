@@ -132,10 +132,10 @@ class DataModelTest extends TestCase
             'Signage Tidak Jelas',
         ], IssueCategory::orderBy('id')->pluck('name')->all());
 
-        $this->assertSame(6, DB::table('campus_areas')->count());
-        $this->assertSame(12, DB::table('campus_locations')->count());
-        $this->assertSame(32, DB::table('location_accessibility_features')->count());
-        $this->assertSame(7, DB::table('users')->count());
+        $this->assertSame(2, DB::table('campus_areas')->count());
+        $this->assertSame(4, DB::table('campus_locations')->count());
+        $this->assertSame(11, DB::table('location_accessibility_features')->count());
+        $this->assertSame(3, DB::table('users')->count());
         $this->assertSame(0, DB::table('accessibility_reports')->count());
     }
 }

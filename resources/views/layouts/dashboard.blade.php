@@ -188,7 +188,7 @@
     </div>
 
     <x-logout-confirmation />
-    <div data-toast-container class="pointer-events-none fixed right-4 top-4 z-[70] flex w-[min(calc(100%-2rem),24rem)] flex-col gap-3" aria-live="polite"></div>
+    <div data-toast-container class="pointer-events-none fixed left-1/2 top-4 z-[70] flex w-[min(calc(100%-2rem),24rem)] -translate-x-1/2 flex-col items-center gap-3" aria-live="polite"></div>
     <script src="{{ asset('js/status-switch.js') }}" defer></script>
     <script src="{{ asset('js/page-loader.js') }}" defer></script>
 

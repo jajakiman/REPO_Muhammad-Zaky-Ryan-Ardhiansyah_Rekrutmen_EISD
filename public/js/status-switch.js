@@ -6,7 +6,7 @@
 
     function showToast(message, error) {
         var toast = document.createElement('div');
-        toast.className = 'flex max-w-sm items-start gap-3 rounded-xl border px-4 py-3 text-sm font-semibold shadow-lg ' + (error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-800');
+        toast.className = 'flex w-full max-w-sm items-start gap-3 rounded-xl border px-4 py-3 text-sm font-semibold shadow-lg ' + (error ? 'border-red-200 bg-red-50 text-red-800' : 'border-emerald-200 bg-emerald-50 text-emerald-800');
         toast.setAttribute('role', error ? 'alert' : 'status');
         toast.textContent = message;
         container.appendChild(toast);
