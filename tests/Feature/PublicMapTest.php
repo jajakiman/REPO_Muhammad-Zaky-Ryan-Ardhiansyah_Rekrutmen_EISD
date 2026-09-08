@@ -58,6 +58,24 @@ class PublicMapTest extends TestCase
             ->assertSee('location-detail-container max-w-7xl mx-auto px-4', false);
     }
 
+    public function test_map_and_sticky_header_use_isolated_stacking_contexts_to_prevent_overlap(): void
+    {
+        $location = CampusLocation::factory()->create();
+        $css = file_get_contents(public_path('css/app.css'));
+
+        $this->get(route('map.index'))
+            ->assertOk()
+            ->assertSee('site-header sticky top-0 z-50', false)
+            ->assertSee('map-container-wrap relative isolate z-0', false);
+
+        $this->get(route('locations.show', $location))
+            ->assertOk()
+            ->assertSee('mini-map-wrap relative isolate z-0', false);
+
+        $this->assertStringContainsString('isolation: isolate', $css);
+        $this->assertStringContainsString('.leaflet-container', $css);
+    }
+
     public function test_public_map_filters_use_interactive_native_select_components(): void
     {
         $this->get(route('map.index'))

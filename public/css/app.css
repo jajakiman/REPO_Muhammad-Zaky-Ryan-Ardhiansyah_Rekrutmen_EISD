@@ -202,6 +202,19 @@ tbody tr:last-child > * { border-bottom: 0; }
 .empty-state p { color: var(--slate-600); margin: 0; font-size: 0.875rem; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
+.map-workspace,
+.map-container-wrap,
+.map-canvas,
+.location-detail-workspace,
+.mini-map-wrap {
+    position: relative;
+    isolation: isolate;
+    z-index: 0;
+}
+.leaflet-container {
+    z-index: 0 !important;
+}
+
 @media (max-width: 44rem) {
     .hero-grid { grid-template-columns: 1fr; }
     .nav { align-items: flex-start; flex-direction: column; padding-block: 0.75rem; }

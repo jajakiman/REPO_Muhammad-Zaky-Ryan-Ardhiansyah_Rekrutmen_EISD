@@ -38,7 +38,7 @@
 </head>
 <body class="min-h-full flex flex-col bg-slate-50 text-slate-900 font-sans antialiased">
     <a class="skip-link" href="#main-content">Langsung ke konten utama</a>
-    <header class="site-header sticky top-0 z-40 bg-navy-950/95 backdrop-blur border-b border-white/10 shadow-md">
+    <header class="site-header sticky top-0 z-50 bg-navy-950/95 backdrop-blur border-b border-white/10 shadow-md">
         <nav class="nav container mx-auto px-4 flex items-center justify-between min-h-[4.75rem] gap-4" aria-label="Navigasi utama">
             <a class="brand inline-flex items-center text-white no-underline font-bold" href="{{ route('home') }}" aria-label="AksesLoka, halaman utama">
                 <x-logo variant="full" size="md" textColor="white" />

@@ -78,7 +78,7 @@
             </div>
 
             <!-- Mini Map -->
-            <div class="lg:col-span-4 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm space-y-2">
+            <div class="mini-map-wrap relative isolate z-0 lg:col-span-4 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm space-y-2">
                 <div id="mini-map" class="w-full h-56 rounded-xl overflow-hidden bg-slate-100 border border-slate-200"></div>
                 <p class="text-[11px] text-slate-500 text-center">
                     &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener" class="underline">OpenStreetMap</a>
