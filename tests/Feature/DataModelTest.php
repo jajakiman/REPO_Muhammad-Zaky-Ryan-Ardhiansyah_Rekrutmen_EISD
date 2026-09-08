@@ -115,13 +115,13 @@ class DataModelTest extends TestCase
             'Universitas Teknologi Bandung',
         ], Campus::orderBy('id')->pluck('name')->all());
         $this->assertSame([
-            'Ramp',
-            'Lift',
-            'Guiding Block',
+            'Jalur Landai (Ramp)',
+            'Lift Aksesibel',
+            'Ubin Pemandu (Guiding Block)',
             'Toilet Aksesibel',
-            'Handrail',
-            'Parkir Disabilitas',
-            'Pintu Aksesibel',
+            'Pegangan Tangan (Handrail)',
+            'Parkir Khusus Disabilitas',
+            'Pintu Masuk Aksesibel',
         ], AccessibilityFeature::orderBy('id')->pluck('name')->all());
         $this->assertSame([
             'Fasilitas Rusak',
@@ -132,10 +132,10 @@ class DataModelTest extends TestCase
             'Signage Tidak Jelas',
         ], IssueCategory::orderBy('id')->pluck('name')->all());
 
-        $this->assertSame(3, DB::table('campus_areas')->count());
-        $this->assertSame(3, DB::table('campus_locations')->count());
-        $this->assertSame(9, DB::table('location_accessibility_features')->count());
-        $this->assertSame(4, DB::table('users')->count());
+        $this->assertSame(6, DB::table('campus_areas')->count());
+        $this->assertSame(12, DB::table('campus_locations')->count());
+        $this->assertSame(32, DB::table('location_accessibility_features')->count());
+        $this->assertSame(7, DB::table('users')->count());
         $this->assertSame(0, DB::table('accessibility_reports')->count());
     }
 }
