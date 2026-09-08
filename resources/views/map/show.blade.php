@@ -38,15 +38,11 @@
 
 <section class="location-detail-workspace py-4 sm:py-6">
     <div class="location-detail-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <div class="breadcrumb-nav">
-            <a href="{{ route('map.index') }}" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy-900 hover:text-orange-700 transition-colors">
-                &larr; Kembali ke Peta Aksesibilitas
-            </a>
-        </div>
+        <div class="breadcrumb-nav"><x-back-link :href="route('map.index')">Kembali ke Peta Aksesibilitas</x-back-link></div>
 
         @if(auth()->user()?->role === 'admin')
             <nav class="flex flex-wrap gap-3" aria-label="Aksi pengelolaan lokasi">
-                <a class="button button-secondary" href="{{ route('admin.campuses.areas.locations.index', [$location->campusArea->campus, $location->campusArea]) }}">Kembali ke daftar lokasi</a>
+                <x-back-link :href="route('admin.campuses.areas.locations.index', [$location->campusArea->campus, $location->campusArea])">Kembali ke daftar lokasi</x-back-link>
                 <a class="button button-secondary" href="{{ route('admin.campuses.areas.locations.edit', [$location->campusArea->campus, $location->campusArea, $location]) }}">Ubah lokasi</a>
                 <a class="button button-primary" href="{{ route('admin.locations.features.index', $location) }}">Kelola fasilitas</a>
             </nav>

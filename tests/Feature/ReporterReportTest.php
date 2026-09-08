@@ -246,6 +246,7 @@ class ReporterReportTest extends TestCase
         $this->actingAs($reporter)->get(route('reporter.reports.show', $report))
             ->assertOk()
             ->assertSee('data-cancel-report-dialog', false)
+            ->assertSee('m-auto', false)
             ->assertSee('Konfirmasi Pembatalan Laporan')
             ->assertSee('badge-submitted', false)
             ->assertDontSee('onsubmit="return confirm', false);

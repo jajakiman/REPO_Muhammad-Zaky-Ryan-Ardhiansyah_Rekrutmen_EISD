@@ -22,11 +22,7 @@
 @section('content')
 <section class="admin-section">
     <div class="container"><div class="max-w-4xl space-y-6">
-        <div class="breadcrumb-nav">
-            <a href="{{ route('reporter.reports.index') }}" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy-900 hover:text-orange-700 transition-colors">
-                &larr; Kembali ke Riwayat Laporan
-            </a>
-        </div>
+        <div class="breadcrumb-nav"><x-back-link :href="route('reporter.reports.index')">Kembali ke Riwayat Laporan</x-back-link></div>
 
         <div class="report-detail-header space-y-2">
             <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm sm:text-base font-semibold">
@@ -170,7 +166,7 @@
                     </button>
                 </div>
 
-                <dialog data-cancel-report-dialog aria-labelledby="cancel-dialog-title" aria-describedby="cancel-dialog-desc" class="w-[min(calc(100%-2rem),28rem)] rounded-2xl border-0 bg-white p-0 shadow-2xl backdrop:bg-slate-950/70">
+                <dialog data-cancel-report-dialog aria-labelledby="cancel-dialog-title" aria-describedby="cancel-dialog-desc" class="m-auto max-h-[calc(100dvh-2rem)] w-[min(calc(100%-2rem),28rem)] overflow-y-auto rounded-2xl border-0 bg-white p-0 shadow-2xl backdrop:bg-slate-950/70">
                     <div class="p-6 text-center">
                         <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-800 mb-4" aria-hidden="true">
                             <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>

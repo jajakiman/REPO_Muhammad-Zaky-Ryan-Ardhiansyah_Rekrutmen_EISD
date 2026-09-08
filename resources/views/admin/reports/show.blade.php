@@ -22,11 +22,7 @@
 @section('content')
 <section class="admin-section">
     <div class="container"><div class="max-w-4xl space-y-6">
-        <div class="breadcrumb-nav">
-            <a href="{{ route('admin.reports.index') }}" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy-900 hover:text-orange-700 transition-colors">
-                &larr; Kembali ke Monitoring Laporan
-            </a>
-        </div>
+        <div class="breadcrumb-nav"><x-back-link :href="route('admin.reports.index')">Kembali ke Monitoring Laporan</x-back-link></div>
 
         <div class="report-detail-header space-y-2">
             <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm sm:text-base font-semibold">

@@ -133,4 +133,21 @@ class VisualConsistencyAuditTest extends TestCase
             ->assertSee('md:h-screen md:overflow-hidden', false)
             ->assertSee('overflow-y-auto', false);
     }
+
+    public function test_back_page_links_use_the_shared_button_component(): void
+    {
+        foreach ([
+            'reporter/reports/show.blade.php',
+            'officer/queue/show.blade.php',
+            'admin/reports/show.blade.php',
+            'map/show.blade.php',
+            'admin/areas/index.blade.php',
+            'admin/locations/index.blade.php',
+            'admin/location-features/index.blade.php',
+            'auth/login.blade.php',
+            'auth/register.blade.php',
+        ] as $view) {
+            $this->assertStringContainsString('<x-back-link', file_get_contents(resource_path('views/'.$view)), $view);
+        }
+    }
 }

@@ -124,6 +124,28 @@ class OfficerVerificationTest extends TestCase
         $this->assertNotNull($fresh->verified_at);
     }
 
+    public function test_submitted_report_presents_verify_and_reject_actions_in_centered_dialogs(): void
+    {
+        $area = CampusArea::factory()->create();
+        $officer = User::factory()->create([
+            'role' => 'officer',
+            'campus_id' => $area->campus_id,
+            'campus_area_id' => $area->id,
+        ]);
+        $report = $this->createAreaReport($area);
+
+        $this->actingAs($officer)
+            ->get(route('officer.reports.show', $report))
+            ->assertOk()
+            ->assertSee('data-report-actions', false)
+            ->assertSee('data-verify-report-dialog', false)
+            ->assertSee('data-reject-report-dialog', false)
+            ->assertSee('m-auto', false)
+            ->assertSee('name="priority"', false)
+            ->assertSee('name="rejection_reason"', false)
+            ->assertSee('data-back-link', false);
+    }
+
     public function test_officer_cannot_claim_already_claimed_or_processed_report(): void
     {
         $campus = Campus::factory()->create();
@@ -180,6 +202,12 @@ class OfficerVerificationTest extends TestCase
         $this->actingAs($officer)->post(route('officer.reports.reject', $report), [
             'rejection_reason' => '',
         ])->assertSessionHasErrors('rejection_reason');
+
+        $this->actingAs($officer)
+            ->get(route('officer.reports.show', $report))
+            ->assertOk()
+            ->assertSee('data-reject-report-dialog', false)
+            ->assertSee('data-open-on-load', false);
 
         // Successful rejection
         $response = $this->actingAs($officer)->post(route('officer.reports.reject', $report), [

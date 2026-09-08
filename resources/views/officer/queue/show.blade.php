@@ -22,11 +22,7 @@
 @section('content')
 <section class="admin-section">
     <div class="container"><div class="max-w-4xl space-y-6">
-        <div class="breadcrumb-nav">
-            <a href="{{ route('officer.queue.index') }}" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy-900 hover:text-orange-700 transition-colors">
-                &larr; Kembali ke Antrean Area
-            </a>
-        </div>
+        <div class="breadcrumb-nav"><x-back-link :href="route('officer.queue.index')">Kembali ke Antrean Area</x-back-link></div>
 
         <div class="report-detail-header space-y-2">
             <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm sm:text-base font-semibold">
@@ -111,60 +107,57 @@
             </div>
         @endif
 
-        <!-- Aksi Verifikasi & Klaim atau Penolakan (Hanya jika status submitted) -->
+        <!-- Aksi verifikasi atau penolakan -->
         @if($report->status === 'submitted')
-            <!-- Card 1: Verifikasi & Klaim -->
-            <div class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm space-y-4">
-                <h2 class="text-xl font-bold text-slate-900">Verifikasi &amp; Klaim Laporan</h2>
-                <p class="text-sm text-slate-600">Tentukan tingkat prioritas penanganan untuk memverifikasi dan mengambil tanggung jawab atas laporan ini.</p>
+            <div data-report-actions class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
+                <h2 class="text-xl font-bold text-slate-900">Tindakan Laporan</h2>
+                <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-600">Periksa informasi laporan sebelum memilih tindakan. Verifikasi akan menetapkan Anda sebagai petugas penanggung jawab.</p>
+                <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+                    <button type="button" data-open-verify-dialog class="button button-primary w-full sm:w-auto">Verifikasi &amp; Klaim</button>
+                    <button type="button" data-open-reject-dialog class="button button-danger w-full sm:w-auto">Tolak Laporan</button>
+                </div>
+            </div>
 
-                <form method="post" action="{{ route('officer.reports.verify', $report) }}" class="space-y-4 pt-2">
+            <dialog data-verify-report-dialog @error('priority') data-open-on-load @enderror aria-labelledby="verify-dialog-title" aria-describedby="verify-dialog-description" class="m-auto max-h-[calc(100dvh-2rem)] w-[min(calc(100%-2rem),30rem)] overflow-y-auto rounded-2xl border-0 bg-white p-0 shadow-2xl backdrop:bg-slate-950/70">
+                <form method="post" action="{{ route('officer.reports.verify', $report) }}" class="p-6 sm:p-7">
                     @csrf
-                    <div class="field mb-0">
+                    <h2 id="verify-dialog-title" class="text-xl font-bold text-slate-950">Verifikasi &amp; Klaim Laporan</h2>
+                    <p id="verify-dialog-description" class="mt-2 text-sm leading-6 text-slate-600">Tentukan prioritas penanganan sebelum mengambil tanggung jawab atas laporan ini.</p>
+                    <div class="field mt-5 mb-0">
                         <label for="priority">Tingkat Prioritas <span class="required-mark text-red-600" aria-hidden="true">*</span></label>
                         <x-select-shell>
-                        <select id="priority" name="priority" required @error('priority') aria-describedby="priority-error" aria-invalid="true" @enderror>
-                            <option value="">Pilih prioritas</option>
-                            <option value="low" @selected(old('priority') === 'low')>Rendah (Low)</option>
-                            <option value="medium" @selected(old('priority') === 'medium')>Sedang (Medium)</option>
-                            <option value="high" @selected(old('priority') === 'high')>Tinggi (High)</option>
-                        </select>
+                            <select id="priority" name="priority" required @error('priority') aria-describedby="priority-error" aria-invalid="true" @enderror>
+                                <option value="">Pilih prioritas</option>
+                                <option value="low" @selected(old('priority') === 'low')>Rendah</option>
+                                <option value="medium" @selected(old('priority') === 'medium')>Sedang</option>
+                                <option value="high" @selected(old('priority') === 'high')>Tinggi</option>
+                            </select>
                         </x-select-shell>
-                        @error('priority')
-                            <p class="field-error" id="priority-error">{{ $message }}</p>
-                        @enderror
+                        @error('priority')<p class="field-error" id="priority-error">{{ $message }}</p>@enderror
                     </div>
-
-                    <div class="actions pt-2">
-                        <button type="submit" class="button button-primary inline-flex min-h-11 items-center px-6 py-2.5 rounded-xl text-sm font-bold text-white bg-orange-700 hover:bg-orange-800 shadow-sm">
-                            Verifikasi &amp; Klaim Laporan
-                        </button>
+                    <div class="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+                        <button type="button" data-close-dialog class="button button-secondary w-full sm:w-auto">Kembali</button>
+                        <button type="submit" class="button button-primary w-full sm:w-auto">Verifikasi &amp; Klaim Laporan</button>
                     </div>
                 </form>
-            </div>
+            </dialog>
 
-            <!-- Card 2: Tolak Laporan -->
-            <div class="rounded-2xl border border-red-200 bg-white p-6 sm:p-8 shadow-sm space-y-4">
-                <h2 class="text-xl font-bold text-red-800">Tolak Laporan</h2>
-                <p class="text-sm text-slate-600">Jika laporan tidak valid, bukan wewenang kampus, atau duplikasi, tolak laporan dengan menyertakan alasan yang jelas.</p>
-
-                <form method="post" action="{{ route('officer.reports.reject', $report) }}" class="space-y-4 pt-2">
+            <dialog data-reject-report-dialog @error('rejection_reason') data-open-on-load @enderror aria-labelledby="reject-dialog-title" aria-describedby="reject-dialog-description" class="m-auto max-h-[calc(100dvh-2rem)] w-[min(calc(100%-2rem),30rem)] overflow-y-auto rounded-2xl border-0 bg-white p-0 shadow-2xl backdrop:bg-slate-950/70">
+                <form method="post" action="{{ route('officer.reports.reject', $report) }}" class="p-6 sm:p-7">
                     @csrf
-                    <div class="field mb-0">
+                    <h2 id="reject-dialog-title" class="text-xl font-bold text-red-800">Tolak Laporan</h2>
+                    <p id="reject-dialog-description" class="mt-2 text-sm leading-6 text-slate-600">Berikan alasan yang jelas agar pelapor memahami keputusan penolakan.</p>
+                    <div class="field mt-5 mb-0">
                         <label for="rejection_reason">Alasan Penolakan <span class="required-mark text-red-600" aria-hidden="true">*</span></label>
-                        <textarea id="rejection_reason" name="rejection_reason" rows="3" required placeholder="Tuliskan alasan penolakan secara jelas untuk pelapor..." @error('rejection_reason') aria-describedby="rejection_reason-error" aria-invalid="true" @enderror>{{ old('rejection_reason') }}</textarea>
-                        @error('rejection_reason')
-                            <p class="field-error" id="rejection_reason-error">{{ $message }}</p>
-                        @enderror
+                        <textarea id="rejection_reason" name="rejection_reason" rows="4" required placeholder="Tuliskan alasan penolakan secara jelas untuk pelapor..." @error('rejection_reason') aria-describedby="rejection_reason-error" aria-invalid="true" @enderror>{{ old('rejection_reason') }}</textarea>
+                        @error('rejection_reason')<p class="field-error" id="rejection_reason-error">{{ $message }}</p>@enderror
                     </div>
-
-                    <div class="actions pt-2">
-                        <button type="submit" class="button button-danger inline-flex min-h-11 items-center px-6 py-2.5 rounded-xl text-sm font-bold bg-red-800 text-white hover:bg-red-900 shadow-sm">
-                            Tolak Laporan Ini
-                        </button>
+                    <div class="mt-6 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+                        <button type="button" data-close-dialog class="button button-secondary w-full sm:w-auto">Kembali</button>
+                        <button type="submit" class="button button-danger w-full sm:w-auto">Ya, Tolak Laporan</button>
                     </div>
                 </form>
-            </div>
+            </dialog>
         @endif
 
         <!-- Tampilan Alasan Penolakan jika rejected -->
@@ -309,6 +302,32 @@
                 }
             });
         }
+
+        [
+            ['[data-open-verify-dialog]', '[data-verify-report-dialog]'],
+            ['[data-open-reject-dialog]', '[data-reject-report-dialog]']
+        ].forEach(function (selectors) {
+            var trigger = document.querySelector(selectors[0]);
+            var dialog = document.querySelector(selectors[1]);
+            if (!trigger || !dialog) return;
+
+            trigger.addEventListener('click', function () {
+                dialog.showModal();
+            });
+            dialog.querySelectorAll('[data-close-dialog]').forEach(function (button) {
+                button.addEventListener('click', function () {
+                    dialog.close();
+                    trigger.focus();
+                });
+            });
+            dialog.addEventListener('click', function (event) {
+                if (event.target === dialog) {
+                    dialog.close();
+                    trigger.focus();
+                }
+            });
+            if (dialog.hasAttribute('data-open-on-load')) dialog.showModal();
+        });
     });
 </script>
 @endsection
