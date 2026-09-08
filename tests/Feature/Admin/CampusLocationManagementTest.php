@@ -33,7 +33,13 @@ class CampusLocationManagementTest extends TestCase
         $campus = $area->campus;
         $location = CampusLocation::factory()->create(['campus_area_id' => $area->id, 'name' => 'Gedung Lama']);
 
-        $this->actingAs($admin)->get(route('admin.campuses.areas.locations.index', [$campus, $area]))->assertOk()->assertSee('Gedung Lama');
+        $this->actingAs($admin)->get(route('admin.campuses.areas.locations.index', [$campus, $area]))
+            ->assertOk()
+            ->assertSee('Gedung Lama')
+            ->assertSee('Belum Dinilai')
+            ->assertSee('Gedung')
+            ->assertDontSee('>not_assessed<', false)
+            ->assertDontSee('>building<', false);
         $this->actingAs($admin)->get(route('admin.campuses.areas.locations.create', [$campus, $area]))->assertOk()->assertSee('Latitude')->assertDontSee('Pilih dari peta');
         $this->actingAs($admin)->post(route('admin.campuses.areas.locations.store', [$campus, $area]), $this->validData())
             ->assertRedirect(route('admin.campuses.areas.locations.index', [$campus, $area]));

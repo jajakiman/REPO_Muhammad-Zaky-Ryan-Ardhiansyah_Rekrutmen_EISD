@@ -43,6 +43,13 @@ class LocationAccessibilityFeatureManagementTest extends TestCase
         $pivot = LocationAccessibilityFeature::firstOrFail();
         $this->assertDatabaseHas('location_accessibility_features', ['campus_location_id' => $location->id, 'accessibility_feature_id' => $ramp->id, 'condition' => 'good']);
 
+        $this->actingAs($admin)->get(route('admin.locations.features.index', $location))
+            ->assertOk()
+            ->assertSee('Tersedia')
+            ->assertSee('Baik')
+            ->assertDontSee('>available<', false)
+            ->assertDontSee('>good<', false);
+
         $this->actingAs($admin)->get(route('admin.locations.features.edit', [$location, $pivot]))->assertOk()->assertSee('Ramp');
         $this->actingAs($admin)->put(route('admin.locations.features.update', [$location, $pivot]), [
             'availability_status' => 'unavailable', 'condition' => 'blocked', 'notes' => 'Akses tertutup proyek', 'last_checked_at' => '2026-09-08T14:15',
