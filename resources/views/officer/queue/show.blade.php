@@ -221,8 +221,8 @@
                     <div class="field mb-0">
                         <label for="resolution_photo" class="block mb-2 font-bold text-slate-900">Foto Hasil Penanganan (Opsional)</label>
                         <div class="flex items-center justify-center w-full">
-                            <label for="resolution_photo" class="flex flex-col items-center justify-center w-full h-44 border-2 border-dashed border-slate-300 rounded-2xl cursor-pointer bg-slate-50 hover:bg-slate-100 hover:border-navy-900 transition-colors group">
-                                <div class="flex flex-col items-center justify-center pt-5 pb-6 px-4 text-center">
+                            <label for="resolution_photo" class="group relative flex h-44 w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 transition-colors hover:border-navy-900 hover:bg-slate-100 focus-within:border-navy-900 focus-within:ring-4 focus-within:ring-orange-500/20">
+                                <div class="pointer-events-none flex flex-col items-center justify-center px-4 pt-5 pb-6 text-center">
                                     <svg class="w-8 h-8 mb-3 text-slate-400 group-hover:text-navy-900 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h3a3 3 0 0 0 0-6h-.025a5.56 5.56 0 0 0 .025-.5A5.5 5.5 0 0 0 7.207 9.021C7.137 9.017 7.071 9 7 9a4 4 0 1 0 0 8h2.167M12 19v-9m0 0-2 2m2-2 2 2"/>
                                     </svg>
@@ -231,7 +231,7 @@
                                     </p>
                                     <p class="text-xs text-slate-500" data-file-hint="resolution_photo">Format: JPG, PNG, atau WebP (Maksimal 2 MB)</p>
                                 </div>
-                                <input id="resolution_photo" name="resolution_photo" type="file" accept="image/jpeg,image/png,image/webp" class="sr-only" @error('resolution_photo') aria-describedby="resolution_photo-error" aria-invalid="true" @enderror>
+                                <input id="resolution_photo" name="resolution_photo" type="file" accept="image/jpeg,image/png,image/webp" class="absolute inset-0 z-10 h-full w-full cursor-pointer opacity-0" @error('resolution_photo') aria-describedby="resolution_photo-error" aria-invalid="true" @enderror>
                             </label>
                         </div>
                         @error('resolution_photo')
