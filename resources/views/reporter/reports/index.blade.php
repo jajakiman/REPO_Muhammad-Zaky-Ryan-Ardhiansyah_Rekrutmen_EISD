@@ -11,7 +11,7 @@
     ];
 @endphp
 
-@section('title', 'Riwayat Laporan Saya | AksesLoka')
+@section('title', 'Riwayat Laporan | AksesLoka')
 
 @section('content')
 <section class="admin-section">
@@ -19,11 +19,11 @@
         <div class="page-heading">
             <div>
                 <p class="eyebrow">Pelapor</p>
-                <h1>Riwayat Laporan Saya</h1>
+                <h1>Riwayat Laporan</h1>
                 <p class="lead">Pantau perkembangan status dan tindak lanjut laporan masalah fasilitas yang telah Anda buat.</p>
             </div>
             <div class="actions">
-                <a class="button button-primary" href="{{ route('map.index') }}">Buka Peta & Laporkan</a>
+                <a class="button button-primary" href="{{ route('reporter.reports.create') }}">Buat Laporan</a>
             </div>
         </div>
 
@@ -32,7 +32,7 @@
                 <h2>Belum ada laporan</h2>
                 <p>Anda belum pernah membuat laporan masalah fasilitas aksesibilitas.</p>
                 <p style="margin-top: 1rem;">
-                    <a class="button button-secondary" href="{{ route('map.index') }}">Temukan Fasilitas di Peta</a>
+                    <a class="button button-secondary" href="{{ route('reporter.reports.create') }}">Buat Laporan Pertama</a>
                 </p>
             </div>
         @else

@@ -335,6 +335,7 @@ class AuthenticationTest extends TestCase
                 ->assertSee('aria-haspopup="true"', false)
                 ->assertSee(route($role.'.dashboard'))
                 ->assertSee('Keluar dari Akun')
+                ->assertDontSee('Laporan Saya')
                 ->assertSee('user-menu.js', false);
 
             auth()->logout();

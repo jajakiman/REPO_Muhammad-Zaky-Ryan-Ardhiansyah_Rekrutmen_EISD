@@ -37,6 +37,7 @@
     </script>
 </head>
 <body class="min-h-full flex flex-col bg-slate-50 text-slate-900 font-sans antialiased">
+    <x-page-loader />
     <a class="skip-link" href="#main-content">Langsung ke konten utama</a>
     <header class="site-header sticky top-0 z-50 bg-navy-950/95 backdrop-blur border-b border-white/10 shadow-md">
         <nav class="nav container mx-auto px-4 flex items-center justify-between min-h-[4.75rem] gap-4" aria-label="Navigasi utama">
@@ -80,7 +81,7 @@
                         <li><a href="{{ route('login') }}" class="hover:text-navy-900 hover:underline">Masuk</a></li>
                         <li><a href="{{ route('register') }}" class="hover:text-navy-900 hover:underline">Daftar</a></li>
                     @else
-                        <li><a href="{{ route(auth()->user()->role.'.dashboard') }}" class="hover:text-navy-900 hover:underline">Area saya</a></li>
+                        <li><a href="{{ route(auth()->user()->role.'.dashboard') }}" class="hover:text-navy-900 hover:underline">Dashboard</a></li>
                     @endguest
                 </ul>
             </div>
@@ -97,5 +98,6 @@
     @endauth
     <script src="https://cdn.jsdelivr.net/npm/motion@11.11.17/dist/motion.js" defer></script>
     <script src="{{ asset('js/motion-interactive.js') }}" defer></script>
+    <script src="{{ asset('js/page-loader.js') }}" defer></script>
 </body>
 </html>

@@ -16,50 +16,40 @@
 @section('content')
 <section class="reporter-dashboard py-4 sm:py-6">
     <div class="w-full">
-        <div class="page-heading items-start">
+        <div class="page-heading items-start flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
-                <p class="eyebrow">Area Pelapor</p>
-                <h1>Dashboard Pelapor</h1>
-                <p class="reporter-dashboard-intro mt-2 max-w-2xl text-base leading-7 text-slate-600">Selamat datang di AksesLoka. Temukan fasilitas kampus, kirim laporan kendala, dan pantau progres penanganannya dari satu tempat.</p>
+                <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-1.5">Area Pelapor</p>
+                <h1 class="font-display text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">Dashboard Pelapor</h1>
+                <p class="reporter-dashboard-intro mt-2 max-w-2xl text-sm sm:text-base leading-relaxed text-slate-600">Temukan fasilitas kampus, kirim laporan kendala, dan pantau progres penanganannya dari satu tempat.</p>
             </div>
-            <div class="actions">
-                <a class="button button-primary" href="{{ route('reporter.reports.create') }}">Buat Laporan Baru</a>
-                <a class="button button-secondary" href="{{ route('map.index') }}">Lihat Peta</a>
-                <a class="button button-secondary" href="{{ route('reporter.reports.index') }}">Semua Laporan Saya</a>
+            <div class="actions flex items-center gap-3">
+                <a class="button button-primary" href="{{ route('reporter.reports.create') }}">Buat Laporan</a>
+                <a class="button button-secondary" href="{{ route('reporter.reports.index') }}">Riwayat Laporan</a>
             </div>
         </div>
 
         <!-- Metric Cards -->
         <div class="stat-grid mt-8 grid grid-cols-1 gap-5 sm:grid-cols-3">
-            <div class="reporter-metric-card rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+            <div class="reporter-metric-card service-card rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
                 <p class="text-4xl font-black tracking-tight text-navy-900">{{ $totalReports }}</p>
                 <p class="mt-2 text-sm font-bold text-slate-700">Total Laporan</p>
             </div>
-            <div class="reporter-metric-card rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+            <div class="reporter-metric-card service-card rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
                 <p class="text-4xl font-black tracking-tight text-orange-700">{{ $activeReports }}</p>
                 <p class="mt-2 text-sm font-bold text-slate-700">Laporan Aktif</p>
             </div>
-            <div class="reporter-metric-card rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
+            <div class="reporter-metric-card service-card rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md">
                 <p class="text-4xl font-black tracking-tight text-emerald-800">{{ $resolvedReports }}</p>
                 <p class="mt-2 text-sm font-bold text-slate-700">Laporan Selesai</p>
             </div>
         </div>
 
-        <section class="mt-8 grid gap-5 rounded-2xl bg-navy-950 p-6 text-white sm:grid-cols-[1fr_auto] sm:items-center sm:p-8" aria-labelledby="report-action-title">
-            <div>
-                <p class="text-xs font-bold uppercase tracking-wider text-orange-400">Pelaporan Cepat</p>
-                <h2 id="report-action-title" class="mt-2 text-2xl font-bold text-white">Temukan kendala fasilitas?</h2>
-                <p class="mt-2 max-w-2xl text-sm leading-6 text-slate-200">Pilih lokasi dan fasilitas langsung pada formulir, jelaskan kendalanya, lalu sertakan foto jika tersedia.</p>
-            </div>
-            <a class="button button-primary min-h-11 justify-center" href="{{ route('reporter.reports.create') }}">Buat Laporan Baru</a>
-        </section>
-
         <!-- Recent Reports Table -->
-        <div class="recent-section" style="margin-top: 3rem;">
-            <div class="page-heading">
+        <div class="recent-section mt-10 space-y-4">
+            <div class="page-heading mb-0">
                 <div>
-                    <h2>Laporan Terbaru</h2>
-                    <p class="field-hint">Maksimal 5 laporan terakhir yang Anda buat.</p>
+                    <h2 class="font-display text-2xl font-bold text-slate-900 tracking-tight">Laporan Terbaru</h2>
+                    <p class="text-sm text-slate-600">Maksimal 5 laporan terakhir yang dibuat.</p>
                 </div>
             </div>
 

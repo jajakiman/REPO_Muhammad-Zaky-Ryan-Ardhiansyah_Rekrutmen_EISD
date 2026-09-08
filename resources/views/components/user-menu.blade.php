@@ -20,7 +20,7 @@
             <li><a href="{{ route($user->role.'.dashboard') }}" class="inline-flex min-h-11 w-full items-center rounded-lg p-2 hover:bg-slate-100 hover:text-navy-900">Dashboard</a></li>
             @if($user->role === 'reporter')
                 <li><a href="{{ route('reporter.reports.create') }}" class="inline-flex min-h-11 w-full items-center rounded-lg p-2 text-orange-700 hover:bg-orange-50">Buat Laporan</a></li>
-                <li><a href="{{ route('reporter.reports.index') }}" class="inline-flex min-h-11 w-full items-center rounded-lg p-2 hover:bg-slate-100 hover:text-navy-900">Laporan Saya</a></li>
+                <li><a href="{{ route('reporter.reports.index') }}" class="inline-flex min-h-11 w-full items-center rounded-lg p-2 hover:bg-slate-100 hover:text-navy-900">Laporan</a></li>
                 <li><a href="{{ route('reporter.profile.edit') }}" class="inline-flex min-h-11 w-full items-center rounded-lg p-2 hover:bg-slate-100 hover:text-navy-900">Profil &amp; Afiliasi</a></li>
             @elseif($user->role === 'officer')
                 <li><a href="{{ route('officer.queue.index') }}" class="inline-flex min-h-11 w-full items-center rounded-lg p-2 hover:bg-slate-100 hover:text-navy-900">Antrean Area</a></li>

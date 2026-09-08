@@ -51,7 +51,10 @@ class DashboardTest extends TestCase
             ->assertSee('5')
             ->assertSee('Laporan Selesai')
             ->assertSee('1')
-            ->assertSee('Buat Laporan Baru')
+            ->assertSee('Buat Laporan')
+            ->assertSee('Riwayat Laporan')
+            ->assertSee('font-display', false)
+            ->assertDontSee('Pelaporan Cepat')
             ->assertSee('Laporan ke-6')
             ->assertDontSee('Laporan ke-1'); // Cap at 5 most recent
     }
@@ -65,8 +68,8 @@ class DashboardTest extends TestCase
             ->assertSee('reporter-dashboard-intro', false)
             ->assertSee('text-slate-600', false)
             ->assertSee('reporter-metric-card', false)
-            ->assertSee('Pelaporan Cepat')
-            ->assertSee('Buat Laporan Baru')
+            ->assertSee('Buat Laporan')
+            ->assertSee('Riwayat Laporan')
             ->assertSee('Buat Laporan Pertama')
             ->assertSee('href="'.route('reporter.reports.create').'"', false);
     }

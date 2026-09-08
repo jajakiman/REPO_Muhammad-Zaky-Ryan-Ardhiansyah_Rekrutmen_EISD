@@ -30,10 +30,12 @@
     <script src="{{ asset('js/auth-form.js') }}" defer></script>
 </head>
 <body class="min-h-[100dvh] bg-navy-950 font-sans text-slate-900 antialiased">
+    <x-page-loader />
     <a class="skip-link" href="#main-content">Langsung ke formulir</a>
     <main id="main-content" tabindex="-1" class="min-h-[100dvh]">
         <div class="fixed inset-x-0 top-4 z-50 mx-auto w-[min(calc(100%-2rem),32rem)]"><x-flash /></div>
         @yield('content')
     </main>
+    <script src="{{ asset('js/page-loader.js') }}" defer></script>
 </body>
 </html>

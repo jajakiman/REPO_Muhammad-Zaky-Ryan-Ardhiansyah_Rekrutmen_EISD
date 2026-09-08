@@ -6,7 +6,6 @@ use App\Models\AccessibilityFeature;
 use App\Models\Campus;
 use App\Models\CampusArea;
 use App\Models\CampusLocation;
-use App\Models\IssueCategory;
 use App\Models\LocationAccessibilityFeature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -95,5 +94,32 @@ class VisualConsistencyAuditTest extends TestCase
                 ->assertDontSee('✅')
                 ->assertDontSee('🎉');
         }
+    }
+
+    public function test_all_layouts_include_an_accessible_page_transition_loader(): void
+    {
+        $user = User::factory()->create(['role' => 'reporter']);
+
+        foreach ([
+            $this->get(route('home')),
+            $this->get(route('login')),
+            $this->actingAs($user)->get(route('reporter.dashboard')),
+        ] as $response) {
+            $response->assertOk()
+                ->assertSee('data-page-loader', false)
+                ->assertSee('Memuat halaman')
+                ->assertSee('page-loader.js', false);
+        }
+    }
+
+    public function test_reporter_profile_is_placed_in_sidebar_footer_and_labels_omit_saya(): void
+    {
+        $reporter = User::factory()->create(['role' => 'reporter']);
+        $html = $this->actingAs($reporter)->get(route('reporter.dashboard'))->assertOk()->getContent();
+
+        $this->assertStringContainsString('data-sidebar-profile', $html);
+        $this->assertGreaterThan(strpos($html, 'sidebar-navigation'), strpos($html, 'data-sidebar-profile'));
+        $this->assertStringNotContainsString('Dashboard Saya', $html);
+        $this->assertStringNotContainsString('Laporan Masalah Saya', $html);
     }
 }
