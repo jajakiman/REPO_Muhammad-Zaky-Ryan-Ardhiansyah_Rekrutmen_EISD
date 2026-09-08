@@ -298,4 +298,63 @@ class ReporterReportTest extends TestCase
             'status' => 'verified',
         ]);
     }
+
+    public function test_reporter_with_campus_affiliation_only_sees_facilities_from_their_campus_in_report_form(): void
+    {
+        $telkomCampus = Campus::factory()->create(['name' => 'Telkom University', 'is_active' => true]);
+        $telkomArea = CampusArea::factory()->create(['campus_id' => $telkomCampus->id, 'is_active' => true]);
+        $telkomLocation = CampusLocation::factory()->create(['campus_area_id' => $telkomArea->id, 'name' => 'Gedung Tokong Nanas', 'is_active' => true]);
+        $feature1 = AccessibilityFeature::factory()->create(['name' => 'Ramp Utama', 'is_active' => true]);
+        $telkomFacility = LocationAccessibilityFeature::factory()->create([
+            'campus_location_id' => $telkomLocation->id,
+            'accessibility_feature_id' => $feature1->id,
+        ]);
+
+        $upiCampus = Campus::factory()->create(['name' => 'UPI Bandung', 'is_active' => true]);
+        $upiArea = CampusArea::factory()->create(['campus_id' => $upiCampus->id, 'is_active' => true]);
+        $upiLocation = CampusLocation::factory()->create(['campus_area_id' => $upiArea->id, 'name' => 'Gymnasium UPI', 'is_active' => true]);
+        $feature2 = AccessibilityFeature::factory()->create(['name' => 'Toilet Difabel', 'is_active' => true]);
+        $upiFacility = LocationAccessibilityFeature::factory()->create([
+            'campus_location_id' => $upiLocation->id,
+            'accessibility_feature_id' => $feature2->id,
+        ]);
+
+        IssueCategory::factory()->create(['is_active' => true]);
+
+        $telkomStudent = User::factory()->create([
+            'role' => 'reporter',
+            'affiliation_type' => 'student',
+            'campus_id' => $telkomCampus->id,
+        ]);
+
+        $response = $this->actingAs($telkomStudent)->get(route('reporter.reports.create'));
+        $response->assertOk()
+            ->assertSee('Gedung Tokong Nanas - Ramp Utama')
+            ->assertSee('Telkom University')
+            ->assertDontSee('Gymnasium UPI - Toilet Difabel');
+
+        // Accessing pre-selected facility from foreign campus returns 404
+        $this->actingAs($telkomStudent)
+            ->get(route('reporter.reports.create', ['facility_id' => $upiFacility->id]))
+            ->assertNotFound();
+
+        // Submitting report for foreign campus facility fails validation
+        $category = IssueCategory::first();
+        $this->actingAs($telkomStudent)
+            ->post(route('reporter.reports.store'), [
+                'location_accessibility_feature_id' => $upiFacility->id,
+                'issue_category_id' => $category->id,
+                'description' => 'Mencoba melaporkan kampus lain yang bukan afiliasi.',
+            ])
+            ->assertSessionHasErrors(['location_accessibility_feature_id']);
+
+        // Submitting report for own campus facility succeeds
+        $this->actingAs($telkomStudent)
+            ->post(route('reporter.reports.store'), [
+                'location_accessibility_feature_id' => $telkomFacility->id,
+                'issue_category_id' => $category->id,
+                'description' => 'Pegangan ramp di Tokong Nanas kendor.',
+            ])
+            ->assertSessionHasNoErrors();
+    }
 }

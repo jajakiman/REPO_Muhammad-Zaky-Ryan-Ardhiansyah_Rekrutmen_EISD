@@ -35,15 +35,21 @@ class ReportController extends Controller
     public function create(Request $request): View
     {
         $facilityId = $request->query('facility_id');
+        $user = auth()->user();
 
-        $facilities = LocationAccessibilityFeature::with([
+        $facilitiesQuery = LocationAccessibilityFeature::with([
             'campusLocation.campusArea.campus',
             'accessibilityFeature',
         ])->whereHas('accessibilityFeature', fn ($query) => $query->active())
             ->whereHas('campusLocation', fn ($query) => $query->active()
                 ->whereHas('campusArea', fn ($area) => $area->active()
-                    ->whereHas('campus', fn ($campus) => $campus->active())))
-            ->get()
+                    ->whereHas('campus', fn ($campus) => $campus->active())));
+
+        if ($user && $user->campus_id) {
+            $facilitiesQuery->whereHas('campusLocation.campusArea', fn ($query) => $query->where('campus_id', $user->campus_id));
+        }
+
+        $facilities = $facilitiesQuery->get()
             ->sortBy(fn ($facility) => implode('|', [
                 $facility->campusLocation->campusArea->campus->name,
                 $facility->campusLocation->name,

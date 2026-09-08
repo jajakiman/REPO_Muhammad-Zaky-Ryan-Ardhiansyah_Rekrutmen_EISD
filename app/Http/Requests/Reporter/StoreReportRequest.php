@@ -27,6 +27,12 @@ class StoreReportRequest extends FormRequest
                         ! $laf->campusLocation?->campusArea?->is_active ||
                         ! $laf->campusLocation?->campusArea?->campus?->is_active) {
                         $fail('Fasilitas pada lokasi ini tidak aktif atau tidak dapat dilaporkan.');
+
+                        return;
+                    }
+
+                    if ($this->user()?->campus_id && $laf->campusLocation?->campusArea?->campus_id !== $this->user()->campus_id) {
+                        $fail('Fasilitas yang dipilih harus berada di kampus afiliasi Anda.');
                     }
                 },
             ],

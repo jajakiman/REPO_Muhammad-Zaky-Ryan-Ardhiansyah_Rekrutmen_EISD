@@ -41,7 +41,11 @@
                         @endforeach
                     </select>
                     </x-select-shell>
-                    <p class="field-hint">Nama kampus digunakan sebagai kelompok agar lokasi lebih mudah ditemukan.</p>
+                    @if(auth()->user()->campus)
+                        <p class="field-hint">Menampilkan fasilitas di {{ auth()->user()->campus->name }} sesuai profil Anda.</p>
+                    @else
+                        <p class="field-hint">Nama kampus digunakan sebagai kelompok agar lokasi lebih mudah ditemukan.</p>
+                    @endif
                     @error('location_accessibility_feature_id')
                         <p class="field-error" id="location_accessibility_feature_id-error">{{ $message }}</p>
                     @enderror
@@ -73,11 +77,23 @@
                 </div>
 
                 <div class="field">
-                    <label for="photo">Foto Bukti (Opsional)</label>
-                    <input id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp" @error('photo') aria-describedby="photo-error" aria-invalid="true" @enderror>
-                    <p class="field-hint">Format yang diterima: JPEG, PNG, WebP. Ukuran maksimal 2 MB.</p>
+                    <label for="photo" class="block mb-2 font-bold text-slate-900">Foto Bukti (Opsional)</label>
+                    <div class="flex items-center justify-center w-full">
+                        <label for="photo" class="flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-slate-300 rounded-2xl cursor-pointer bg-slate-50 hover:bg-slate-100 hover:border-navy-900 transition-colors group">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6 px-4 text-center">
+                                <svg class="w-8 h-8 mb-3 text-slate-400 group-hover:text-navy-900 transition-colors" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h3a3 3 0 0 0 0-6h-.025a5.56 5.56 0 0 0 .025-.5A5.5 5.5 0 0 0 7.207 9.021C7.137 9.017 7.071 9 7 9a4 4 0 1 0 0 8h2.167M12 19v-9m0 0-2 2m2-2 2 2"/>
+                                </svg>
+                                <p class="mb-1 text-sm text-slate-700 font-medium">
+                                    <span class="font-bold text-orange-700 group-hover:underline">Klik untuk mengunggah foto</span> atau seret dan lepas
+                                </p>
+                                <p class="text-xs text-slate-500" data-file-hint="photo">Format: JPG, PNG, atau WebP (Maksimal 2 MB)</p>
+                            </div>
+                            <input id="photo" name="photo" type="file" accept="image/jpeg,image/png,image/webp" class="sr-only" @error('photo') aria-describedby="photo-error" aria-invalid="true" @enderror>
+                        </label>
+                    </div>
                     @error('photo')
-                        <p class="field-error" id="photo-error">{{ $message }}</p>
+                        <p class="field-error mt-2" id="photo-error">{{ $message }}</p>
                     @enderror
                 </div>
 
@@ -90,4 +106,20 @@
         @endif
     </div>
 </section>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var input = document.getElementById('photo');
+        var hint = document.querySelector('[data-file-hint="photo"]');
+        if (input && hint) {
+            input.addEventListener('change', function () {
+                if (input.files && input.files[0]) {
+                    var file = input.files[0];
+                    var sizeKb = Math.round(file.size / 1024);
+                    hint.textContent = 'File terpilih: ' + file.name + ' (' + sizeKb + ' KB)';
+                    hint.classList.add('text-emerald-700', 'font-semibold');
+                }
+            });
+        }
+    });
+</script>
 @endsection
