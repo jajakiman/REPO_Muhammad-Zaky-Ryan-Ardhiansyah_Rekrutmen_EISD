@@ -29,8 +29,8 @@
         </div>
 
         <div class="report-detail-header space-y-2">
-            <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-0">Kode Laporan: {{ $report->report_code }}</p>
-            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Detail Laporan Masalah</h1>
+            <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-1.5">Kode Laporan: {{ $report->report_code }}</p>
+            <h1 class="font-display text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">Detail Laporan Masalah</h1>
             <div class="flex flex-wrap items-center gap-3 pt-1 text-xs text-slate-500">
                 <span class="badge badge-{{ $report->status }}">
                     {{ $statusLabels[$report->status] ?? $report->status }}
@@ -131,15 +131,46 @@
         <!-- Tombol Pembatalan (Jika masih submitted dan belum diklaim) -->
         @if($report->status === 'submitted' && $report->officer_id === null)
             <div class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm space-y-3">
-                <h2 class="text-lg font-bold text-slate-900">Batalkan Laporan Ini?</h2>
+                <h2 class="font-display text-lg font-bold text-slate-900">Batalkan Laporan Ini?</h2>
                 <p class="text-sm text-slate-600">Anda dapat membatalkan laporan ini selama belum diverifikasi atau diklaim oleh Petugas.</p>
-                <form method="post" action="{{ route('reporter.reports.cancel', $report) }}" onsubmit="return confirm('Apakah Anda yakin ingin membatalkan laporan ini?');">
-                    @csrf
-                    @method('patch')
-                    <button type="submit" class="button button-danger inline-flex min-h-11 items-center px-5 py-2.5 rounded-xl text-sm font-bold bg-red-800 text-white hover:bg-red-900 shadow-sm transition-colors">
+                <div>
+                    <button type="button" id="open-cancel-dialog-btn" class="button button-danger inline-flex min-h-11 items-center px-5 py-2.5 rounded-xl text-sm font-bold bg-red-800 text-white hover:bg-red-900 shadow-sm transition-colors">
                         Batalkan Laporan
                     </button>
-                </form>
+                </div>
+
+                <dialog data-cancel-report-dialog aria-labelledby="cancel-dialog-title" aria-describedby="cancel-dialog-desc" class="w-[min(calc(100%-2rem),28rem)] rounded-2xl border-0 bg-white p-0 shadow-2xl backdrop:bg-slate-950/70">
+                    <div class="p-6 text-center">
+                        <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-800 mb-4" aria-hidden="true">
+                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                        </div>
+                        <h2 id="cancel-dialog-title" class="text-xl font-bold text-slate-950 font-display">Konfirmasi Pembatalan Laporan</h2>
+                        <p id="cancel-dialog-desc" class="mt-2 text-sm leading-6 text-slate-600">Apakah Anda yakin ingin membatalkan laporan masalah ini? Tindakan pembatalan ini tidak dapat diurungkan.</p>
+                        <form method="post" action="{{ route('reporter.reports.cancel', $report) }}" class="mt-6 flex justify-center gap-3">
+                            @csrf
+                            @method('patch')
+                            <button type="button" id="close-cancel-dialog-btn" class="button button-secondary min-h-11" autofocus>Kembali</button>
+                            <button type="submit" class="button button-danger min-h-11 bg-red-800 text-white hover:bg-red-900">Ya, Batalkan Laporan</button>
+                        </form>
+                    </div>
+                </dialog>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var openBtn = document.getElementById('open-cancel-dialog-btn');
+                        var closeBtn = document.getElementById('close-cancel-dialog-btn');
+                        var dialog = document.querySelector('[data-cancel-report-dialog]');
+                        if (!openBtn || !dialog) return;
+
+                        openBtn.addEventListener('click', function () {
+                            dialog.showModal();
+                        });
+                        if (closeBtn) {
+                            closeBtn.addEventListener('click', function () {
+                                dialog.close();
+                            });
+                        }
+                    });
+                </script>
             </div>
         @endif
     </div>

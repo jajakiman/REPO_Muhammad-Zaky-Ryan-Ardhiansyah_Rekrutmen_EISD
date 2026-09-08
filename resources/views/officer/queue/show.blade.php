@@ -29,8 +29,8 @@
         </div>
 
         <div class="report-detail-header space-y-2">
-            <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-0">Kode Laporan: {{ $report->report_code }}</p>
-            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Pemeriksaan Laporan Fasilitas</h1>
+            <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-1.5">Kode Laporan: {{ $report->report_code }}</p>
+            <h1 class="font-display text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">Pemeriksaan Laporan Fasilitas</h1>
             <div class="flex flex-wrap items-center gap-3 pt-1 text-xs text-slate-500">
                 <span class="badge badge-{{ $report->status }}">
                     {{ $statusLabels[$report->status] ?? $report->status }}

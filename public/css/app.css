@@ -192,8 +192,10 @@ tbody tr:last-child > * { border-bottom: 0; }
 .link-button { min-height: 44px; padding: 0; border: 0; background: transparent; color: var(--navy-900); text-decoration: underline; }
 .badge { display: inline-flex; align-items: center; padding: 0.2rem 0.65rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; border: 1px solid transparent; }
 .badge-positive, .badge-good, .badge-resolved, .badge-available, .badge-accessible { background: var(--emerald-50); border-color: rgb(167 243 208); color: var(--emerald-800); }
-.badge-neutral, .badge-not_assessed, .badge-submitted, .badge-cancelled { background: var(--slate-100); border-color: var(--slate-200); color: var(--slate-700); }
-.badge-warning, .badge-needs_repair, .badge-in_progress, .badge-partially_accessible, .badge-priority-medium { background: var(--amber-50); border-color: rgb(253 230 138); color: var(--amber-900); }
+.badge-neutral, .badge-not_assessed, .badge-cancelled { background: var(--slate-100); border-color: var(--slate-200); color: var(--slate-700); }
+.badge-warning, .badge-needs_repair, .badge-submitted, .badge-partially_accessible, .badge-priority-medium { background: var(--amber-50); border-color: rgb(253 230 138); color: var(--amber-900); }
+.badge-submitted { background: var(--amber-50); border-color: rgb(253 230 138); color: var(--amber-900); }
+.badge-in_progress { background: rgb(255 247 237); border-color: rgb(254 215 170); color: rgb(154 52 18); }
 .badge-critical, .badge-broken, .badge-blocked, .badge-inaccessible, .badge-rejected, .badge-priority-high { background: var(--red-50); border-color: rgb(254 202 202); color: var(--red-800); }
 .badge-info, .badge-verified, .badge-priority-low { background: rgb(239 246 255); border-color: rgb(191 219 254); color: var(--navy-900); }
 .empty-state { padding: 2rem; border: 1px solid var(--slate-200); border-radius: var(--radius-card); background: var(--white); }

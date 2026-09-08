@@ -240,6 +240,13 @@ class ReporterReportTest extends TestCase
             'officer_id' => null,
         ]);
 
+        $this->actingAs($reporter)->get(route('reporter.reports.show', $report))
+            ->assertOk()
+            ->assertSee('data-cancel-report-dialog', false)
+            ->assertSee('Konfirmasi Pembatalan Laporan')
+            ->assertSee('badge-submitted', false)
+            ->assertDontSee('onsubmit="return confirm', false);
+
         $response = $this->actingAs($reporter)->patch(route('reporter.reports.cancel', $report));
 
         $response->assertRedirect(route('reporter.reports.show', $report))
@@ -249,6 +256,21 @@ class ReporterReportTest extends TestCase
             'id' => $report->id,
             'status' => 'cancelled',
         ]);
+    }
+
+    public function test_report_status_badges_use_distinct_semantic_colors(): void
+    {
+        $css = file_get_contents(public_path('css/app.css'));
+
+        $this->assertStringContainsString('.badge-submitted', $css);
+        $this->assertStringContainsString('.badge-verified', $css);
+        $this->assertStringContainsString('.badge-in_progress', $css);
+        $this->assertStringContainsString('.badge-resolved', $css);
+        $this->assertStringContainsString('.badge-rejected', $css);
+        $this->assertStringContainsString('.badge-cancelled', $css);
+
+        // Verify that submitted is amber/yellow, not gray/neutral
+        $this->assertStringContainsString('.badge-submitted { background: var(--amber-50)', $css);
     }
 
     public function test_reporter_cannot_cancel_already_processed_or_claimed_report(): void
