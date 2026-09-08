@@ -2,12 +2,14 @@
 
 namespace Tests\Feature;
 
+use App\Providers\AppServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class FoundationTest extends TestCase
 {
     use RefreshDatabase;
+
     public function test_home_page_exposes_the_brand_and_skip_link(): void
     {
         $response = $this->get('/');
@@ -22,7 +24,7 @@ class FoundationTest extends TestCase
     {
         $this->get('/')
             ->assertOk()
-            ->assertSee('Lihat peta')
+            ->assertSee('Lihat Peta Kampus')
             ->assertSee(route('map.index'));
     }
 
@@ -71,7 +73,7 @@ class FoundationTest extends TestCase
     public function test_https_scheme_is_forced_when_app_url_is_https(): void
     {
         config(['app.url' => 'https://aksesloka.onrender.com']);
-        (new \App\Providers\AppServiceProvider($this->app))->boot();
+        (new AppServiceProvider($this->app))->boot();
 
         $this->assertStringStartsWith('https://', asset('css/app.css'));
     }

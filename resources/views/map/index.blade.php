@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 
 <section class="map-workspace py-4 sm:py-6">
-    <div class="w-full space-y-6">
+    <div class="map-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <!-- Page Header -->
         <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>

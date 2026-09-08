@@ -44,6 +44,20 @@ class PublicMapTest extends TestCase
             ->assertSee('accessible');
     }
 
+    public function test_guest_map_workspace_uses_consistent_container_grid_layout(): void
+    {
+        $location = CampusLocation::factory()->create();
+
+        $this->get(route('map.index'))
+            ->assertOk()
+            ->assertSee('map-container max-w-7xl mx-auto px-4', false)
+            ->assertSee('locations-grid', false);
+
+        $this->get(route('locations.show', $location))
+            ->assertOk()
+            ->assertSee('location-detail-container max-w-7xl mx-auto px-4', false);
+    }
+
     public function test_public_map_filters_use_interactive_native_select_components(): void
     {
         $this->get(route('map.index'))

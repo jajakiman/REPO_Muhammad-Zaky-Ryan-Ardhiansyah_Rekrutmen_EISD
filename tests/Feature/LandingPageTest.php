@@ -40,7 +40,7 @@ class LandingPageTest extends TestCase
             ->assertSee('AksesLoka')
             ->assertSee('SDGs 11')
             ->assertSee('Alur Kerja Penanganan')
-            ->assertSee('Lihat peta')
+            ->assertSee('Lihat Peta Kampus')
             ->assertSee(route('map.index'))
             ->assertSee('Statistik Operasional')
             ->assertSee('Kampus Terpetakan')
@@ -81,8 +81,32 @@ class LandingPageTest extends TestCase
             ->assertSee('font-sans', false)
             ->assertSee('font-display italic', false)
             ->assertSee('Pemetaan Kampus Bandung')
-            ->assertSee(route('map.index'))
+            ->assertSee('Lihat Peta Kampus')
+            ->assertSee('Pelajari Alur Layanan')
+            ->assertDontSee('Buka peta interaktif')
             ->assertDontSee('Play trailer');
+    }
+
+    public function test_navbar_and_footer_synchronize_all_landing_page_sections(): void
+    {
+        $this->get(route('home'))
+            ->assertOk()
+            ->assertSee('href="'.route('map.index').'"', false)
+            ->assertSee('href="'.route('home').'#statistik"', false)
+            ->assertSee('href="'.route('home').'#alur-kerja"', false)
+            ->assertSee('href="'.route('home').'#sdgs"', false)
+            ->assertSee('href="'.route('home').'#faq"', false)
+            ->assertSee('href="'.route('home').'#tentang"', false);
+    }
+
+    public function test_about_section_uses_two_column_asymmetric_grid_and_value_pillars(): void
+    {
+        $this->get(route('home'))
+            ->assertOk()
+            ->assertSee('id="tentang"', false)
+            ->assertSee('Informasi Aksesibel')
+            ->assertSee('Pelaporan Terarah')
+            ->assertSee('Pembaruan Kondisi Aktual');
     }
 
     public function test_landing_page_answers_product_specific_questions_in_an_open_grid(): void
@@ -109,7 +133,7 @@ class LandingPageTest extends TestCase
             ->assertSee('site-footer', false)
             ->assertSee('rounded-2xl shadow-sm border border-slate-200', false)
             ->assertSee(route('map.index'))
-            ->assertSee(route('home').'#faq-title', false)
+            ->assertSee(route('home').'#faq', false)
             ->assertSee('Sistem Pelaporan Fasilitas Kampus');
     }
 

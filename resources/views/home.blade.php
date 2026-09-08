@@ -18,8 +18,8 @@
                     Temukan fasilitas kampus, laporkan kendala, dan pantau tindak lanjut petugas dalam satu layanan yang transparan.
                 </p>
                 <div class="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center md:justify-center gap-3">
-                    <a href="{{ route('map.index') }}" class="inline-flex min-h-11 items-center justify-center px-8 py-3 font-sans text-base font-semibold rounded-full bg-orange-700 text-white hover:bg-orange-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:ring-offset-navy-950 transition-colors">Lihat peta</a>
-                    <a href="#tentang" class="inline-flex min-h-11 items-center justify-center px-8 py-3 font-sans text-base font-semibold rounded-full bg-white/10 text-white border border-white/20 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-navy-950 transition-colors">Pelajari layanan</a>
+                    <a href="{{ route('map.index') }}" class="inline-flex min-h-11 items-center justify-center px-8 py-3 font-sans text-base font-semibold rounded-full bg-orange-700 text-white hover:bg-orange-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500 focus:ring-offset-navy-950 transition-colors">Lihat Peta Kampus</a>
+                    <a href="#alur-kerja" class="inline-flex min-h-11 items-center justify-center px-8 py-3 font-sans text-base font-semibold rounded-full bg-white/10 text-white border border-white/20 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-navy-950 transition-colors">Pelajari Alur Layanan</a>
                 </div>
             </div>
         </div>
@@ -36,7 +36,11 @@
                             <p class="font-sans text-xs font-bold uppercase tracking-wider text-orange-700">Informasi Terpusat</p>
                             <h2 class="font-display text-3xl font-bold text-slate-900 mt-2">Pemetaan Kampus Bandung</h2>
                             <p class="font-sans text-slate-600 mt-3 max-w-xl">Lihat lokasi dan kondisi fasilitas pada kampus yang sudah terdata, lalu buka detailnya sebelum berkunjung.</p>
-                            <a href="{{ route('map.index') }}" class="mt-6 inline-flex min-h-11 items-center justify-center px-6 py-2.5 rounded-xl bg-navy-900 text-white font-sans font-semibold text-sm hover:bg-navy-950 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-600">Buka peta interaktif</a>
+                            <div class="mt-5 flex flex-wrap items-center justify-center md:justify-start gap-2">
+                                <span class="badge badge-neutral text-xs font-medium">Telkom University</span>
+                                <span class="badge badge-neutral text-xs font-medium">UPI Bandung</span>
+                                <span class="badge badge-neutral text-xs font-medium">UTB Bandung</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -45,7 +49,7 @@
     </section>
 
     <!-- Statistik Operasional Real Database -->
-    <section class="info-section bg-white border-b border-slate-200 pt-28 pb-16 lg:pt-40">
+    <section class="info-section bg-white border-b border-slate-200 pt-28 pb-16 lg:pt-40" id="statistik">
         <div class="container mx-auto px-4">
             <div class="section-title-wrap text-center max-w-3xl mx-auto mb-12">
                 <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-2">Data Nyata</p>
@@ -79,7 +83,7 @@
     </section>
 
     <!-- Alur Kerja Penanganan Tertutup -->
-    <section class="info-section py-16 bg-slate-50">
+    <section class="info-section py-16 bg-slate-50" id="alur-kerja">
         <div class="container mx-auto px-4">
             <div class="section-title-wrap text-center max-w-3xl mx-auto mb-14">
                 <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-2">Alur Kerja Penanganan</p>
@@ -113,7 +117,7 @@
     </section>
 
     <!-- Komitmen SDGs 11 -->
-    <section class="info-section bg-white border-t border-b border-slate-200 py-16">
+    <section class="info-section bg-white border-t border-b border-slate-200 py-16" id="sdgs">
         <div class="container mx-auto px-4 max-w-3xl text-center">
             <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-2">
                 Kota &amp; Komunitas Berkelanjutan
@@ -130,7 +134,7 @@
         </div>
     </section>
 
-    <section class="faq-section bg-white border-t border-slate-200 py-20 lg:py-24" aria-labelledby="faq-title">
+    <section class="faq-section bg-white border-t border-slate-200 py-20 lg:py-24" id="faq" aria-labelledby="faq-title">
         <div class="container mx-auto px-4 max-w-6xl">
             <div class="mx-auto max-w-2xl text-center">
                 <h2 id="faq-title" class="font-display text-4xl sm:text-5xl font-bold tracking-tight text-slate-900">Pertanyaan yang Sering Diajukan</h2>
@@ -167,14 +171,47 @@
     </section>
 
     <!-- Tentang Layanan -->
-    <section class="info-section py-16 bg-slate-50" id="tentang" aria-labelledby="about-title">
-        <div class="container mx-auto px-4 max-w-3xl">
-            <div class="service-card bg-white p-8 rounded-2xl border border-slate-200 shadow-sm">
-                <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-2">Tentang AksesLoka</p>
-                <h2 id="about-title" class="font-display text-2xl font-bold text-slate-900 mb-3">Wayfinding yang jelas, tanpa klaim berlebihan</h2>
-                <p class="text-slate-600 leading-relaxed text-base">
-                    AksesLoka menyediakan data fasilitas aksesibilitas, kondisi terkini, dan kanal tindak lanjut yang transparan. Sistem ini tidak menggantikan audit aksesibilitas profesional, melainkan menghubungkan pengguna dan pengelola kampus untuk mewujudkan fasilitas yang lebih terawat.
-                </p>
+    <section class="info-section py-20 lg:py-24 bg-slate-50" id="tentang" aria-labelledby="about-title">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                <div class="lg:col-span-5">
+                    <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-2">Tentang AksesLoka</p>
+                    <h2 id="about-title" class="font-display text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight mb-4">
+                        Wayfinding yang jelas, tanpa klaim berlebihan
+                    </h2>
+                    <p class="text-slate-600 leading-relaxed text-base sm:text-lg">
+                        AksesLoka menyediakan data fasilitas aksesibilitas, kondisi terkini, dan kanal tindak lanjut yang transparan. Sistem ini tidak menggantikan audit aksesibilitas profesional, melainkan menghubungkan pengguna dan pengelola kampus untuk mewujudkan fasilitas yang lebih terawat.
+                    </p>
+                </div>
+                <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="service-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-navy-900 font-extrabold flex items-center justify-center text-sm mb-3 border border-blue-100">
+                            01
+                        </div>
+                        <h3 class="font-sans text-base font-bold text-slate-900 mb-1.5">Informasi Aksesibel</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                            Peta dan data fasilitas dapat diakses publik tanpa kewajiban memiliki akun.
+                        </p>
+                    </div>
+                    <div class="service-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-navy-900 font-extrabold flex items-center justify-center text-sm mb-3 border border-blue-100">
+                            02
+                        </div>
+                        <h3 class="font-sans text-base font-bold text-slate-900 mb-1.5">Pelaporan Terarah</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                            Setiap kendala otomatis diteruskan langsung ke petugas penanggung jawab area kampus.
+                        </p>
+                    </div>
+                    <div class="service-card bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all sm:col-span-2">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-800 font-extrabold flex items-center justify-center text-sm mb-3 border border-emerald-100">
+                            03
+                        </div>
+                        <h3 class="font-sans text-base font-bold text-slate-900 mb-1.5">Pembaruan Kondisi Aktual</h3>
+                        <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                            Kondisi fasilitas pada peta diperbarui secara otomatis setelah penanganan dinyatakan selesai oleh petugas.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

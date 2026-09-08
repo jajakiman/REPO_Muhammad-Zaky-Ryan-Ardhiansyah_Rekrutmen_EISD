@@ -45,7 +45,11 @@
             </a>
             <div class="nav-links flex items-center gap-3">
                 <a href="{{ route('map.index') }}" class="inline-flex items-center text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">Peta</a>
-                <a href="#tentang" class="inline-flex items-center text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">Tentang</a>
+                <a href="{{ route('home') }}#statistik" class="inline-flex items-center text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">Statistik</a>
+                <a href="{{ route('home') }}#alur-kerja" class="inline-flex items-center text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">Alur Kerja</a>
+                <a href="{{ route('home') }}#sdgs" class="inline-flex items-center text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">SDGs 11</a>
+                <a href="{{ route('home') }}#faq" class="inline-flex items-center text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">FAQ</a>
+                <a href="{{ route('home') }}#tentang" class="inline-flex items-center text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">Tentang</a>
                 @guest
                     <a href="{{ route('login') }}" class="inline-flex items-center text-white bg-white/10 hover:bg-white/20 border border-white/20 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all">Masuk</a>
                     <a href="{{ route('register') }}" class="inline-flex items-center text-white bg-orange-700 hover:bg-orange-800 shadow-sm px-3.5 py-2 rounded-lg text-sm font-semibold transition-all">Daftar</a>
@@ -79,8 +83,11 @@
                 </a>
                 <ul class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm font-semibold text-slate-600">
                     <li><a href="{{ route('map.index') }}" class="hover:text-navy-900 hover:underline">Peta</a></li>
+                    <li><a href="{{ route('home') }}#statistik" class="hover:text-navy-900 hover:underline">Statistik</a></li>
+                    <li><a href="{{ route('home') }}#alur-kerja" class="hover:text-navy-900 hover:underline">Alur Kerja</a></li>
+                    <li><a href="{{ route('home') }}#sdgs" class="hover:text-navy-900 hover:underline">SDGs 11</a></li>
+                    <li><a href="{{ route('home') }}#faq" class="hover:text-navy-900 hover:underline">FAQ</a></li>
                     <li><a href="{{ route('home') }}#tentang" class="hover:text-navy-900 hover:underline">Tentang</a></li>
-                    <li><a href="{{ route('home') }}#faq-title" class="hover:text-navy-900 hover:underline">FAQ</a></li>
                     @guest
                         <li><a href="{{ route('login') }}" class="hover:text-navy-900 hover:underline">Masuk</a></li>
                         <li><a href="{{ route('register') }}" class="hover:text-navy-900 hover:underline">Daftar</a></li>

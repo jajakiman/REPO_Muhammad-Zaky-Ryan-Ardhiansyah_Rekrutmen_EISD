@@ -37,7 +37,7 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 
 <section class="location-detail-workspace py-4 sm:py-6">
-    <div class="w-full space-y-6">
+    <div class="location-detail-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div class="breadcrumb-nav">
             <a href="{{ route('map.index') }}" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy-900 hover:text-orange-700 transition-colors">
                 &larr; Kembali ke Peta Aksesibilitas

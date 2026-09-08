@@ -57,7 +57,7 @@ class ReportLifecycleTest extends TestCase
         $this->get(route('home'))
             ->assertOk()
             ->assertSee('AksesLoka')
-            ->assertSee('Lihat peta');
+            ->assertSee('Lihat Peta Kampus');
 
         $this->get(route('map.index', ['q' => 'Manterawu']))
             ->assertOk()
