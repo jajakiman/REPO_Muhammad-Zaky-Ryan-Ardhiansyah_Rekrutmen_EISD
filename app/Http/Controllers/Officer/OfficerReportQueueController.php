@@ -113,6 +113,11 @@ class OfficerReportQueueController extends Controller
         $photoPath = null;
         if ($request->hasFile('resolution_photo')) {
             $photoPath = $request->file('resolution_photo')->store('resolutions', 'report-photos');
+            if ($photoPath === false) {
+                return redirect()->route('officer.reports.show', $report)
+                    ->withInput($request->safe()->except('resolution_photo'))
+                    ->with('error', 'Foto hasil penanganan gagal disimpan. Silakan coba kembali.');
+            }
         }
 
         try {

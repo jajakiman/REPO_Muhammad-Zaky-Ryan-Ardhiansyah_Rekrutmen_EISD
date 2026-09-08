@@ -1,6 +1,5 @@
 @php
     $user = auth()->user();
-    $roleLabels = ['reporter' => 'Pelapor', 'officer' => 'Petugas', 'admin' => 'Administrator'];
 @endphp
 
 <div class="relative" data-user-menu>
@@ -20,15 +19,6 @@
                     <p class="truncate text-sm font-bold text-slate-900">{{ $user->name }}</p>
                     <p class="truncate text-xs text-slate-500">{{ $user->email }}</p>
                 </div>
-            </div>
-            <div class="mt-3 flex items-center pt-2.5 border-t border-slate-200/60 text-xs">
-                @if($user->role === 'reporter')
-                    <span class="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-0.5 font-bold text-blue-700">Pelapor</span>
-                @elseif($user->role === 'officer')
-                    <span class="rounded-full border border-orange-200 bg-orange-50 px-2.5 py-0.5 font-bold text-orange-700">Petugas</span>
-                @else
-                    <span class="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-0.5 font-bold text-emerald-700">Administrator</span>
-                @endif
             </div>
         </div>
         <ul class="space-y-1 p-2 text-sm font-medium" aria-labelledby="user-menu-button">

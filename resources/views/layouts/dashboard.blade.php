@@ -144,17 +144,8 @@
                         <p class="text-xs text-slate-400 truncate">{{ auth()->user()->email }}</p>
                     </div>
                 </div>
-                <div class="mt-3 pt-2.5 border-t border-white/10 flex items-center text-xs">
-                    @if(auth()->user()->role === 'reporter')
-                        <span class="px-2 py-0.5 rounded-full font-bold bg-blue-500/20 text-blue-300 border border-blue-400/30">Pelapor</span>
-                    @elseif(auth()->user()->role === 'officer')
-                        <span class="px-2 py-0.5 rounded-full font-bold bg-orange-500/20 text-orange-300 border border-orange-400/30">Petugas</span>
-                    @else
-                        <span class="px-2 py-0.5 rounded-full font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">Administrator</span>
-                    @endif
-                </div>
                 @if(auth()->user()->role === 'officer' && auth()->user()->campusArea)
-                    <p class="mt-1.5 text-[11px] text-orange-300 truncate">Area: {{ auth()->user()->campusArea->name }}</p>
+                    <p class="mt-3 border-t border-white/10 pt-2.5 text-[11px] text-orange-300 truncate">Area: {{ auth()->user()->campusArea->name }}</p>
                 @endif
             </div>
             <a href="{{ route('home') }}" class="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:bg-white/10 hover:text-white transition-colors">

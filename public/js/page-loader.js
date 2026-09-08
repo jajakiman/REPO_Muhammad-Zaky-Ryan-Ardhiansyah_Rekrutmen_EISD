@@ -29,6 +29,8 @@
 
     document.addEventListener('submit', function (event) {
         if (event.defaultPrevented || event.target.matches('[data-status-switch], [method="dialog"]')) return;
+        var dialog = event.target.closest('dialog[open]');
+        if (dialog) dialog.close();
         show();
     });
 

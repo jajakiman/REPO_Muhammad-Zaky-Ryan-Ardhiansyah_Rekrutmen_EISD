@@ -137,6 +137,18 @@ class OfficerHandlingTest extends TestCase
         $this->assertNotNull($freshFacility->last_checked_at);
     }
 
+    public function test_resolution_form_supports_photo_uploads(): void
+    {
+        $data = $this->createSetup();
+        $data['report']->update(['status' => 'in_progress']);
+
+        $this->actingAs($data['officer'])
+            ->get(route('officer.reports.show', $data['report']))
+            ->assertOk()
+            ->assertSee('enctype="multipart/form-data"', false)
+            ->assertSee('name="resolution_photo"', false);
+    }
+
     public function test_resolution_validation_requires_notes_and_valid_condition(): void
     {
         $data = $this->createSetup();

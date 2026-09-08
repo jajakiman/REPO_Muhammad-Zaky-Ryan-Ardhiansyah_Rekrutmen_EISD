@@ -119,8 +119,28 @@ class VisualConsistencyAuditTest extends TestCase
 
         $this->assertStringContainsString('data-sidebar-profile', $html);
         $this->assertGreaterThan(strpos($html, 'sidebar-navigation'), strpos($html, 'data-sidebar-profile'));
+        $this->assertStringNotContainsString('data-role-badge', $html);
         $this->assertStringNotContainsString('Dashboard Saya', $html);
         $this->assertStringNotContainsString('Laporan Masalah Saya', $html);
+    }
+
+    public function test_profile_sections_do_not_render_actor_role_badges(): void
+    {
+        $dashboard = file_get_contents(resource_path('views/layouts/dashboard.blade.php'));
+        $userMenu = file_get_contents(resource_path('views/components/user-menu.blade.php'));
+
+        $this->assertStringNotContainsString('bg-blue-500/20 text-blue-300', $dashboard);
+        $this->assertStringNotContainsString('bg-orange-500/20 text-orange-300', $dashboard);
+        $this->assertStringNotContainsString('border-blue-200 bg-blue-50 px-2.5', $userMenu);
+        $this->assertStringNotContainsString('border-orange-200 bg-orange-50 px-2.5', $userMenu);
+    }
+
+    public function test_page_loader_closes_a_valid_open_dialog_before_loading(): void
+    {
+        $script = file_get_contents(public_path('js/page-loader.js'));
+
+        $this->assertStringContainsString("closest('dialog[open]')", $script);
+        $this->assertStringContainsString('dialog.close()', $script);
     }
 
     public function test_dashboard_sidebar_is_stationary_and_header_omits_portal_kerja(): void
