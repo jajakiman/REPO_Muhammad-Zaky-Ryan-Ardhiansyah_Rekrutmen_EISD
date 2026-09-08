@@ -20,8 +20,8 @@
 @section('title', 'Laporan ' . $report->report_code . ' | AksesLoka')
 
 @section('content')
-<section class="report-detail py-4 sm:py-6">
-    <div class="max-w-4xl space-y-6">
+<section class="admin-section">
+    <div class="container"><div class="max-w-4xl space-y-6">
         <div class="breadcrumb-nav">
             <a href="{{ route('reporter.reports.index') }}" class="inline-flex items-center gap-1.5 text-sm font-semibold text-navy-900 hover:text-orange-700 transition-colors">
                 &larr; Kembali ke Riwayat Laporan
@@ -173,6 +173,6 @@
                 </script>
             </div>
         @endif
-    </div>
+    </div></div>
 </section>
 @endsection

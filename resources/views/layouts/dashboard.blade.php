@@ -65,7 +65,7 @@
                     <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
                     Dashboard
                 </a>
-                <a href="{{ route('reporter.reports.create') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all {{ request()->routeIs('reporter.reports.create') ? 'bg-orange-700 text-white shadow-sm' : 'bg-white/10 text-white hover:bg-white/15' }}">
+                <a href="{{ route('reporter.reports.create') }}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-colors duration-150 {{ request()->routeIs('reporter.reports.create') ? 'bg-orange-700 text-white shadow-sm' : 'text-slate-300 hover:bg-white/10 hover:text-white' }}">
                     <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" /></svg>
                     Buat Laporan
                 </a>
@@ -144,8 +144,7 @@
                         <p class="text-xs text-slate-400 truncate">{{ auth()->user()->email }}</p>
                     </div>
                 </div>
-                <div class="mt-3 pt-2.5 border-t border-white/10 flex items-center justify-between text-xs">
-                    <span class="text-slate-400">Peran Akun:</span>
+                <div class="mt-3 pt-2.5 border-t border-white/10 flex items-center text-xs">
                     @if(auth()->user()->role === 'reporter')
                         <span class="px-2 py-0.5 rounded-full font-bold bg-blue-500/20 text-blue-300 border border-blue-400/30">Pelapor</span>
                     @elseif(auth()->user()->role === 'officer')
