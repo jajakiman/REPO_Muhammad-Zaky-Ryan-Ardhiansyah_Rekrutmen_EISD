@@ -29,18 +29,21 @@
         </div>
 
         <div class="report-detail-header space-y-2">
-            <p class="eyebrow text-orange-700 text-xs font-bold uppercase tracking-wider mb-1.5">Kode Laporan: {{ $report->report_code }}</p>
+            <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm sm:text-base font-semibold">
+                <span class="text-orange-700 font-extrabold uppercase tracking-wider">Kode Laporan: {{ $report->report_code }}</span>
+                <span class="text-slate-300 font-normal select-none" aria-hidden="true">&bull;</span>
+                <span class="text-slate-600 font-medium">Diajukan pada {{ $report->created_at->format('d M Y, H:i') }} WIB</span>
+            </div>
             <h1 class="font-display text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">Pemeriksaan Laporan Fasilitas</h1>
-            <div class="flex flex-wrap items-center gap-3 pt-1 text-xs text-slate-500">
-                <span class="badge badge-{{ $report->status }}">
+            <div class="flex flex-wrap items-center gap-3 pt-1">
+                <span class="badge badge-{{ $report->status }} text-xs sm:text-sm px-3 py-1">
                     {{ $statusLabels[$report->status] ?? $report->status }}
                 </span>
                 @if($report->priority)
-                    <span class="badge badge-priority-{{ $report->priority }}">
+                    <span class="badge badge-priority-{{ $report->priority }} text-xs sm:text-sm px-3 py-1">
                         Prioritas: {{ $priorityLabels[$report->priority] ?? $report->priority }}
                     </span>
                 @endif
-                <span>Diajukan: {{ $report->created_at->format('d M Y, H:i') }}</span>
             </div>
         </div>
 
@@ -76,7 +79,21 @@
                     <div class="sm:col-span-2">
                         <dt class="text-xs font-bold uppercase text-slate-400 mb-2">Foto Bukti</dt>
                         <dd>
-                            <img src="{{ Storage::disk('report-photos')->url($report->photo_path) }}" alt="Foto bukti laporan fasilitas" loading="lazy" decoding="async" class="max-w-md w-full h-auto rounded-xl border border-slate-200 shadow-xs">
+                            <div class="photo-preview-card max-w-lg rounded-2xl border border-slate-200 bg-slate-50 p-3 shadow-xs space-y-2">
+                                <a href="{{ asset('storage/report-photos/' . $report->photo_path) }}" target="_blank" rel="noopener noreferrer" class="group block relative overflow-hidden rounded-xl border border-slate-200/80 bg-slate-100 focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                    <img src="{{ asset('storage/report-photos/' . $report->photo_path) }}" alt="Foto bukti laporan fasilitas" loading="lazy" decoding="async" class="w-full max-h-80 object-cover rounded-xl transition-transform duration-200 group-hover:scale-[1.02]" onerror="this.parentElement.innerHTML='<div class=\'p-6 text-center text-xs text-slate-500 font-medium\'>Foto bukti tidak dapat dimuat atau berkas telah dipindahkan.</div>'">
+                                    <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/80 text-white text-xs font-bold backdrop-blur-xs">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                            Buka Foto Ukuran Penuh
+                                        </span>
+                                    </div>
+                                </a>
+                                <p class="text-[11px] text-slate-500 flex items-center gap-1">
+                                    <svg class="w-3.5 h-3.5 text-slate-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    Klik gambar untuk melihat foto resolusi penuh di tab baru.
+                                </p>
+                            </div>
                         </dd>
                     </div>
                 @endif
@@ -255,7 +272,21 @@
                         <div class="sm:col-span-2">
                             <dt class="text-xs font-bold uppercase text-emerald-800 mb-2">Foto Hasil</dt>
                             <dd>
-                                <img src="{{ Storage::disk('report-photos')->url($report->resolution_photo_path) }}" alt="Foto hasil penanganan fasilitas" loading="lazy" decoding="async" class="max-w-md w-full h-auto rounded-xl border border-emerald-200 shadow-xs">
+                                <div class="photo-preview-card max-w-lg rounded-2xl border border-emerald-200 bg-emerald-50/50 p-3 shadow-xs space-y-2">
+                                    <a href="{{ asset('storage/report-photos/' . $report->resolution_photo_path) }}" target="_blank" rel="noopener noreferrer" class="group block relative overflow-hidden rounded-xl border border-emerald-200/80 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                        <img src="{{ asset('storage/report-photos/' . $report->resolution_photo_path) }}" alt="Foto hasil penanganan fasilitas" loading="lazy" decoding="async" class="w-full max-h-80 object-cover rounded-xl transition-transform duration-200 group-hover:scale-[1.02]" onerror="this.parentElement.innerHTML='<div class=\'p-6 text-center text-xs text-slate-500 font-medium\'>Foto hasil tidak dapat dimuat atau berkas telah dipindahkan.</div>'">
+                                        <div class="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/20 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900/80 text-white text-xs font-bold backdrop-blur-xs">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+                                                Buka Foto Ukuran Penuh
+                                            </span>
+                                        </div>
+                                    </a>
+                                    <p class="text-[11px] text-emerald-800 flex items-center gap-1">
+                                        <svg class="w-3.5 h-3.5 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                        Foto dokumentasi hasil perbaikan fasilitas.
+                                    </p>
+                                </div>
                             </dd>
                         </div>
                     @endif
