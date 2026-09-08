@@ -32,7 +32,7 @@
             <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm sm:text-base font-semibold">
                 <span class="text-orange-700 font-extrabold uppercase tracking-wider">Kode Laporan: {{ $report->report_code }}</span>
                 <span class="text-slate-300 font-normal select-none" aria-hidden="true">&bull;</span>
-                <span class="text-slate-600 font-medium">Diajukan pada {{ $report->created_at->format('d M Y, H:i') }} WIB</span>
+                <span class="text-slate-600 font-medium">Diajukan pada {{ $report->created_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB</span>
             </div>
             <h1 class="font-display text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">Pemeriksaan Laporan Fasilitas</h1>
             <div class="flex flex-wrap items-center gap-3 pt-1">
@@ -106,7 +106,7 @@
                 <h2 class="text-lg font-bold text-slate-900">Petugas Penanggung Jawab</h2>
                 <p class="text-sm text-slate-800"><strong>{{ $report->officer->name }}</strong> <span class="text-xs text-slate-500">({{ $report->officer->email }})</span></p>
                 @if($report->verified_at)
-                    <p class="text-xs text-slate-500">Diverifikasi pada: {{ $report->verified_at->format('d M Y, H:i') }}</p>
+                    <p class="text-xs text-slate-500">Diverifikasi pada: {{ $report->verified_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB</p>
                 @endif
             </div>
         @endif
@@ -174,7 +174,7 @@
                 <p class="text-xs font-bold uppercase text-red-700">Alasan Penolakan:</p>
                 <p class="text-sm whitespace-pre-wrap leading-relaxed">{{ $report->rejection_reason }}</p>
                 @if($report->verified_at)
-                    <p class="text-xs text-red-700">Ditolak pada: {{ $report->verified_at->format('d M Y, H:i') }}</p>
+                    <p class="text-xs text-red-700">Ditolak pada: {{ $report->verified_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB</p>
                 @endif
             </div>
         @endif
@@ -262,7 +262,7 @@
                 <dl class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 text-sm">
                     <div>
                         <dt class="text-xs font-bold uppercase text-emerald-800">Waktu Selesai</dt>
-                        <dd class="mt-1 text-slate-800 font-semibold">{{ $report->resolved_at ? $report->resolved_at->format('d M Y, H:i') : '-' }}</dd>
+                        <dd class="mt-1 text-slate-800 font-semibold">{{ $report->resolved_at ? $report->resolved_at->timezone('Asia/Jakarta')->format('d M Y, H:i').' WIB' : '-' }}</dd>
                     </div>
                     <div class="sm:col-span-2">
                         <dt class="text-xs font-bold uppercase text-emerald-800">Catatan Hasil</dt>

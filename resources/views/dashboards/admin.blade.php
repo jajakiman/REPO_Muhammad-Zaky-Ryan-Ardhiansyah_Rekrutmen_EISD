@@ -116,7 +116,7 @@
                                             {{ $statusLabels[$report->status] ?? $report->status }}
                                         </span>
                                     </td>
-                                    <td data-label="Waktu Masuk">{{ $report->created_at->format('d M Y, H:i') }}</td>
+                                    <td data-label="Waktu Masuk">{{ $report->created_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB</td>
                                     <td data-label="Aksi">
                                         <div class="table-actions">
                                             <a href="{{ route('admin.reports.show', $report) }}" class="button button-secondary button-sm inline-flex items-center px-3 py-1.5 rounded-lg text-xs font-bold text-navy-900 hover:underline">

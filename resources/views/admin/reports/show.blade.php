@@ -32,7 +32,7 @@
             <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm sm:text-base font-semibold">
                 <span class="text-orange-700 font-extrabold uppercase tracking-wider">Pusat Monitoring &bull; {{ $report->report_code }}</span>
                 <span class="text-slate-300 font-normal select-none" aria-hidden="true">&bull;</span>
-                <span class="text-slate-600 font-medium">Diajukan pada {{ $report->created_at->format('d M Y, H:i') }} WIB</span>
+                <span class="text-slate-600 font-medium">Diajukan pada {{ $report->created_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB</span>
             </div>
             <h1 class="font-display text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">Detail Laporan Lintas Kampus</h1>
             <div class="flex flex-wrap items-center gap-3 pt-1">
@@ -115,13 +115,13 @@
                 @if($report->verified_at)
                     <div>
                         <dt class="text-xs font-bold uppercase text-slate-400">Waktu Verifikasi</dt>
-                        <dd class="mt-1 text-slate-700">{{ $report->verified_at->format('d M Y, H:i') }}</dd>
+                        <dd class="mt-1 text-slate-700">{{ $report->verified_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB</dd>
                     </div>
                 @endif
                 @if($report->handling_started_at)
                     <div>
                         <dt class="text-xs font-bold uppercase text-slate-400">Waktu Mulai Penanganan</dt>
-                        <dd class="mt-1 text-slate-700">{{ $report->handling_started_at->format('d M Y, H:i') }}</dd>
+                        <dd class="mt-1 text-slate-700">{{ $report->handling_started_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB</dd>
                     </div>
                 @endif
                 @if($report->status === 'rejected')
@@ -133,7 +133,7 @@
                 @if($report->status === 'resolved')
                     <div>
                         <dt class="text-xs font-bold uppercase text-slate-400">Waktu Selesai</dt>
-                        <dd class="mt-1 text-slate-700">{{ $report->resolved_at?->format('d M Y, H:i') }}</dd>
+                        <dd class="mt-1 text-slate-700">{{ $report->resolved_at?->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB</dd>
                     </div>
                     @if($report->resolution_notes)
                         <div class="sm:col-span-2">

@@ -302,6 +302,24 @@ class ReporterReportTest extends TestCase
         ]);
     }
 
+    public function test_report_detail_displays_the_submission_time_in_western_indonesia_time(): void
+    {
+        $facility = $this->createFacility();
+        $category = IssueCategory::factory()->create();
+        $reporter = User::factory()->create(['role' => 'reporter']);
+        $report = AccessibilityReport::factory()->create([
+            'reporter_id' => $reporter->id,
+            'location_accessibility_feature_id' => $facility->id,
+            'issue_category_id' => $category->id,
+            'created_at' => '2026-09-08 12:05:00',
+        ]);
+
+        $this->actingAs($reporter)
+            ->get(route('reporter.reports.show', $report))
+            ->assertOk()
+            ->assertSee('Diajukan pada 08 Sep 2026, 19:05 WIB');
+    }
+
     public function test_reporter_with_campus_affiliation_only_sees_facilities_from_their_campus_in_report_form(): void
     {
         $telkomCampus = Campus::factory()->create(['name' => 'Telkom University', 'is_active' => true]);

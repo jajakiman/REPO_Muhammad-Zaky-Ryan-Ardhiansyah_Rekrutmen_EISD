@@ -85,7 +85,7 @@
                                     </span>
                                 </td>
                                 <td data-label="Waktu Masuk">
-                                    {{ $report->created_at->format('d M Y, H:i') }}
+                                    {{ $report->created_at->timezone('Asia/Jakarta')->format('d M Y, H:i') }} WIB
                                 </td>
                                 <td data-label="Aksi">
                                     <div class="table-actions">
