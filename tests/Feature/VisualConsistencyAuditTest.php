@@ -122,4 +122,15 @@ class VisualConsistencyAuditTest extends TestCase
         $this->assertStringNotContainsString('Dashboard Saya', $html);
         $this->assertStringNotContainsString('Laporan Masalah Saya', $html);
     }
+
+    public function test_dashboard_sidebar_is_stationary_and_header_omits_portal_kerja(): void
+    {
+        $admin = User::factory()->create(['role' => 'admin']);
+        $response = $this->actingAs($admin)->get(route('admin.dashboard'));
+
+        $response->assertOk()
+            ->assertDontSee('Portal Kerja')
+            ->assertSee('md:h-screen md:overflow-hidden', false)
+            ->assertSee('overflow-y-auto', false);
+    }
 }

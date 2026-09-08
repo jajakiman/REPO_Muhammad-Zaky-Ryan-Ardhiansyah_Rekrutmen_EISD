@@ -28,7 +28,7 @@
         }
     </script>
 </head>
-<body class="min-h-full bg-slate-100 font-sans text-slate-900 antialiased flex flex-col md:flex-row">
+<body class="min-h-full md:h-screen md:overflow-hidden bg-slate-100 font-sans text-slate-900 antialiased flex flex-col md:flex-row">
     <x-page-loader />
     <a class="skip-link" href="#dashboard-main">Langsung ke konten utama</a>
 
@@ -46,7 +46,7 @@
     <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-950/70 z-40 hidden md:hidden transition-opacity backdrop-blur-xs" aria-hidden="true"></div>
 
     <!-- Sidebar Navigation -->
-    <aside id="dashboard-sidebar" class="dashboard-sidebar fixed inset-y-0 left-0 z-50 w-72 bg-navy-950 text-white flex flex-col -translate-x-full md:translate-x-0 md:static md:w-64 lg:w-72 transition-transform duration-200 ease-in-out shadow-2xl md:shadow-xl md:sticky md:top-0 md:min-h-screen shrink-0 border-r border-white/10">
+    <aside id="dashboard-sidebar" class="dashboard-sidebar fixed inset-y-0 left-0 z-50 w-72 bg-navy-950 text-white flex flex-col -translate-x-full md:translate-x-0 md:static md:w-64 lg:w-72 transition-transform duration-200 ease-in-out shadow-2xl md:shadow-xl md:h-screen shrink-0 border-r border-white/10">
         <!-- Sidebar Brand & Mobile Close Button -->
         <div class="p-6 border-b border-white/10 flex items-center justify-between">
             <a href="{{ route('home') }}" class="inline-flex items-center no-underline">
@@ -173,12 +173,10 @@
     </aside>
 
     <!-- Main Content Area -->
-    <div class="flex-1 flex flex-col min-w-0 bg-slate-50 min-h-screen">
+    <div class="flex-1 flex flex-col min-w-0 bg-slate-50 min-h-screen md:h-screen md:overflow-y-auto">
         <!-- Top Workspace Bar -->
         <header data-workspace-header class="bg-white border-b border-slate-200 px-4 sm:px-6 lg:px-8 py-3.5 shadow-xs sticky top-0 z-20">
             <div class="flex items-center gap-3">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Portal Kerja</span>
-                <span class="text-slate-300">&bull;</span>
                 <span class="text-sm font-semibold text-slate-700">@yield('title', 'Dashboard')</span>
             </div>
         </header>
