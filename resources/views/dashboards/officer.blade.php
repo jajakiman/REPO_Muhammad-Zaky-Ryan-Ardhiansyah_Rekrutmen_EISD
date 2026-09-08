@@ -23,15 +23,15 @@
         <div class="stat-grid mt-8 grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div class="service-card rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
                 <p class="text-4xl font-black tracking-tight text-navy-900">{{ $submittedCount }}</p>
-                <p class="mt-2 text-sm font-bold text-slate-700">Menunggu Verifikasi (Submitted)</p>
+                <p class="mt-2 text-sm font-bold text-slate-700">Menunggu Verifikasi</p>
             </div>
             <div class="service-card rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
                 <p class="text-4xl font-black tracking-tight text-orange-700">{{ $inProgressCount }}</p>
-                <p class="mt-2 text-sm font-bold text-slate-700">Sedang Ditangani (In Progress)</p>
+                <p class="mt-2 text-sm font-bold text-slate-700">Sedang Ditangani</p>
             </div>
             <div class="service-card rounded-2xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
                 <p class="text-4xl font-black tracking-tight text-emerald-800">{{ $resolvedCount }}</p>
-                <p class="mt-2 text-sm font-bold text-slate-700">Selesai Ditangani (Resolved)</p>
+                <p class="mt-2 text-sm font-bold text-slate-700">Selesai Ditangani</p>
             </div>
         </div>
 

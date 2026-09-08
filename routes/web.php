@@ -19,10 +19,25 @@ use App\Http\Controllers\Reporter\ProfileController;
 use App\Http\Controllers\Reporter\ReportController;
 use App\Http\Controllers\Reporter\ReporterDashboardController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/', HomeController::class)->name('home');
 Route::get('/peta', [PublicMapController::class, 'index'])->name('map.index');
 Route::get('/lokasi/{location}', [PublicMapController::class, 'show'])->name('locations.show');
+
+Route::get('/media/report-photos/{path}', function (string $path) {
+    if (Storage::disk('report-photos')->exists($path)) {
+        return Storage::disk('report-photos')->response($path);
+    }
+    abort(404);
+})->where('path', '.*')->name('report.photo');
+
+Route::get('/storage/report-photos/{path}', function (string $path) {
+    if (Storage::disk('report-photos')->exists($path)) {
+        return Storage::disk('report-photos')->response($path);
+    }
+    abort(404);
+})->where('path', '.*');
 
 Route::middleware('guest')->group(function () {
     Route::get('/daftar', [RegisteredUserController::class, 'create'])->name('register');

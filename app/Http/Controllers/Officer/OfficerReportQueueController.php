@@ -30,11 +30,8 @@ class OfficerReportQueueController extends Controller
             'reporter',
         ]);
 
-        if ($request->filled('status')) {
+        if ($request->filled('status') && $request->input('status') !== 'all') {
             $query->where('status', $request->input('status'));
-        } else {
-            // Default queue shows submitted reports needing action
-            $query->where('status', 'submitted');
         }
 
         if ($request->filled('priority')) {

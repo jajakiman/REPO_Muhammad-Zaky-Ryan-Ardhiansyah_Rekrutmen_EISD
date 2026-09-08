@@ -13,11 +13,11 @@
             </div>
         </div>
 
-        <!-- Filter Form -->
-        <div class="filter-card">
-            <form method="get" action="{{ route('admin.reports.index') }}" class="filter-grid">
-                <div class="field">
-                    <label for="filter-campus">Kampus</label>
+        <!-- Filter Form Card -->
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm mb-6">
+            <form method="get" action="{{ route('admin.reports.index') }}" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                <div class="field mb-0">
+                    <label for="filter-campus" class="block text-xs font-bold uppercase text-slate-700 mb-1.5">Kampus</label>
                     <x-select-shell>
                     <select id="filter-campus" name="campus_id">
                         <option value="">Semua Kampus</option>
@@ -28,8 +28,8 @@
                     </x-select-shell>
                 </div>
 
-                <div class="field">
-                    <label for="filter-status">Status Laporan</label>
+                <div class="field mb-0">
+                    <label for="filter-status" class="block text-xs font-bold uppercase text-slate-700 mb-1.5">Status Laporan</label>
                     <x-select-shell>
                     <select id="filter-status" name="status">
                         <option value="">Semua Status</option>
@@ -40,8 +40,8 @@
                     </x-select-shell>
                 </div>
 
-                <div class="field">
-                    <label for="filter-priority">Prioritas</label>
+                <div class="field mb-0">
+                    <label for="filter-priority" class="block text-xs font-bold uppercase text-slate-700 mb-1.5">Prioritas</label>
                     <x-select-shell>
                     <select id="filter-priority" name="priority">
                         <option value="">Semua Prioritas</option>
@@ -52,10 +52,10 @@
                     </x-select-shell>
                 </div>
 
-                <div class="filter-actions">
-                    <button type="submit" class="button button-primary">Terapkan Filter</button>
+                <div class="flex items-center gap-2 pt-1">
+                    <button type="submit" class="button button-primary flex-1 inline-flex min-h-11 items-center justify-center px-4 py-2.5 rounded-xl text-sm font-bold bg-orange-700 text-white hover:bg-orange-800 shadow-sm transition-colors">Terapkan Filter</button>
                     @if(request()->hasAny(['campus_id', 'campus_area_id', 'campus_location_id', 'status', 'priority']))
-                        <a href="{{ route('admin.reports.index') }}" class="button button-secondary">Reset</a>
+                        <a href="{{ route('admin.reports.index') }}" class="button button-secondary inline-flex min-h-11 items-center justify-center px-4 py-2.5 rounded-xl text-sm font-semibold bg-white text-navy-900 border border-slate-300 hover:bg-slate-50 transition-colors">Reset</a>
                     @endif
                 </div>
             </form>

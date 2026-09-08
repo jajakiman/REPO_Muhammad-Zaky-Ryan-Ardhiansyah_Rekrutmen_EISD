@@ -167,8 +167,11 @@ class ReporterReportTest extends TestCase
 
         $this->actingAs($reporter)->get(route('reporter.reports.show', $report))
             ->assertOk()
+            ->assertSee($report->photo_url)
             ->assertSee('loading="lazy"', false)
             ->assertSee('decoding="async"', false);
+
+        $this->get($report->photo_url)->assertOk();
     }
 
     public function test_report_validation_enforces_required_fields_and_photo_rules(): void

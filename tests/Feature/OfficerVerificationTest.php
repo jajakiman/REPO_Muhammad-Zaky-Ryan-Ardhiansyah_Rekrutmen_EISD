@@ -57,9 +57,22 @@ class OfficerVerificationTest extends TestCase
 
         $response->assertOk()
             ->assertSee('Antrean Laporan Area')
+            ->assertSee('Semua Status')
+            ->assertSee('Menunggu Verifikasi')
+            ->assertDontSee('(Submitted)', false)
             ->assertSee($area1->name)
             ->assertSee($reportInArea->report_code)
             ->assertDontSee($reportOutsideArea->report_code);
+
+        // Filter by specific status
+        $this->actingAs($officer)->get(route('officer.queue.index', ['status' => 'verified']))
+            ->assertOk()
+            ->assertDontSee($reportInArea->report_code);
+
+        // Filter by all statuses
+        $this->actingAs($officer)->get(route('officer.queue.index', ['status' => 'all']))
+            ->assertOk()
+            ->assertSee($reportInArea->report_code);
     }
 
     public function test_officer_cannot_view_report_detail_outside_their_area(): void

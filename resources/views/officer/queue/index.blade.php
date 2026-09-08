@@ -27,12 +27,13 @@
                     <label for="queue-status" class="sr-only">Status Laporan</label>
                     <x-select-shell class="min-w-[15rem]">
                     <select id="queue-status" name="status" onchange="this.form.submit()">
-                        <option value="submitted" @selected(request('status', 'submitted') === 'submitted')>Menunggu Verifikasi (Submitted)</option>
-                        <option value="verified" @selected(request('status') === 'verified')>Terverifikasi (Verified)</option>
-                        <option value="in_progress" @selected(request('status') === 'in_progress')>Sedang Ditangani (In Progress)</option>
-                        <option value="resolved" @selected(request('status') === 'resolved')>Selesai (Resolved)</option>
-                        <option value="rejected" @selected(request('status') === 'rejected')>Ditolak (Rejected)</option>
-                        <option value="cancelled" @selected(request('status') === 'cancelled')>Dibatalkan (Cancelled)</option>
+                        <option value="" @selected(!request('status') || request('status') === 'all')>Semua Status</option>
+                        <option value="submitted" @selected(request('status') === 'submitted')>Menunggu Verifikasi</option>
+                        <option value="verified" @selected(request('status') === 'verified')>Terverifikasi</option>
+                        <option value="in_progress" @selected(request('status') === 'in_progress')>Sedang Ditangani</option>
+                        <option value="resolved" @selected(request('status') === 'resolved')>Selesai Ditangani</option>
+                        <option value="rejected" @selected(request('status') === 'rejected')>Ditolak</option>
+                        <option value="cancelled" @selected(request('status') === 'cancelled')>Dibatalkan</option>
                     </select>
                     </x-select-shell>
                 </form>

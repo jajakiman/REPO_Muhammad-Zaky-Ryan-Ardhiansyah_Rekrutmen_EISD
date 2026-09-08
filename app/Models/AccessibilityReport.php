@@ -40,4 +40,14 @@ class AccessibilityReport extends Model
     {
         return $this->belongsTo(LocationAccessibilityFeature::class);
     }
+
+    public function getPhotoUrlAttribute(): ?string
+    {
+        return $this->photo_path ? route('report.photo', ['path' => $this->photo_path]) : null;
+    }
+
+    public function getResolutionPhotoUrlAttribute(): ?string
+    {
+        return $this->resolution_photo_path ? route('report.photo', ['path' => $this->resolution_photo_path]) : null;
+    }
 }
