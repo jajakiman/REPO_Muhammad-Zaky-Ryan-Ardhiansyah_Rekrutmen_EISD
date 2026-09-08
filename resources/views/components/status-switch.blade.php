@@ -13,9 +13,8 @@
             @checked($checked)
             @disabled($disabled)
             aria-label="Status aktif {{ $label }}"
-            onchange="this.form.requestSubmit()"
         >
         <span class="relative h-6 w-11 shrink-0 rounded-full bg-slate-400 transition-colors after:absolute after:start-1 after:top-1 after:h-4 after:w-4 after:rounded-full after:bg-white after:transition-transform after:content-[''] peer-checked:bg-emerald-700 peer-checked:after:translate-x-5 peer-focus-visible:ring-4 peer-focus-visible:ring-emerald-200"></span>
-        <span class="text-sm font-semibold text-slate-700">{{ $checked ? 'Aktif' : 'Nonaktif' }}</span>
+        <span data-status-label class="text-sm font-semibold text-slate-700">{{ $checked ? 'Aktif' : 'Nonaktif' }}</span>
     </label>
 </form>

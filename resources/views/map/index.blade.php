@@ -89,7 +89,7 @@
 
         <!-- Container Peta Leaflet -->
         <div class="map-container-wrap relative isolate z-0 rounded-2xl border border-slate-200 bg-white p-2 sm:p-3 shadow-sm overflow-hidden">
-            <div id="map" class="map-canvas w-full h-[28rem] sm:h-[32rem] lg:h-[36rem] rounded-xl overflow-hidden bg-slate-100 border border-slate-200"></div>
+            <div id="map" data-lazy-map class="map-canvas w-full h-[28rem] sm:h-[32rem] lg:h-[36rem] rounded-xl overflow-hidden bg-slate-100 border border-slate-200"></div>
             <p class="map-attribution-note px-2 pt-2.5 text-xs text-slate-500 flex items-center justify-between">
                 <span>Peta ditenagai oleh <strong>Leaflet</strong> dengan data &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener" class="underline hover:text-navy-900">OpenStreetMap</a> kontributor.</span>
                 <span class="hidden sm:inline">Koordinat GPS bersifat privat di peramban.</span>
@@ -194,9 +194,17 @@
 <script src="{{ asset('js/map.js') }}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        if (typeof window.initAksesLokaMap === 'function') {
+        var mapElement = document.querySelector('[data-lazy-map]');
+        var initialize = function () {
             window.initAksesLokaMap(@json($mapMarkers));
-        }
+        };
+        if (!('IntersectionObserver' in window)) return initialize();
+        var observer = new IntersectionObserver(function (entries) {
+            if (!entries[0].isIntersecting) return;
+            observer.disconnect();
+            initialize();
+        }, { rootMargin: '240px' });
+        observer.observe(mapElement);
     });
 </script>
 @endsection

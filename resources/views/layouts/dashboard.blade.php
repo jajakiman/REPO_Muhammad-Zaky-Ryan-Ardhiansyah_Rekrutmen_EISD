@@ -176,17 +176,11 @@
     <!-- Main Content Area -->
     <div class="flex-1 flex flex-col min-w-0 bg-slate-50 min-h-screen">
         <!-- Top Workspace Bar -->
-        <header class="bg-white border-b border-slate-200 px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between shadow-xs sticky top-0 z-20">
+        <header data-workspace-header class="bg-white border-b border-slate-200 px-4 sm:px-6 lg:px-8 py-3.5 shadow-xs sticky top-0 z-20">
             <div class="flex items-center gap-3">
                 <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Portal Kerja</span>
                 <span class="text-slate-300">&bull;</span>
                 <span class="text-sm font-semibold text-slate-700">@yield('title', 'Dashboard')</span>
-            </div>
-            <div class="flex items-center gap-3">
-                <a href="{{ route('map.index') }}" class="inline-flex items-center gap-1.5 text-xs font-bold text-navy-900 hover:text-orange-700 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition-colors">
-                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" /></svg>
-                    Peta Kampus
-                </a>
             </div>
         </header>
 
@@ -198,6 +192,8 @@
     </div>
 
     <x-logout-confirmation />
+    <div data-toast-container class="pointer-events-none fixed right-4 top-4 z-[70] flex w-[min(calc(100%-2rem),24rem)] flex-col gap-3" aria-live="polite"></div>
+    <script src="{{ asset('js/status-switch.js') }}" defer></script>
 
     <!-- Accessible Mobile Drawer Controller -->
     <script>

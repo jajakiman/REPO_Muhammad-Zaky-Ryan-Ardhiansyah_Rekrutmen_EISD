@@ -323,6 +323,38 @@ class AuthenticationTest extends TestCase
         }
     }
 
+    public function test_public_header_uses_role_aware_account_dropdown_for_authenticated_users(): void
+    {
+        foreach (['reporter', 'officer', 'admin'] as $role) {
+            $user = User::factory()->create(['role' => $role]);
+
+            $this->actingAs($user)->get(route('home'))
+                ->assertOk()
+                ->assertSee('data-user-menu', false)
+                ->assertSee('data-user-menu-button', false)
+                ->assertSee('aria-haspopup="true"', false)
+                ->assertSee(route($role.'.dashboard'))
+                ->assertSee('Keluar dari Akun')
+                ->assertSee('user-menu.js', false);
+
+            auth()->logout();
+        }
+    }
+
+    public function test_dashboard_topbar_does_not_duplicate_the_sidebar_map_link(): void
+    {
+        foreach (['reporter', 'officer', 'admin'] as $role) {
+            $user = User::factory()->create(['role' => $role]);
+
+            $this->actingAs($user)->get(route($role.'.dashboard'))
+                ->assertOk()
+                ->assertSee('data-workspace-header', false)
+                ->assertDontSee('data-topbar-map-link', false);
+
+            auth()->logout();
+        }
+    }
+
     public function test_success_modal_is_accessible_and_only_auto_closes_when_requested(): void
     {
         $this->withSession([

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreCampusRequest;
 use App\Http\Requests\Admin\UpdateCampusRequest;
 use App\Models\Campus;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -50,9 +51,13 @@ class CampusController extends Controller
         return redirect()->route('admin.campuses.index')->with('success', 'Kampus berhasil dinonaktifkan.');
     }
 
-    public function status(Request $request, Campus $campus): RedirectResponse
+    public function status(Request $request, Campus $campus): RedirectResponse|JsonResponse
     {
         $campus->update($request->validate(['is_active' => ['required', 'boolean']]));
+
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Status kampus berhasil diperbarui.', 'is_active' => $campus->is_active]);
+        }
 
         return redirect()->route('admin.campuses.index')->with('success', 'Status kampus berhasil diperbarui.');
     }

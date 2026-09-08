@@ -76,6 +76,21 @@ class PublicMapTest extends TestCase
         $this->assertStringContainsString('.leaflet-container', $css);
     }
 
+    public function test_leaflet_map_initialization_is_deferred_until_near_the_viewport(): void
+    {
+        $location = CampusLocation::factory()->create();
+
+        $this->get(route('map.index'))
+            ->assertOk()
+            ->assertSee('data-lazy-map', false)
+            ->assertSee('IntersectionObserver', false);
+
+        $this->get(route('locations.show', $location))
+            ->assertOk()
+            ->assertSee('data-lazy-map', false)
+            ->assertSee('IntersectionObserver', false);
+    }
+
     public function test_public_map_filters_use_interactive_native_select_components(): void
     {
         $this->get(route('map.index'))

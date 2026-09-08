@@ -80,7 +80,7 @@
                     <div class="sm:col-span-2">
                         <dt class="text-xs font-bold uppercase text-slate-400 mb-2">Foto Bukti</dt>
                         <dd>
-                            <img src="{{ Storage::disk('report-photos')->url($report->photo_path) }}" alt="Foto bukti masalah" class="max-w-md w-full h-auto rounded-xl border border-slate-200 shadow-xs">
+                            <img src="{{ Storage::disk('report-photos')->url($report->photo_path) }}" alt="Foto bukti masalah" loading="lazy" decoding="async" class="max-w-md w-full h-auto rounded-xl border border-slate-200 shadow-xs">
                         </dd>
                     </div>
                 @endif
@@ -128,7 +128,7 @@
                         <div class="sm:col-span-2">
                             <dt class="text-xs font-bold uppercase text-slate-400 mb-2">Foto Hasil</dt>
                             <dd>
-                                <img src="{{ Storage::disk('report-photos')->url($report->resolution_photo_path) }}" alt="Foto hasil penanganan" class="max-w-md w-full h-auto rounded-xl border border-slate-200 shadow-xs">
+                                <img src="{{ Storage::disk('report-photos')->url($report->resolution_photo_path) }}" alt="Foto hasil penanganan" loading="lazy" decoding="async" class="max-w-md w-full h-auto rounded-xl border border-slate-200 shadow-xs">
                             </dd>
                         </div>
                     @endif

@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\UpdateCampusLocationRequest;
 use App\Models\Campus;
 use App\Models\CampusArea;
 use App\Models\CampusLocation;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -60,14 +61,22 @@ class CampusLocationController extends Controller
         return $this->redirect($campus, $area, 'Lokasi kampus berhasil dinonaktifkan.');
     }
 
-    public function status(Request $request, Campus $campus, CampusArea $area, CampusLocation $location): RedirectResponse
+    public function status(Request $request, Campus $campus, CampusArea $area, CampusLocation $location): RedirectResponse|JsonResponse
     {
         $this->ensureLocationContext($campus, $area, $location);
         $data = $request->validate(['is_active' => ['required', 'boolean']]);
         if ($data['is_active'] && (! $campus->is_active || ! $area->is_active)) {
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Aktifkan kampus dan area terlebih dahulu.'], 422);
+            }
+
             return back()->withErrors(['is_active' => 'Aktifkan kampus dan area terlebih dahulu.']);
         }
         $location->update($data);
+
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Status lokasi berhasil diperbarui.', 'is_active' => $location->is_active]);
+        }
 
         return $this->redirect($campus, $area, 'Status lokasi berhasil diperbarui.');
     }

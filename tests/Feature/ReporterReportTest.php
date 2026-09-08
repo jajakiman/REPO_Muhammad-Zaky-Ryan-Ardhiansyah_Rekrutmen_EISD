@@ -164,6 +164,11 @@ class ReporterReportTest extends TestCase
 
         $response->assertRedirect(route('reporter.reports.show', $report))
             ->assertSessionHas('success', 'Laporan masalah berhasil dibuat.');
+
+        $this->actingAs($reporter)->get(route('reporter.reports.show', $report))
+            ->assertOk()
+            ->assertSee('loading="lazy"', false)
+            ->assertSee('decoding="async"', false);
     }
 
     public function test_report_validation_enforces_required_fields_and_photo_rules(): void

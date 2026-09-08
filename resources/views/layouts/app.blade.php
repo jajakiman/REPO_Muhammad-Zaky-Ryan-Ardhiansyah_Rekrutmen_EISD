@@ -54,19 +54,7 @@
                     <a href="{{ route('login') }}" class="inline-flex items-center text-white bg-white/10 hover:bg-white/20 border border-white/20 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all">Masuk</a>
                     <a href="{{ route('register') }}" class="inline-flex items-center text-white bg-orange-700 hover:bg-orange-800 shadow-sm px-3.5 py-2 rounded-lg text-sm font-semibold transition-all">Daftar</a>
                 @else
-                    <a href="{{ route(auth()->user()->role.'.dashboard') }}" class="inline-flex items-center text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">Area saya</a>
-                    @if (auth()->user()->role === 'reporter')
-                        <a href="{{ route('reporter.reports.index') }}" class="inline-flex items-center text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">Laporan saya</a>
-                        <a href="{{ route('reporter.profile.edit') }}" class="inline-flex items-center text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">Profil</a>
-                    @endif
-                    @if (auth()->user()->role === 'officer')
-                        <a href="{{ route('officer.queue.index') }}" class="inline-flex items-center text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">Antrean area</a>
-                        <a href="{{ route('officer.history.index') }}" class="inline-flex items-center text-slate-200 hover:text-white px-3 py-2 rounded-lg text-sm font-semibold transition-colors">Riwayat area</a>
-                    @endif
-                    <form method="post" action="{{ route('logout') }}" class="inline-flex" data-logout-form>
-                        @csrf
-                        <button class="nav-button inline-flex items-center text-slate-300 hover:text-red-300 px-2.5 py-1.5 text-sm font-semibold transition-colors" type="submit">Keluar</button>
-                    </form>
+                    <x-user-menu />
                 @endguest
             </div>
         </nav>
@@ -105,6 +93,7 @@
     </footer>
     @auth
         <x-logout-confirmation />
+        <script src="{{ asset('js/user-menu.js') }}" defer></script>
     @endauth
     <script src="https://cdn.jsdelivr.net/npm/motion@11.11.17/dist/motion.js" defer></script>
     <script src="{{ asset('js/motion-interactive.js') }}" defer></script>

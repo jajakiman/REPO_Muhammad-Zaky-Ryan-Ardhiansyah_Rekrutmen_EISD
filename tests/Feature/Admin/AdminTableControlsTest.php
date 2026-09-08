@@ -86,6 +86,21 @@ class AdminTableControlsTest extends TestCase
         $this->assertTrue($campus->fresh()->is_active);
     }
 
+    public function test_status_switch_returns_json_for_ajax_updates(): void
+    {
+        $campus = Campus::factory()->create(['is_active' => true]);
+
+        $this->actingAs($this->admin())
+            ->patchJson(route('admin.campuses.status', $campus), ['is_active' => false])
+            ->assertOk()
+            ->assertJson([
+                'message' => 'Status kampus berhasil diperbarui.',
+                'is_active' => false,
+            ]);
+
+        $this->assertFalse($campus->fresh()->is_active);
+    }
+
     public function test_admin_tables_use_accessible_switches_and_button_actions(): void
     {
         $admin = $this->admin();
@@ -123,6 +138,8 @@ class AdminTableControlsTest extends TestCase
             $this->actingAs($admin)->get($url)
                 ->assertOk()
                 ->assertSee('data-status-switch', false)
+                ->assertSee('status-switch.js', false)
+                ->assertSee('data-toast-container', false)
                 ->assertSee('peer-checked:bg-emerald-700', false)
                 ->assertSee('class="button button-secondary button-sm"', false);
         }

@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreCampusAreaRequest;
 use App\Http\Requests\Admin\UpdateCampusAreaRequest;
 use App\Models\Campus;
 use App\Models\CampusArea;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -55,14 +56,22 @@ class CampusAreaController extends Controller
         return redirect()->route('admin.campuses.areas.index', $campus)->with('success', 'Area kampus berhasil dinonaktifkan.');
     }
 
-    public function status(Request $request, Campus $campus, CampusArea $area): RedirectResponse
+    public function status(Request $request, Campus $campus, CampusArea $area): RedirectResponse|JsonResponse
     {
         $this->ensureContext($campus, $area);
         $data = $request->validate(['is_active' => ['required', 'boolean']]);
         if ($data['is_active'] && ! $campus->is_active) {
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Aktifkan kampus terlebih dahulu.'], 422);
+            }
+
             return back()->withErrors(['is_active' => 'Aktifkan kampus terlebih dahulu.']);
         }
         $area->update($data);
+
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Status area berhasil diperbarui.', 'is_active' => $area->is_active]);
+        }
 
         return redirect()->route('admin.campuses.areas.index', $campus)->with('success', 'Status area berhasil diperbarui.');
     }

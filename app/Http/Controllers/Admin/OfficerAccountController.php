@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreOfficerRequest;
 use App\Http\Requests\Admin\UpdateOfficerRequest;
 use App\Models\CampusArea;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -93,10 +94,14 @@ class OfficerAccountController extends Controller
             ->with('success', 'Akun petugas berhasil dinonaktifkan.');
     }
 
-    public function status(Request $request, User $officer): RedirectResponse
+    public function status(Request $request, User $officer): RedirectResponse|JsonResponse
     {
         abort_unless($officer->role === 'officer', 404);
         $officer->update($request->validate(['is_active' => ['required', 'boolean']]));
+
+        if ($request->expectsJson()) {
+            return response()->json(['message' => 'Status akun petugas berhasil diperbarui.', 'is_active' => $officer->is_active]);
+        }
 
         return redirect()->route('admin.officers.index')->with('success', 'Status akun petugas berhasil diperbarui.');
     }
